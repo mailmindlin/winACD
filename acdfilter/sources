@@ -1,0 +1,10 @@
+TARGETNAME=acdfilter
+TARGETTYPE=DRIVER
+DRIVERTYPE=WDM
+TARGETPATH=obj
+
+MSC_WARNING_LEVEL=-W3 -WX
+
+SOURCES=\
+	acdfilter.c \
+	acdfilter.rc
