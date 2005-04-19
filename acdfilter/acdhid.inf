@@ -1,0 +1,94 @@
+; Copyright (C) 2005 Laurent Morichetti
+;
+; This program is free software; you can redistribute it and/or
+; modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2
+; of the License, or (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+;
+; Apple Cinema (HD) Display HID Monitor Controls
+;
+
+[Version]
+Signature="$CHICAGO$"
+Class=HIDClass
+ClassGuid={745a17a0-74d3-11d0-b6fe-00a0c90f57da}
+Provider=%LM%
+LayoutFile=layout.inf
+DriverVer=04/13/2005,0.1
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[DestinationDirs]
+DefaultDestDir = 12
+ACD_Inst.CopyFilesDLL.NT = 11
+
+[Manufacturer]
+%APPLE%=APPLE_HID
+
+[APPLE_HID]
+%USB\VID_05AC&PID_921D.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921D
+%USB\VID_05AC&PID_921E.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921E
+%USB\VID_05AC&PID_9220.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9220
+
+[ACD_Inst.NT]
+CopyFiles=ACD_Inst.CopyFiles.NT, ACD_Inst.CopyFilesDLL.NT
+
+[ACD_Inst.CopyFiles.NT]
+hidusb.sys
+hidclass.sys
+hidparse.sys
+acdfilter.sys
+
+[ACD_Inst.CopyFilesDLL.NT]
+hid.dll
+
+[ACD_Inst.NT.Services]
+AddService = ACDFilter,,ACD_Service_Inst
+AddService = HidUsb,%SPSVCINST_ASSOCSERVICE%,HID_Service_Inst
+
+[ACD_Inst.NT.HW]
+AddReg = HID_Inst.AddReg.NT.HW
+
+[HID_Inst.AddReg.NT.HW]
+HKR,,"LowerFilters",0x00010000,"ACDFilter"
+
+[HID_Service_Inst]
+DisplayName	= %HID.SvcDesc%
+ServiceType	= %SERVICE_KERNEL_DRIVER%
+StartType	= %SERVICE_DEMAND_START%
+ErrorControl	= %SERVICE_ERROR_IGNORE%
+ServiceBinary	= %12%\hidusb.sys
+LoadOrderGroup	= extended base
+
+[ACD_Service_Inst]
+DisplayName	= %ACD.SvcDesc%
+ServiceType	= %SERVICE_KERNEL_DRIVER%
+StartType	= %SERVICE_DEMAND_START%
+ErrorControl	= %SERVICE_ERROR_IGNORE%
+ServiceBinary	= %12%\acdfilter.sys
+LoadOrderGroup	= extended base
+
+[Strings]
+LM		= "Laurent M."
+APPLE		= "Apple Computer, Inc."
+ACD.SvcDesc	= "ACD HID Filter Driver"
+HID.SvcDesc	= "Microsoft HID Class Driver"
+
+USB\VID_05AC&PID_921D.DeviceDesc = "Apple HID Monitor Controls"
+USB\VID_05AC&PID_921E.DeviceDesc = "Apple HID Monitor Controls"
+USB\VID_05AC&PID_9220.DeviceDesc = "Apple HID Monitor Controls"
+
+SERVICE_KERNEL_DRIVER = 1
+SERVICE_DEMAND_START  = 3
+SERVICE_ERROR_IGNORE  = 0

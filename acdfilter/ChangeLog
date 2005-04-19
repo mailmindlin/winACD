@@ -1,0 +1,6 @@
+2005-04-19 Laurent Morichetti <l_m@pacbell.net>
+	* acdfilter.[c|h|rc]: Fixed indentation (for tab=8).
+	* acdhid.inf: Initial commit.
+
+2005-04-16 Laurent Morichetti <l_m@pacbell.net>
+	* Inital commit.
