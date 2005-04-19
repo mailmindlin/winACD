@@ -19,8 +19,8 @@
 
 #include <ntverp.h>
 
-#define	VER_FILETYPE				VFT_DLL
-#define	VER_FILESUBTYPE				VFT2_UNKNOWN
+#define	VER_FILETYPE			VFT_DLL
+#define	VER_FILESUBTYPE			VFT2_UNKNOWN
 #define VER_FILEDESCRIPTION_STR		"Apple Cinema Display HID Filter Driver"
 #define VER_INTERNALNAME_STR		"acdfilter.sys"
 #define VER_ORIGINALFILENAME_STR	"acdfilter.sys"

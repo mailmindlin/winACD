@@ -27,7 +27,7 @@
 
 #if defined DBG
 # define ACD_dbgPrint(p) { \
-	DbgPrint ("'ACDFILTER> "); DbgPrint p; DbgPrint ("\n"); \
+    DbgPrint ("'ACDFILTER> "); DbgPrint p; DbgPrint ("\n"); \
 }
 #else /* !defined DBG */
 # define ACD_dbgPrint(p)
@@ -36,86 +36,86 @@
 
 typedef struct _DEVICE_EXTENSION {
 
-	PDEVICE_OBJECT physicalDeviceObject;
-	PDEVICE_OBJECT lowerDeviceObject;
+    PDEVICE_OBJECT physicalDeviceObject;
+    PDEVICE_OBJECT lowerDeviceObject;
 
-	IO_REMOVE_LOCK removeLock;
+    IO_REMOVE_LOCK removeLock;
 
 } DEVICE_EXTENSION, *PDEVICE_EXTENSION;
 
 typedef struct _ACD_CONFIGURATION_DESCRIPTOR {
 
-	USB_CONFIGURATION_DESCRIPTOR	Configuration0;
-	USB_INTERFACE_DESCRIPTOR		Interface0;
-	HID_DESCRIPTOR					Hid0;
-	USB_ENDPOINT_DESCRIPTOR			EndPoint1;
+    USB_CONFIGURATION_DESCRIPTOR	Configuration0;
+    USB_INTERFACE_DESCRIPTOR		Interface0;
+    HID_DESCRIPTOR			Hid0;
+    USB_ENDPOINT_DESCRIPTOR		EndPoint1;
 
 } ACD_CONFIGURATION_DESCRIPTOR, *ACD_PCONFIGURATION_DESCRIPTOR;
 
 NTSTATUS
 DriverEntry (
-	IN PDRIVER_OBJECT DriverObject,
-	IN PUNICODE_STRING RegistryPath
-	);
+    IN PDRIVER_OBJECT DriverObject,
+    IN PUNICODE_STRING RegistryPath
+    );
 
 NTSTATUS
 ACD_AddDevice (
-	IN PDRIVER_OBJECT DriverObject,
-	IN PDEVICE_OBJECT PhysicalDeviceObject
-	);
+    IN PDRIVER_OBJECT DriverObject,
+    IN PDEVICE_OBJECT PhysicalDeviceObject
+    );
 
 VOID
 ACD_DriverUnload (
-	IN PDRIVER_OBJECT DriverObject
-	);
+    IN PDRIVER_OBJECT DriverObject
+    );
 
 NTSTATUS
 ACD_DispatchAny (
-	IN PDEVICE_OBJECT FilterDeviceObject,
-	IN PIRP Irp
-	);
+    IN PDEVICE_OBJECT FilterDeviceObject,
+    IN PIRP Irp
+    );
 
 NTSTATUS
 ACD_DispatchPower (
-	IN PDEVICE_OBJECT FilterDeviceObject,
-	IN PIRP Irp
-	);
+    IN PDEVICE_OBJECT FilterDeviceObject,
+    IN PIRP Irp
+    );
 
 NTSTATUS
 ACD_DispatchPnP (
-	IN PDEVICE_OBJECT FilterDeviceObject,
-	IN PIRP Irp
-	);
+    IN PDEVICE_OBJECT FilterDeviceObject,
+    IN PIRP Irp
+    );
 
 NTSTATUS
 ACD_DispatchIoctl (
-	IN PDEVICE_OBJECT FilterDeviceObject,
-	IN PIRP Irp
-	);
+    IN PDEVICE_OBJECT FilterDeviceObject,
+    IN PIRP Irp
+    );
 
 NTSTATUS
 ACD_IoCallDriverCompletion (
-	IN PDEVICE_OBJECT DeviceObject,
-	IN PIRP Irp,
-	IN PVOID Context
-	);
+    IN PDEVICE_OBJECT DeviceObject,
+    IN PIRP Irp,
+    IN PVOID Context
+    );
 
 NTSTATUS
 ACD_FillControlDescriptorRequest (
-	IN PURB Urb, IN PUCHAR Buffer,
-	IN ULONG BufferLength
-	);
+    IN PURB Urb, IN PUCHAR Buffer,
+    IN ULONG BufferLength
+    );
 
 NTSTATUS
 ACD_GetPortStatus (
-	IN PDEVICE_OBJECT LowerDeviceObject,
-	IN OUT PULONG FLAGS
-	);
+    IN PDEVICE_OBJECT LowerDeviceObject,
+    IN OUT PULONG FLAGS
+    );
 
 NTSTATUS
 ACD_ResetPort (
-	IN PDEVICE_OBJECT LowerDeviceObject
-	);
+    IN PDEVICE_OBJECT LowerDeviceObject
+    );
 
 
 #endif /* !defined _ACD_FILTER_H_ */
