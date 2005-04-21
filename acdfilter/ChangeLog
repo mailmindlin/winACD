@@ -1,3 +1,8 @@
+2005-04-21 Laurent Morichetti <l_m@pacbell.net>
+	* acdfilter.c: Added reports 0xE1, 0xE3 and 0xE8 to the HID descriptor.
+	* acdfilter.rc: Increased revision number.
+	* acdhid.inf: Changed provider string to WinACD, Increased revision number.
+
 2005-04-19 Laurent Morichetti <l_m@pacbell.net>
 	* acdfilter.[c|h|rc]: Fixed indentation (for tab=8).
 	* acdhid.inf: Initial commit.
