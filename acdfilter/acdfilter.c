@@ -46,10 +46,24 @@ ACD_HidReportDescriptor [] = {
 	0x85, 0x10,		/*   REPORT_ID (16)			*/
 	0x09, 0x10,		/*   USAGE (Brightness)			*/
 	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+
+	0x85, 0xE3,		/*   REPORT_ID (227)		<- (x)	*/
+	0x09, 0xE3,		/*   USAGE (227)		<- (x)	*/
+	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
+
+	0x25, 0x01,		/*   LOGICAL_MAXIMUM (1)	<- (x)	*/
+	0x85, 0xE1,		/*   REPORT_ID (0x225)		<- (x)	*/
+	0x09, 0xE1,		/*   USAGE (225)		<- (x)	*/
+	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
+	0x85, 0xE8,		/*   REPORT_ID (232)		<- (x)	*/
+	0x09, 0xE8,		/*   USAGE (232)		<- (x)	*/
+	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
+
 	0x25, 0x04,		/*   LOGICAL_MAXIMUM (4)		*/
 	0x85, 0xD6,		/*   REPORT_ID (214)			*/
 	0x09, 0xD6,		/*   USAGE (214)			*/
 	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+
 	0x25, 0x07,		/*   LOGICAL_MAXIMUM (7)		*/
 	0x85, 0xE7,		/*   REPORT_ID (231)			*/
 	0x09, 0xE7,		/*   USAGE (231)		<- (*)	*/
@@ -61,6 +75,7 @@ ACD_HidReportDescriptor [] = {
 	0xC0			/* END_COLLECTION			*/
 };
 				/* (*) missing USAGE tags		*/
+				/* (x) added reports			*/
 
 /**
  * New configuration descriptor (since we changed the HID report size)
