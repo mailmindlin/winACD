@@ -1,0 +1,55 @@
+HKCR
+{
+	ACDExt.ACDShlExt.1 = s 'ACDShlExt Class'
+	{
+		CLSID = s '{CF27ED67-1882-4977-97EF-CAEB537DE51F}'
+	}
+	ACDExt.ACDShlExt = s 'ACDShlExt Class'
+	{
+		CLSID = s '{CF27ED67-1882-4977-97EF-CAEB537DE51F}'
+		CurVer = s 'ACDExt.ACDShlExt.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {CF27ED67-1882-4977-97EF-CAEB537DE51F} = s 'ACDShlExt Class'
+		{
+			ProgID = s 'ACDExt.ACDShlExt.1'
+			VersionIndependentProgID = s 'ACDExt.ACDShlExt'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			val AppID = s '%APPID%'
+			'TypeLib' = s '{FE1379C5-DB1A-4478-8ED3-DC584E58406E}'
+		}
+	}
+}
+HKLM
+{
+	NoRemove Software
+	{
+		NoRemove Microsoft
+		{
+			NoRemove Windows
+			{
+				NoRemove CurrentVersion
+				{
+					NoRemove 'Controls Folder'
+					{
+						NoRemove Device
+						{
+							NoRemove ShellEx
+							{
+								NoRemove PropertySheetHandlers
+								{
+									ACDExt = s '{CF27ED67-1882-4977-97EF-CAEB537DE51F}'
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

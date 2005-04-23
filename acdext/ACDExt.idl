@@ -1,0 +1,36 @@
+// ACDExt.idl : IDL source for ACDExt
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (ACDExt.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	object,
+	uuid(E19D392B-381E-4E34-A0F4-48760E54539E),
+	dual,
+	nonextensible,
+	helpstring("IACDShlExt Interface"),
+	pointer_default(unique)
+]
+interface IACDShlExt : IDispatch{
+};
+[
+	uuid(FE1379C5-DB1A-4478-8ED3-DC584E58406E),
+	version(1.0),
+	helpstring("ACDExt 1.0 Type Library")
+]
+library ACDExtLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(CF27ED67-1882-4977-97EF-CAEB537DE51F),
+		helpstring("ACDShlExt Class")
+	]
+	coclass ACDShlExt
+	{
+		[default] interface IACDShlExt;
+	};
+};
