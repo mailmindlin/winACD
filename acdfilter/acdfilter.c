@@ -28,6 +28,9 @@
 
 /**
  * New HID report descriptor.
+ *
+ * TODO: fixup the bitfield usages (report size=1, report count=x and add
+ *	 constant padding)
  */
 UCHAR
 ACD_HidReportDescriptor [] = {
@@ -38,11 +41,11 @@ ACD_HidReportDescriptor [] = {
 	0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
 	0x75, 0x08,		/*   REPORT_SIZE (8)			*/
 	0x85, 0x02,		/*   REPORT_ID (2)			*/
-	0x96, 0x01, 0x01,	/*   REPORT_COUNT (257)			*/
+	0x96, 0x00, 0x01,	/*   REPORT_COUNT (256)			*/
 	0x09, 0x02,		/*   USAGE (EDID Information)		*/
 	0xB2, 0x02, 0x01,	/*   FEATURE (Data,Var,Abs,Buf)		*/
 	0x05, 0x82,		/*   USAGE_PAGE (VESA Virtual Controls)	*/
-	0x95, 0x02,		/*   REPORT_COUNT (2)			*/
+	0x95, 0x01,		/*   REPORT_COUNT (1)			*/
 	0x85, 0x10,		/*   REPORT_ID (16)			*/
 	0x09, 0x10,		/*   USAGE (Brightness)			*/
 	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
