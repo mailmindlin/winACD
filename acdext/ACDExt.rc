@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,1,1,0
- PRODUCTVERSION 0,1,1,0
+ FILEVERSION 0,2,0,0
+ PRODUCTVERSION 0,2,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD (http://sourceforge.net/projects/winacd)"
             VALUE "FileDescription", "Apple Cinema Display Control Panel"
-            VALUE "FileVersion", "0.1.1.0"
+            VALUE "FileVersion", "0.2.0.0"
             VALUE "InternalName", "acdext.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0.1.1.0"
+            VALUE "ProductVersion", "0.2.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -108,9 +108,11 @@ IDI_ICON                ICON                    "icon.ico"
 // Dialog
 //
 
-IDD_ACD_PROPPAGE DIALOGEX 0, 0, 251, 231
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Property Page"
+IDD_ACD_PROPPAGE DIALOGEX 20, 20, 252, 230
+STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | 
+    WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Controls"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Virtual Control Panel",IDC_CONTROLS_GROUP,7,3,237,37
@@ -155,11 +157,18 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 244
         TOPMARGIN, 2
-        BOTTOMMARGIN, 224
+        BOTTOMMARGIN, 223
     END
 END
 #endif    // APSTUDIO_INVOKED
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// RT_MANIFEST
+//
+
+2                       RT_MANIFEST             "acdext.dll.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -5,6 +5,7 @@
 #define IDS_PROJNAME                    100
 #define IDR_ACDEXT                      101
 #define IDR_ACDSHLEXT                   102
+#define IDR_RT_MANIFEST1                103
 #define IDD_PROPPAGE_MEDIUM             106
 #define IDD_ACD_PROPPAGE                106
 #define IDI_ICON                        201
@@ -19,7 +20,6 @@
 #define IDC_STATIC_MONITORS             216
 #define IDC_CONTROLS_GROUP              217
 #define IDC_STATIC_BRIGHTNESS           218
-#define IDC_STATIC_LOW                  219
 #define IDC_STATIC_0                    219
 #define IDC_STATIC_100                  220
 
@@ -27,7 +27,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        202
+#define _APS_NEXT_RESOURCE_VALUE        104
 #define _APS_NEXT_COMMAND_VALUE         32768
 #define _APS_NEXT_CONTROL_VALUE         221
 #define _APS_NEXT_SYMED_VALUE           103
