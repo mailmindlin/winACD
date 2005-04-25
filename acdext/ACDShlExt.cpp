@@ -20,6 +20,7 @@
 #include "ACDShlExt.h"
 #include "ACDHidDev.h"
 
+#include <uxtheme.h>
 #include <map>
 
 // CACDShlExt
@@ -96,6 +97,10 @@ PspInitControls (HWND hwnd)
 static void
 PspOnInitDialog (HWND hwnd)
 {
+    // Uncomment this if we can't get the themes to work
+    // properly with the manifest resource.
+    // ::EnableThemeDialogTexture (hwnd, ETDT_ENABLETAB); 
+
     // get the HIDClass guid.
     GUID hidGuid;
     HidD_GetHidGuid (&hidGuid);
@@ -139,17 +144,19 @@ PspOnInitDialog (HWND hwnd)
 	if (hidDevice == INVALID_HANDLE_VALUE)
 	    continue;
 
-	if (!CACDHidDevice::IsACDHidDevice (hidDevice))
+	if (!CACDHidDevice::IsACDHidDevice (hidDevice)) {
+	    CloseHandle (hidDevice);
 	    continue;
-
-	CACDHidDevice* acdDevice = new CACDHidDevice (hidDevice);
+	}
 
 	// Get the device's name
 	SP_DEVINFO_DATA	devInfo;
-
 	devInfo.cbSize = sizeof (devInfo);
-	if (!SetupDiEnumDeviceInfo (hDeviceInfo, i, &devInfo))
+
+	if (!SetupDiEnumDeviceInfo (hDeviceInfo, i, &devInfo)) {
+	    CloseHandle (hidDevice);
 	    continue;
+	}
 
 	DEVINST devInst;
 	CM_Get_Parent (&devInst, devInfo.DevInst, 0);
@@ -161,17 +168,38 @@ PspOnInitDialog (HWND hwnd)
 	ULONG length = (ULONG) (sizeof (name) - start);
 	if (CM_Get_DevNode_Registry_Property (devInst,
 		CM_DRP_DEVICEDESC, NULL, &name [start], &length, 0
-		) != CR_SUCCESS)
+		) != CR_SUCCESS) {
+	    CloseHandle (hidDevice);
 	    continue;
+	}
 
 	int index = (int)SendDlgItemMessage (hwnd, IDC_AVAILABLE_MONITORS, 
 	    CB_ADDSTRING, (WPARAM)0, (LPARAM)name);
 	if (index != -1)
-	    Controls [index] = CACDControl (acdDevice);
+	    Controls [index] = CACDControl (new CACDHidDevice (hidDevice));
+	else
+	    CloseHandle (hidDevice);
+
     }
     SetupDiDestroyDeviceInfoList (hDeviceInfo);
 
-    if (Controls.size () > 1) {
+    switch (Controls.size ()) {
+    case 0:
+	/* device not found, disable UI */
+	EnableWindow (GetDlgItem (hwnd, IDC_BRIGHTNESS_SLIDER), FALSE);
+	EnableWindow (GetDlgItem (hwnd, IDC_STATIC_0), FALSE);
+	EnableWindow (GetDlgItem (hwnd, IDC_STATIC_100), FALSE);
+	EnableWindow (GetDlgItem (hwnd, IDC_STATIC_BRIGHTNESS), FALSE);
+	EnableWindow (GetDlgItem (hwnd, IDC_CONTROLS_GROUP), FALSE);
+	return;
+
+    case 1:
+	/* only 1 acd, no need for 'Monitors' combo-box */
+	ShowWindow (GetDlgItem (hwnd, IDC_STATIC_MONITORS), SW_HIDE);
+	ShowWindow (GetDlgItem (hwnd, IDC_AVAILABLE_MONITORS), SW_HIDE);
+	break;
+
+    default:
         // Select the first device in the combo box.
 	LRESULT result;
         result = SendDlgItemMessage (hwnd, IDC_AVAILABLE_MONITORS,
@@ -179,22 +207,9 @@ PspOnInitDialog (HWND hwnd)
 	result = SendDlgItemMessage (hwnd, IDC_AVAILABLE_MONITORS,
 	    CB_GETCURSEL, 0, 0);
 	assert (result == 0);
+	break;
     }
-    else {
-	ShowWindow (GetDlgItem(hwnd, IDC_STATIC_MONITORS), SW_HIDE);
-	ShowWindow (GetDlgItem(hwnd, IDC_AVAILABLE_MONITORS), SW_HIDE);
-    }
-    if (Controls.size () == 0) {
-	EnableWindow (GetDlgItem(hwnd, IDC_BRIGHTNESS_SLIDER), FALSE);
-	EnableWindow (GetDlgItem(hwnd, IDC_STATIC_0), FALSE);
-	EnableWindow (GetDlgItem(hwnd, IDC_STATIC_100), FALSE);
-	EnableWindow (GetDlgItem(hwnd, IDC_STATIC_BRIGHTNESS), FALSE);
-	EnableWindow (GetDlgItem(hwnd, IDC_CONTROLS_GROUP), FALSE);
-	return;
-    }
-    else {
-	CurrentDevice = Controls [0].Device;
-    }
+    CurrentDevice = Controls [0].Device;
 
     // Set the appropriate range for the brightness slider.
     SendDlgItemMessage (hwnd, IDC_BRIGHTNESS_SLIDER,
@@ -301,7 +316,10 @@ UINT CALLBACK PspCallbackProc (HWND hwnd, UINT uMsg, LPPROPSHEETPAGE ppsp)
 {
     if (PSPCB_RELEASE == uMsg) {
 	for (int i = 0; i < (int) Controls.size (); ++i) {
+	    CACDHidDevice* device = Controls [i].Device;
+	    HANDLE handle = device->DeviceHandle ();
 	    delete Controls [i].Device;
+	    CloseHandle (handle);
 	}
     }
 
@@ -343,6 +361,7 @@ CACDShlExt::AddPages (LPFNADDPROPSHEETPAGE lpfnAddPageProc, LPARAM lParam)
     psp.pszTitle    = "Controls";
     psp.pfnDlgProc  = PspDlgProc;
     psp.pfnCallback = PspCallbackProc;
+    /* TODO: how do we add RefCount ??? */
 
     hpsp = CreatePropertySheetPage (&psp);
     if (hpsp == NULL) {
