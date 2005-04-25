@@ -62,7 +62,7 @@ CACDHidDevice::IsACDHidDevice (HANDLE device)
 
 
 CACDHidDevice::CACDHidDevice (HANDLE device)
-: m_Device (device)
+    : m_Device (device)
 {
     BOOL status;
 
@@ -111,7 +111,7 @@ CACDHidDevice::SetFeatureValue (Usage feature, UCHAR value)
 }
  
 ULONG
-CACDHidDevice::GetFeatureValue (Usage feature)
+CACDHidDevice::GetFeatureValue (Usage feature) const
 {
     ULONG value = 0;
 

@@ -32,9 +32,9 @@ private:
 
     /// ACD product id
     enum ProductID {
-	ALUMINIUM_CINEMA_DISPLAY_20INCH		    = 0x921D,
-	ALUMINIUM_CINEMA_HD_DISPLAY_23INCH	    = 0x921E,
-	ALUMINIUM_CINEMA_HD_DISPLAY_30INCH	    = 0x9220
+	ALUMINIUM_CINEMA_DISPLAY_20INCH		= 0x921D,
+	ALUMINIUM_CINEMA_HD_DISPLAY_23INCH	= 0x921E,
+	ALUMINIUM_CINEMA_HD_DISPLAY_30INCH	= 0x9220
     };
 
     /// ACD hid usage opcodes.
@@ -71,7 +71,7 @@ private:
 protected:
 
     /// Return the given feature's value.
-    ULONG GetFeatureValue (Usage feature);
+    ULONG GetFeatureValue (Usage feature) const;
     /// Set the given feature value.
     void SetFeatureValue (Usage feature, UCHAR value);
 
@@ -85,8 +85,13 @@ public:
     CACDHidDevice (HANDLE device);
     ~CACDHidDevice ();
 
+    HANDLE DeviceHandle (void) const
+    {
+	return m_Device;
+    }
+
     /// Return the current brightness.
-    UCHAR GetBrightness (void)
+    UCHAR GetBrightness (void) const
     {
 	return (UCHAR) GetFeatureValue (ACD_USAGE_BRIGHTNESS);
     }
