@@ -21,7 +21,7 @@
 
 #define	VER_FILETYPE			VFT_DLL
 #define	VER_FILESUBTYPE			VFT2_UNKNOWN
-#define VER_FILEVERSION			0,1,1,0
+#define VER_FILEVERSION			0,2,0,0
 #define VER_FILEDESCRIPTION_STR		"Apple Cinema Display HID Filter Driver"
 #define VER_INTERNALNAME_STR		"acdfilter.sys"
 #define VER_ORIGINALFILENAME_STR	"acdfilter.sys"
