@@ -23,7 +23,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(WINDDK)\inc\wxp"
-				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ISOLATION_AWARE_ENABLED"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -90,7 +90,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="$(WINDDK)\inc\wxp"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL"
+				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ISOLATION_AWARE_ENABLED"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
@@ -238,6 +238,9 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\acdext.dll.manifest">
+		</File>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>
