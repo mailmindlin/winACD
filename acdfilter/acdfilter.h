@@ -25,19 +25,26 @@
 
 #include <wdm.h>
 
-#if defined DBG
+#if DBG
 # define ACD_dbgPrint(p) { \
     DbgPrint ("'ACDFILTER> "); DbgPrint p; DbgPrint ("\n"); \
 }
-#else /* !defined DBG */
+#else /* !DBG */
 # define ACD_dbgPrint(p)
-#endif /* !defined DBG */
+#endif /* !DBG */
 
+#define ACD_LAST_DEVICE_STRING_DESCRIPTOR   1
+#define ACD_LAST_DRIVER_STRING_DESCRIPTOR   \
+    (ACD_LAST_DEVICE_STRING_DESCRIPTOR + 0)
 
 typedef struct _DEVICE_EXTENSION {
 
     PDEVICE_OBJECT physicalDeviceObject;
     PDEVICE_OBJECT lowerDeviceObject;
+
+    PUSB_STRING_DESCRIPTOR stringDescriptor [
+	ACD_LAST_DRIVER_STRING_DESCRIPTOR + 1
+    ];
 
     IO_REMOVE_LOCK removeLock;
 
@@ -115,6 +122,20 @@ ACD_GetPortStatus (
 NTSTATUS
 ACD_ResetPort (
     IN PDEVICE_OBJECT LowerDeviceObject
+    );
+
+NTSTATUS
+ACD_CacheStringDescriptors (
+    IN OUT PDEVICE_EXTENSION DeviceExt
+    );
+
+
+NTSTATUS
+ACD_GetStringDescriptor (
+    IN PDEVICE_OBJECT LowerDeviceObject,
+    IN UCHAR Index,
+    IN OUT PUSB_STRING_DESCRIPTOR pDescriptor,
+    IN ULONG Size
     );
 
 

@@ -22,63 +22,62 @@
 #include <wdm.h>
 #include <usb.h>
 #include <usbioctl.h>
+#include <usbdlib.h>
 #include <hidport.h>
 
 #include "acdfilter.h"
 
 /**
  * New HID report descriptor.
- *
- * TODO: fixup the bitfield usages (report size=1, report count=x and add
- *	 constant padding)
  */
+
 UCHAR
 ACD_HidReportDescriptor [] = {
-	0x05, 0x80,		/* USAGE_PAGE (Monitor)			*/
-	0x09, 0x01,		/* USAGE (Monitor Control)		*/
-	0xA1, 0x01,		/* COLLECTION (Application)		*/
-	0x15, 0x00,		/*   LOGICAL_MINIMUM (0)		*/
-	0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
-	0x75, 0x08,		/*   REPORT_SIZE (8)			*/
-	0x85, 0x02,		/*   REPORT_ID (2)			*/
-	0x96, 0x00, 0x01,	/*   REPORT_COUNT (256)			*/
-	0x09, 0x02,		/*   USAGE (EDID Information)		*/
-	0xB2, 0x02, 0x01,	/*   FEATURE (Data,Var,Abs,Buf)		*/
-	0x05, 0x82,		/*   USAGE_PAGE (VESA Virtual Controls)	*/
-	0x95, 0x01,		/*   REPORT_COUNT (1)			*/
-	0x85, 0x10,		/*   REPORT_ID (16)			*/
-	0x09, 0x10,		/*   USAGE (Brightness)			*/
-	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+    0x05, 0x80,		/* USAGE_PAGE (Monitor)			*/
+    0x09, 0x01,		/* USAGE (Monitor Control)		*/
+    0xA1, 0x01,		/* COLLECTION (Application)		*/
+    0x15, 0x00,		/*   LOGICAL_MINIMUM (0)		*/
+    0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
+    0x75, 0x08,		/*   REPORT_SIZE (8)			*/
+    0x85, 0x02,		/*   REPORT_ID (2)			*/
+    0x96, 0x00, 0x01,	/*   REPORT_COUNT (256)			*/
+    0x09, 0x02,		/*   USAGE (EDID Information)		*/
+    0xB2, 0x02, 0x01,	/*   FEATURE (Data,Var,Abs,Buf)		*/
+    0x05, 0x82,		/*   USAGE_PAGE (VESA Virtual Controls)	*/
+    0x95, 0x01,		/*   REPORT_COUNT (1)			*/
+    0x85, 0x10,		/*   REPORT_ID (16)			*/
+    0x09, 0x10,		/*   USAGE (Brightness)			*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+    0x85, 0xE3,		/*   REPORT_ID (227)		<- (x)	*/
+    0x09, 0xE3,		/*   USAGE (227)		<- (x)	*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
 
-	0x85, 0xE3,		/*   REPORT_ID (227)		<- (x)	*/
-	0x09, 0xE3,		/*   USAGE (227)		<- (x)	*/
-	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
+    0x25, 0x01,		/*   LOGICAL_MAXIMUM (1)	<- (x)	*/
+    0x85, 0xE1,		/*   REPORT_ID (0x225)		<- (x)	*/
+    0x09, 0xE1,		/*   USAGE (225)		<- (x)	*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
+    0x85, 0xE8,		/*   REPORT_ID (232)		<- (x)	*/
+    0x09, 0xE8,		/*   USAGE (232)		<- (x)	*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
 
-	0x25, 0x01,		/*   LOGICAL_MAXIMUM (1)	<- (x)	*/
-	0x85, 0xE1,		/*   REPORT_ID (0x225)		<- (x)	*/
-	0x09, 0xE1,		/*   USAGE (225)		<- (x)	*/
-	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
-	0x85, 0xE8,		/*   REPORT_ID (232)		<- (x)	*/
-	0x09, 0xE8,		/*   USAGE (232)		<- (x)	*/
-	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)	<- (x)	*/
+    0x25, 0x04,		/*   LOGICAL_MAXIMUM (4)		*/
+    0x85, 0xD6,		/*   REPORT_ID (214)			*/
+    0x09, 0xD6,		/*   USAGE (214)			*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
 
-	0x25, 0x04,		/*   LOGICAL_MAXIMUM (4)		*/
-	0x85, 0xD6,		/*   REPORT_ID (214)			*/
-	0x09, 0xD6,		/*   USAGE (214)			*/
-	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
-
-	0x25, 0x07,		/*   LOGICAL_MAXIMUM (7)		*/
-	0x85, 0xE7,		/*   REPORT_ID (231)			*/
-	0x09, 0xE7,		/*   USAGE (231)		<- (*)	*/
-	0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
-	0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
-	0x85, 0xE4,		/*   REPORT_ID (228)			*/
-	0x09, 0xE4,		/*   USAGE (228)		<- (*)	*/
-	0x81, 0x02,		/*   INPUT (Data,Var,Abs)		*/
-	0xC0			/* END_COLLECTION			*/
+    0x25, 0x07,		/*   LOGICAL_MAXIMUM (7)		*/
+    0x85, 0xE7,		/*   REPORT_ID (231)			*/
+    0x09, 0xE7,		/*   USAGE (231)		<- (*)	*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+    0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
+    0x85, 0xE4,		/*   REPORT_ID (228)			*/
+    0x09, 0xE4,		/*   USAGE (228)		<- (*)	*/
+    0x81, 0x02,		/*   INPUT (Data,Var,Abs)		*/
+    0xC0		/* END_COLLECTION			*/
 };
-				/* (*) missing USAGE tags		*/
-				/* (x) added reports			*/
+			/* (*) missing USAGE tags		*/
+			/* (x) added reports			*/
+
 
 /**
  * New configuration descriptor (since we changed the HID report size)
@@ -273,6 +272,21 @@ ACD_DispatchIoctl (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 	USHORT function = urb->UrbHeader.Function;
 
 	if (function == URB_FUNCTION_GET_DESCRIPTOR_FROM_DEVICE
+	    && desc->DescriptorType == USB_STRING_DESCRIPTOR_TYPE) {
+	    if (desc->Index <= ACD_LAST_DRIVER_STRING_DESCRIPTOR) {
+		status = ACD_FillControlDescriptorRequest (urb,
+		    (PUCHAR) deviceExt->stringDescriptor [desc->Index],
+		    deviceExt->stringDescriptor [desc->Index]->bLength
+		    );
+	    }
+	    else {
+		desc->TransferBufferLength = 0;
+		urb->UrbHeader.Status = USBD_STATUS_STALL_PID;
+		status = STATUS_UNSUCCESSFUL;
+	    }
+	    completeRequestHere = TRUE;
+	}
+	else if (function == URB_FUNCTION_GET_DESCRIPTOR_FROM_DEVICE
 	    && desc->DescriptorType == USB_CONFIGURATION_DESCRIPTOR_TYPE) {
 	    /* return our own device configuration descriptor */
 	    status = ACD_FillControlDescriptorRequest (
@@ -370,9 +384,14 @@ ACD_DispatchPnP (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 	 */
 	if (NT_SUCCESS (status)) {
 	    status = ACD_ResetPort (deviceExt->lowerDeviceObject);
+	    Irp->IoStatus.Status = status;
 	}
 
+	if (NT_SUCCESS (status))
+	    status = ACD_CacheStringDescriptors (deviceExt);
+
 	/* we're done with this IRP, we can complete it here */
+	Irp->IoStatus.Status = status;
 	IoCompleteRequest (Irp, IO_NO_INCREMENT);
     }
     else {
@@ -381,13 +400,19 @@ ACD_DispatchPnP (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
     }
 
     if (minor == IRP_MN_REMOVE_DEVICE) {
+	size_t i;
+	for (i = 0; i <= ACD_LAST_DRIVER_STRING_DESCRIPTOR; ++i)
+	    if (deviceExt->stringDescriptor [i] != NULL)
+		ExFreePool (deviceExt->stringDescriptor [i]);
+
 	IoReleaseRemoveLockAndWait (&deviceExt->removeLock, Irp);
 	IoDetachDevice (deviceExt->lowerDeviceObject);
 	IoDeleteDevice (FilterDeviceObject);
-	return status;
+    }
+    else {
+        IoReleaseRemoveLock (&deviceExt->removeLock, Irp);
     }
 
-    IoReleaseRemoveLock (&deviceExt->removeLock, Irp);
     return status;
 }
 
@@ -400,6 +425,119 @@ ACD_IoCallDriverCompletion (IN PDEVICE_OBJECT DeviceObject,
 
     KeSetEvent((PKEVENT) Context, 0, FALSE);
     return STATUS_MORE_PROCESSING_REQUIRED;
+}
+
+NTSTATUS
+ACD_CacheStringDescriptors (IN OUT PDEVICE_EXTENSION DeviceExt)
+{
+    PUSB_STRING_DESCRIPTOR desc0;
+    NTSTATUS status;
+    UCHAR index;
+
+    /* allocate desc0 */
+    desc0 = ExAllocatePool (NonPagedPool, sizeof (USB_STRING_DESCRIPTOR));
+    if (desc0 == NULL)
+	return STATUS_INSUFFICIENT_RESOURCES;
+
+    for (index = 1; index <= ACD_LAST_DEVICE_STRING_DESCRIPTOR; ++index) {
+	PUSB_STRING_DESCRIPTOR desc;
+
+	/* get StringDescN->bLenth */
+	RtlZeroMemory (desc0, sizeof (USB_STRING_DESCRIPTOR));
+	status = ACD_GetStringDescriptor (
+	    DeviceExt->lowerDeviceObject, index,
+	    desc0, sizeof (USB_STRING_DESCRIPTOR)
+	    );
+	if (!NT_SUCCESS (status)) {
+	    ExFreePool (desc0);
+	    return status;
+	}
+
+	/* get StringDescN */
+	desc = ExAllocatePool (NonPagedPool, desc0->bLength);
+	if (desc == NULL) {
+	    ExFreePool (desc0);
+	    return STATUS_INSUFFICIENT_RESOURCES;
+	}
+
+	RtlZeroMemory (desc, desc0->bLength);
+	status = ACD_GetStringDescriptor (
+	    DeviceExt->lowerDeviceObject, index, desc, desc0->bLength
+	    );
+	if (!NT_SUCCESS (status)) {
+	    ExFreePool (desc0);
+	    ExFreePool (desc);
+	    return status;
+	}
+	DeviceExt->stringDescriptor [index] = desc;
+    }
+
+    /* get StringDesc0 */
+    status = ACD_GetStringDescriptor (
+	DeviceExt->lowerDeviceObject, 0, desc0, sizeof (USB_STRING_DESCRIPTOR)
+	);
+    if (!NT_SUCCESS (status)) {
+	ExFreePool (desc0);
+	return status;
+    }
+
+    DeviceExt->stringDescriptor [0] = desc0;
+    return status;
+}
+
+NTSTATUS
+ACD_GetStringDescriptor (IN PDEVICE_OBJECT LowerDeviceObject,
+			 IN UCHAR Index,
+			 IN OUT PUSB_STRING_DESCRIPTOR pDescriptor,
+			 IN ULONG Size)
+{
+    PIO_STACK_LOCATION irpStack;
+    KEVENT event;
+    PIRP irp;
+    IO_STATUS_BLOCK ioStatus;
+    NTSTATUS status;
+
+    PURB urb = ExAllocatePool (NonPagedPool, 
+	sizeof (struct _URB_CONTROL_DESCRIPTOR_REQUEST));
+
+    if (!urb)
+	return STATUS_INSUFFICIENT_RESOURCES;
+
+    UsbBuildGetDescriptorRequest(
+	urb, 
+	(USHORT) sizeof(struct _URB_CONTROL_DESCRIPTOR_REQUEST),
+	USB_STRING_DESCRIPTOR_TYPE, 
+	Index,
+	0x0409,
+	pDescriptor, 
+	NULL, 
+	Size,
+	NULL);
+
+    KeInitializeEvent (&event, NotificationEvent, FALSE);
+
+    irp = IoBuildDeviceIoControlRequest (
+	IOCTL_INTERNAL_USB_SUBMIT_URB, LowerDeviceObject,
+	NULL, 0, NULL, 0, TRUE, &event, &ioStatus
+	);
+
+    if (irp == NULL) {
+	ExFreePool (urb);
+	return STATUS_INSUFFICIENT_RESOURCES;
+    }
+
+    irpStack = IoGetNextIrpStackLocation (irp);
+    irpStack->Parameters.Others.Argument1 = urb;
+
+    status = IoCallDriver (LowerDeviceObject, irp);
+
+    if (status == STATUS_PENDING) {
+	KeWaitForSingleObject (&event, Executive, KernelMode, FALSE, NULL);
+	status = ioStatus.Status;
+    }
+
+    ExFreePool (urb);
+    return status;
 }
 
 NTSTATUS
@@ -454,6 +592,7 @@ ACD_ResetPort (IN PDEVICE_OBJECT LowerDeviceObject)
     if (irp == NULL)
 	return STATUS_INSUFFICIENT_RESOURCES;
 
+    ioStatus.Status = STATUS_NOT_SUPPORTED;
     status = IoCallDriver (LowerDeviceObject, irp);
 
     if (status == STATUS_PENDING) {
@@ -473,7 +612,12 @@ ACD_FillControlDescriptorRequest (IN PURB Urb, IN PUCHAR Buffer,
     ULONG length = BufferLength < desc->TransferBufferLength
 	? BufferLength : desc->TransferBufferLength;
 
+    if (Buffer == NULL) {
+	return STATUS_INVALID_PARAMETER;
+    }
+
     RtlCopyMemory (desc->TransferBuffer, Buffer, length);
+    desc->TransferBufferLength = length;
 
     Urb->UrbHeader.Status = USBD_STATUS_SUCCESS;
     return STATUS_SUCCESS;
