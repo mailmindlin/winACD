@@ -1,3 +1,10 @@
+2005-04-26 Laurent Morichetti <l_m@pacbell.net>
+	* acdfilter.[c|h]: Added string descriptor caching. The device seems
+	to lock up if the TransbufferBufferLength exceeds the length of the desc.
+	Fixed a couple of problems with the IoStatus.Status value (should now
+	pass the WHQL universal tests).
+	* acdfilter.rc: Increased revision number.
+
 2005-04-24 Laurent Morichetti <l_m@pacbell.net>
 	* acdfilter.c: Fixed incorrect report counts.
 	* acdfilter.rc: Increased revision number.
