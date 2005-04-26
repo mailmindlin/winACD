@@ -24,7 +24,7 @@ Class=HIDClass
 ClassGuid={745A17A0-74D3-11D0-B6FE-00A0C90F57DA}
 Provider=%WINACD%
 LayoutFile=layout.inf
-DriverVer=04/21/2005,0.1.1
+DriverVer=04/25/2005,0.2.0
 
 [ControlFlags]
 ExcludeFromSelect = *
@@ -80,7 +80,7 @@ ServiceBinary	= %12%\acdfilter.sys
 LoadOrderGroup	= extended base
 
 [Strings]
-WINACD		= "WinACD (http://sourceforge.net/projects/winacd)"
+WINACD		= "WinACD, http://winacd.sourceforge.net"
 APPLE		= "Apple Computer, Inc."
 ACD.SvcDesc	= "ACD HID Filter Driver"
 HID.SvcDesc	= "Microsoft HID Class Driver"
