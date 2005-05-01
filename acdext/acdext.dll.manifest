@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
-<assemblyIdentity name="ACDExt" processorArchitecture="x86" version="0.1.1.0" type="win32"/>
+<assemblyIdentity 
+    version="0.1.9.0" 
+    processorArchitecture="x86" 
+    name="WinACD.ACDExt"
+    type="win32" 
+/> 
 <description>Apple Cinema Display Control Panel</description>
 <dependency>
     <dependentAssembly>

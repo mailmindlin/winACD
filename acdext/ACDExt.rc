@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,2,0,0
- PRODUCTVERSION 0,2,0,0
+ FILEVERSION 0,1,9,0
+ PRODUCTVERSION 0,1,9,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -69,14 +69,14 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "WinACD (http://sourceforge.net/projects/winacd)"
-            VALUE "FileDescription", "Apple Cinema Display Control Panel"
-            VALUE "FileVersion", "0.2.0.0"
+            VALUE "CompanyName", "WinACD"
+            VALUE "FileDescription", "Apple Cinema Display Control Panel Extension"
+            VALUE "FileVersion", "0, 1, 9, 0"
             VALUE "InternalName", "acdext.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0.2.0.0"
+            VALUE "ProductVersion", "0, 1, 9, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -168,7 +168,7 @@ END
 // RT_MANIFEST
 //
 
-2                       RT_MANIFEST             "acdext.dll.manifest"
+IDR_MANIFEST            RT_MANIFEST             "acdext.dll.manifest"
 
 /////////////////////////////////////////////////////////////////////////////
 //
