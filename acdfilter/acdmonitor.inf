@@ -1,0 +1,114 @@
+; Copyright (C) 2005 Laurent Morichetti
+;
+; This program is free software; you can redistribute it and/or
+; modify it under the terms of the GNU General Public License
+; as published by the Free Software Foundation; either version 2
+; of the License, or (at your option) any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program; if not, write to the Free Software
+; Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+;
+; Apple Cinema (HD) Display Monitor Inf
+;
+
+; v0.2.0: ICM is currently disabled. The E-EDID reports
+; sRGB default color space but the color characteristics
+; on the ACD 23-inch do not match the sRGB color space.
+
+[Version]
+Signature="$CHICAGO$"
+Class=Monitor
+ClassGuid={4D36E96E-E325-11CE-BFC1-08002BE10318}
+Provider=%WINACD%
+DriverVer=04/30/2005,0.1.9
+DriverPackageType=PlugAndPlay
+
+[ControlFlags]
+ExcludeFromSelect.nt = *
+
+[ClassInstall32]
+AddReg=ClassAddReg32
+
+[ClassAddReg32]
+HKR,,,,%MonitorClassName%
+HKR,,Icon,,"-1"
+HKR,,NoInstallClass,,1
+
+[DestinationDirs]
+DefaultDestDir=11
+
+[Manufacturer]
+%APPLE%=APPLE_MON
+
+[APPLE_MON]
+%Monitor\APP921D%=ACD20.Install, Monitor\APP921D
+%Monitor\APP921E%=ACD23.Install, Monitor\APP921E
+%Monitor\APP9220%=ACD30.Install, Monitor\APP9220
+
+[ACD20.Install]
+DelReg=ACD.DelReg
+AddReg=ACD20.AddReg, 1680, DPMS
+
+[ACD23.Install]
+DelReg=ACD.DelReg
+AddReg=ACD23.AddReg, 1920, DPMS
+
+[ACD30.Install]
+DelReg=ACD.DelReg
+AddReg=ACD30.AddReg, 2560, DPMS
+
+[ACD.DelReg]
+HKR,MODES
+HKR,,MaxResolution
+HKR,,DPMS
+;HKR,,ICMProfile
+
+[1680]
+HKR,,MaxResolution,,"1680,1050"
+
+[1920]
+HKR,,MaxResolution,,"1920,1200"
+
+[2560]
+HKR,,MaxResolution,,"2560,1600"
+
+[DPMS]
+HKR,,DPMS,,1
+
+[ACD20.AddReg]
+HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50-61,+,-"	; Apple
+HKR,,PreferredMode,,"1680,1050,60"
+;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
+
+[ACD23.AddReg]
+HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,-"	; Apple
+HKR,,PreferredMode,,"1920,1200,60"
+;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
+
+[ACD30.AddReg]
+HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\2048,1280",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
+HKR,"MODES\2560,1600",Mode1,,"30.0-119.0,50-61,+,-"	; Apple
+HKR,,PreferredMode,,"2560,1600,60"
+;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
+
+[Strings]
+WINACD			= "WinACD"
+APPLE			= "Apple Computer, Inc."
+MonitorClassName	= "Monitor"
+Monitor\APP921D		= "Apple Cinema Display 20-inch"
+Monitor\APP921E		= "Apple Cinema HD Display 23-inch"
+Monitor\APP9220		= "Apple Cinema HD Display 30-inch"

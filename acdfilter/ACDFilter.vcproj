@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="7.10"
+	Name="ACDFilter"
+	ProjectGUID="{7957BBA0-3555-43A5-8D20-E148B34FC034}"
+	RootNamespace="ACDFilter"
+	Keyword="MakeFileProj">
+	<Platforms>
+		<Platform
+			Name="Win32"/>
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="Debug"
+			IntermediateDirectory="Debug"
+			ConfigurationType="0">
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="$(ProjectDir)/ddkbuild.bat -WXP checked $(InputDir)"
+				ReBuildCommandLine="$(ProjectDir)/ddkbuild.bat -WXP checked $(InputDir) -c"
+				CleanCommandLine="$(ProjectDir)/ddkbuild.bat -WXP checked $(InputDir) -clean"
+				Output="objchk_wxp_x86/i386/acdfilter.sys"/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="Release"
+			IntermediateDirectory="Release"
+			ConfigurationType="0">
+			<Tool
+				Name="VCNMakeTool"
+				BuildCommandLine="$(ProjectDir)/ddkbuild.bat -WXP free $(InputDir)"
+				ReBuildCommandLine="$(ProjectDir)/ddkbuild.bat -WXP free $(InputDir) -c"
+				CleanCommandLine="$(ProjectDir)/ddkbuild.bat -WXP free $(InputDir) -clean"
+				Output="objfre_wxp_x86/i386/acdfilter.sys"/>
+		</Configuration>
+	</Configurations>
+	<References>
+	</References>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath=".\acdfilter.c">
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath=".\acdfilter.h">
+			</File>
+			<File
+				RelativePath=".\resource.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+		</Filter>
+		<File
+			RelativePath=".\acdfilter.rc">
+		</File>
+		<File
+			RelativePath=".\acdhid.inf"
+			DeploymentContent="TRUE">
+		</File>
+		<File
+			RelativePath=".\acdmon.inf">
+		</File>
+		<File
+			RelativePath=".\makefile"
+			FileType="8">
+		</File>
+		<File
+			RelativePath=".\readme.txt">
+		</File>
+		<File
+			RelativePath=".\sources">
+		</File>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>
