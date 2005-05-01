@@ -20,7 +20,6 @@
 #include "ACDShlExt.h"
 #include "ACDHidDev.h"
 
-#include <uxtheme.h>
 #include <map>
 
 // CACDShlExt
@@ -40,32 +39,49 @@ class CACDControl {
 private:
     UCHAR m_InitialBrightness;
 
-public:
-    CACDHidDevice* Device; //!< The ACD hid device
+    CACDHidDevice* m_hDevice; //!< The ACD hid device
 
 public:
     // Default constructor.
-    CACDControl () : Device (NULL)
-    { }
+    CACDControl () : m_hDevice (NULL), m_InitialBrightness (0) { }
 
-    CACDControl (CACDHidDevice* device) : Device (device)
+    ~CACDControl ()
     {
-	assert (Device != NULL);
-	m_InitialBrightness = Device->GetBrightness ();
+	if (m_hDevice)
+	    delete m_hDevice;
+    }
+
+    // Create a new HidDevice instance from the given handle.
+    void Initialize (HANDLE hidDevice)
+    {
+	if (m_hDevice)
+	    delete m_hDevice;
+
+	m_hDevice = new CACDHidDevice (hidDevice);
+	assert (m_hDevice != NULL);
+
+	m_InitialBrightness = m_hDevice->GetBrightness ();
+    }
+
+    // Return the HidDevice instance.
+    operator CACDHidDevice* const () 
+    {
+	assert (m_hDevice);
+	return m_hDevice;
     }
 
     // Apply the current settings
     void Apply (void)
     {
-	assert (Device != NULL);
-	m_InitialBrightness = Device->GetBrightness ();
+	assert (m_hDevice != NULL);
+	m_InitialBrightness = m_hDevice->GetBrightness ();
     }
 
     // Reset to the initial settings
-    void Reset (void)
+    void Reset (void) const
     {
-	assert (Device != NULL);
-	Device->SetBrightness (m_InitialBrightness);
+	assert (m_hDevice != NULL);
+	m_hDevice->SetBrightness (m_InitialBrightness);
     }
 };
 
@@ -175,8 +191,11 @@ PspOnInitDialog (HWND hwnd)
 
 	int index = (int)SendDlgItemMessage (hwnd, IDC_AVAILABLE_MONITORS, 
 	    CB_ADDSTRING, (WPARAM)0, (LPARAM)name);
-	if (index != -1)
-	    Controls [index] = CACDControl (new CACDHidDevice (hidDevice));
+	if (index != -1) {
+	    // NOTE: the CACDControl will close the handle in its
+	    // destructor when the DLL is unloaded.
+	    Controls [index].Initialize (hidDevice);
+	}
 	else
 	    CloseHandle (hidDevice);
 
@@ -191,6 +210,8 @@ PspOnInitDialog (HWND hwnd)
 	EnableWindow (GetDlgItem (hwnd, IDC_STATIC_100), FALSE);
 	EnableWindow (GetDlgItem (hwnd, IDC_STATIC_BRIGHTNESS), FALSE);
 	EnableWindow (GetDlgItem (hwnd, IDC_CONTROLS_GROUP), FALSE);
+	ShowWindow (GetDlgItem (hwnd, IDC_STATIC_MONITORS), SW_HIDE);
+	ShowWindow (GetDlgItem (hwnd, IDC_AVAILABLE_MONITORS), SW_HIDE);
 	return;
 
     case 1:
@@ -209,7 +230,7 @@ PspOnInitDialog (HWND hwnd)
 	assert (result == 0);
 	break;
     }
-    CurrentDevice = Controls [0].Device;
+    CurrentDevice = Controls [0];
 
     // Set the appropriate range for the brightness slider.
     SendDlgItemMessage (hwnd, IDC_BRIGHTNESS_SLIDER,
@@ -260,7 +281,7 @@ PspDlgProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	    if (HIWORD (wParam) == CBN_SELCHANGE) {
 		int i = (int) SendDlgItemMessage (
 		    hwnd, IDC_AVAILABLE_MONITORS, CB_GETCURSEL, 0, 0);
-		CurrentDevice = Controls [i].Device;
+		CurrentDevice = Controls [i];
 		PspInitControls (hwnd);
 		return TRUE;
 	    }
@@ -315,12 +336,7 @@ PspDlgProc (HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 UINT CALLBACK PspCallbackProc (HWND hwnd, UINT uMsg, LPPROPSHEETPAGE ppsp)
 {
     if (PSPCB_RELEASE == uMsg) {
-	for (int i = 0; i < (int) Controls.size (); ++i) {
-	    CACDHidDevice* device = Controls [i].Device;
-	    HANDLE handle = device->DeviceHandle ();
-	    delete Controls [i].Device;
-	    CloseHandle (handle);
-	}
+	/* we are unloading */
     }
 
     return 1;                           // used for PSPCB_CREATE - let the page be created
