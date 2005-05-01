@@ -43,7 +43,7 @@ HKLM
 							{
 								NoRemove PropertySheetHandlers
 								{
-									ACDExt = s '{CF27ED67-1882-4977-97EF-CAEB537DE51F}'
+									'Apple Cinema Display CPL Extension' = s '{CF27ED67-1882-4977-97EF-CAEB537DE51F}'
 								}
 							}
 						}
