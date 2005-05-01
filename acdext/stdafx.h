@@ -38,5 +38,6 @@
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
+#include <commctrl.h>
 
 using namespace ATL;
