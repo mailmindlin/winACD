@@ -1,3 +1,18 @@
+2005-05-01 Laurent Morichetti <l_m@pacbell.net>
+	* acdfilter.c:
+	* acdhid.inf:
+	* acdfilter.rc:
+	Support for DIFxApp.
+	* ACDFilter.vcproj:
+	* ddkbuild.bat:
+	* LICENSE.txt:
+	* ReadMe.txt:
+	* .cvsignore:
+	* acdmonitor.inf:
+	Initial commit. Can now build the driver whitin Visual Studio.
+	Acdfilter.vcproj is a Makefile project which calls ddkbuild.bat.
+
+
 2005-04-26 Laurent Morichetti <l_m@pacbell.net>
 	* acdfilter.[c|h]: Added string descriptor caching. The device seems
 	to lock up if the TransbufferBufferLength exceeds the length of the desc.
@@ -19,4 +34,4 @@
 	* acdhid.inf: Initial commit.
 
 2005-04-16 Laurent Morichetti <l_m@pacbell.net>
-	* Inital commit.
+	* Initial commit.
