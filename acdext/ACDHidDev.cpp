@@ -83,6 +83,7 @@ CACDHidDevice::~CACDHidDevice ()
 {
     delete[] m_FeatureReportBuffer;
     HidD_FreePreparsedData (m_Ppd);
+    CloseHandle (m_Device);
 }
 
 

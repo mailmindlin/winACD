@@ -85,11 +85,6 @@ public:
     CACDHidDevice (HANDLE device);
     ~CACDHidDevice ();
 
-    HANDLE DeviceHandle (void) const
-    {
-	return m_Device;
-    }
-
     /// Return the current brightness.
     UCHAR GetBrightness (void) const
     {
