@@ -22,8 +22,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WINDDK)\inc\wxp"
-				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ISOLATION_AWARE_ENABLED"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\acdutils&quot;;&quot;$(WINDDK)\inc\wxp&quot;"
+				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG;_USRDLL;ISOLATION_AWARE_ENABLED"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -36,7 +36,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalOptions="comctl32.lib setupapi.lib &quot;$(WINDDK)\lib\wxp\i386\hid.lib&quot;"
+				AdditionalDependencies="powrprof.lib comctl32.lib setupapi.lib"
 				OutputFile="$(OutDir)/acdext.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\ACDExt.def"
@@ -89,7 +89,7 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(WINDDK)\inc\wxp"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\acdutils&quot;;&quot;$(WINDDK)\inc\wxp&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG;_USRDLL;ISOLATION_AWARE_ENABLED"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="3"
@@ -101,7 +101,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalOptions="comctl32.lib setupapi.lib &quot;$(WINDDK)\lib\wxp\i386\hid.lib&quot;"
+				AdditionalDependencies="powrprof.lib comctl32.lib setupapi.lib"
 				OutputFile="$(OutDir)/ACDExt.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\ACDExt.def"
@@ -164,9 +164,6 @@
 				RelativePath=".\ACDExt.idl">
 			</File>
 			<File
-				RelativePath=".\ACDHidDev.cpp">
-			</File>
-			<File
 				RelativePath=".\ACDShlExt.cpp">
 			</File>
 			<File
@@ -190,9 +187,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\ACDHidDev.h">
-			</File>
-			<File
 				RelativePath=".\ACDShlExt.h">
 			</File>
 			<File
@@ -206,6 +200,9 @@
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\acd.ico">
+			</File>
 			<File
 				RelativePath=".\ACDExt.rc">
 			</File>
