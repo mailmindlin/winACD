@@ -1,3 +1,15 @@
+2005-05-05 Laurent Morichetti <l_m@pacbell.net>
+	* ACDHidDev.[cpp|h]: Moved to the ACDUtils library.
+
+	* acd.ico: Inital commit.
+
+	* ACDExt.vcproj: Removed ACDHidDev and added dep on ACDUtils.
+
+	* resource.h: 
+	* ACDExt.rc:
+	* ACDShlExt.cpp: New property page layout. Added Options dialog.
+
+
 2005-05-01 Laurent Morichetti <l_m@pacbell.net>
 	* ACDExt.vcproj: Statically link against runtime so that we do not
 	have to package the vcrt DLLs in the distribution.
