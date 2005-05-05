@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,1,9,0
- PRODUCTVERSION 0,1,9,0
+ FILEVERSION 0,2,0,0
+ PRODUCTVERSION 0,2,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "Apple Cinema Display Control Panel Extension"
-            VALUE "FileVersion", "0, 1, 9, 0"
+            VALUE "FileVersion", "0, 2, 0, 0"
             VALUE "InternalName", "acdext.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0, 1, 9, 0"
+            VALUE "ProductVersion", "0, 2, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -102,45 +102,82 @@ IDR_ACDSHLEXT           REGISTRY                "ACDShlExt.rgs"
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDI_ICON                ICON                    "icon.ico"
+IDI_ACDMON              ICON                    "acd.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_ACD_PROPPAGE DIALOGEX 20, 20, 252, 230
+IDD_ACD_PROPPAGE DIALOGEX 20, 20, 252, 177
 STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | 
     WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Controls"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    GROUPBOX        "Virtual Control Panel",IDC_CONTROLS_GROUP,7,3,237,37
+    GROUPBOX        "Virtual Control Panel",IDC_STATIC_VCP,7,3,237,52
+    ICON            IDI_ACDMON,IDC_STATIC_VCP_ICON,14,12,20,20
+    LTEXT           "None present",IDC_VIRTUAL_CONTROL,40,17,197,8,NOT 
+                    WS_GROUP
+    LISTBOX         IDC_VIRTUAL_CONTROL_LIST,40,13,197,18,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Properties",IDC_PROPERTIES_BUTTON,161,35,75,14
+    GROUPBOX        "Monitor Settings",IDC_STATIC,7,58,237,36
     CONTROL         "",IDC_BRIGHTNESS_SLIDER,"msctls_trackbar32",TBS_NOTICKS | 
-                    WS_TABSTOP,71,19,99,12
-    LTEXT           "Brightness :",IDC_STATIC_BRIGHTNESS,14,20,46,8
-    COMBOBOX        IDC_AVAILABLE_MONITORS,7,178,156,30,CBS_DROPDOWN | 
-                    CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Available Monitor Controls:",IDC_STATIC_MONITORS,7,168,
-                    156,8
-    LTEXT           "0%",IDC_STATIC_0,58,20,12,8
-    LTEXT           "100%",IDC_STATIC_100,171,20,20,8
-    EDITTEXT        IDC_BRIGHTNESS_EDIT,201,17,33,12,ES_AUTOHSCROLL | 
-                    ES_NUMBER | WS_DISABLED
-    CONTROL         "",IDC_SPIN,"msctls_updown32",UDS_SETBUDDYINT | 
+                    WS_TABSTOP,71,73,112,12
+    LTEXT           "Brightness :",IDC_STATIC,13,74,46,8,NOT WS_GROUP
+    LTEXT           "0%",IDC_STATIC,58,74,12,8,NOT WS_GROUP
+    LTEXT           "100%",IDC_STATIC,185,74,20,8,NOT WS_GROUP
+    EDITTEXT        IDC_BRIGHTNESS_EDIT,209,72,28,12,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "",IDC_BRIGHTNESS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | 
                     UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS | 
-                    WS_DISABLED,223,17,11,12
-    GROUPBOX        "Monitor Information",IDC_STATIC,7,107,237,58,
-                    WS_DISABLED
-    EDITTEXT        IDC_MONITOR_INFO,14,118,223,40,ES_AUTOHSCROLL | 
-                    ES_READONLY | WS_DISABLED | NOT WS_TABSTOP
+                    WS_TABSTOP,226,72,11,12
+    GROUPBOX        "Monitor Information",IDC_STATIC,7,97,237,52
+    LTEXT           "Device description :",IDC_STATIC,13,109,68,8,NOT 
+                    WS_GROUP
+    LTEXT           "Firmware revision :",IDC_STATIC,13,121,68,8,NOT 
+                    WS_GROUP
+    LTEXT           "Manufacturing date :",IDC_STATIC,13,133,68,8,NOT 
+                    WS_GROUP
+    LTEXT           "N/A",IDC_DESCRIPTION,87,109,150,8,NOT WS_GROUP
+    LTEXT           "N/A",IDC_FIRMWARE_VERSION,87,121,150,8,NOT WS_GROUP
+    LTEXT           "N/A",IDC_MANUFACTURING_DATE,87,133,150,8,NOT WS_GROUP
+    PUSHBUTTON      "Options...",IDC_OPTIONS_BUTTON,7,155,75,14
+END
+
+IDD_ACD_OPTIONS DIALOGEX 0, 0, 265, 218
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+CAPTION "Monitor Control Options"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,153,197,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,208,197,50,14
+    GROUPBOX        "Power Button",IDC_STATIC,7,40,251,43
+    GROUPBOX        "Monitor Control Options",IDC_STATIC,7,86,251,52
+    CONTROL         "Disable the power and brightness buttons",
+                    IDC_DISABLE_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    13,97,238,10
+    CONTROL         "Show icon on the taskbar",IDC_CHECK2,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,110,238,10
+    CONTROL         "Lock brightness controls",IDC_CHECK3,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,123,238,10
     LTEXT           "When I press the power button on my monitor:",
-                    IDC_STATIC,14,55,158,8,WS_DISABLED
-    COMBOBOX        IDC_COMBO1,14,65,221,30,CBS_DROPDOWN | CBS_SORT | 
-                    WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Options",IDC_STATIC,7,43,237,60,WS_DISABLED
-    CONTROL         "Show icon on the taskbar",IDC_CHECK1,"Button",
-                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,14,84,130,10
+                    IDC_STATIC,13,51,238,8
+    COMBOBOX        IDC_POWER_ACTION_COMBO,13,63,238,30,CBS_DROPDOWN | 
+                    WS_VSCROLL | WS_TABSTOP
+    ICON            IDI_ACDMON,IDC_STATIC,14,10,20,20
+    LTEXT           "Select the monitor power button action you wish to use. If multiple monitor controls are connected, the same action will be executed from any of the power buttons.",
+                    IDC_STATIC,44,7,201,27
+    CONTROL         "",IDC_HOTKEY_INCREASE,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,87,153,80,14
+    GROUPBOX        "HotKeys",IDC_STATIC,7,142,251,51
+    LTEXT           "Increase brightness :",IDC_STATIC,14,156,69,8
+    LTEXT           "Decrease brightness :",IDC_STATIC,14,174,71,8
+    CONTROL         "",IDC_HOTKEY_DECREASE,"msctls_hotkey32",WS_BORDER | 
+                    WS_TABSTOP,87,171,80,14
 END
 
 
@@ -157,7 +194,15 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 244
         TOPMARGIN, 2
-        BOTTOMMARGIN, 223
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_ACD_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 258
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 211
     END
 END
 #endif    // APSTUDIO_INVOKED

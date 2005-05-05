@@ -9,25 +9,35 @@
 #define IDD_ACD_PROPPAGE                106
 #define IDI_ICON                        201
 #define IDC_BRIGHTNESS_SLIDER           201
-#define IDC_CHECK1                      202
-#define IDC_AVAILABLE_MONITORS          203
-#define IDC_BRIGHTNESS_EDIT             204
-#define IDC_SPIN                        205
-#define IDC_MONITOR_INFO                206
-#define IDC_COMBO1                      207
-#define IDC_STATIC_MONITORS             208
-#define IDC_CONTROLS_GROUP              209
-#define IDC_STATIC_BRIGHTNESS           210
-#define IDC_STATIC_0                    211
-#define IDC_STATIC_100                  212
+#define IDI_ACDMON                      202
+#define IDC_BRIGHTNESS_EDIT             202
+#define IDC_BRIGHTNESS_SPIN             203
+#define IDD_ACD_OPTIONS                 203
+#define IDC_VIRTUAL_CONTROL_LIST        204
+#define IDC_PROPERTIES_BUTTON           205
+#define IDC_OPTIONS_BUTTON              206
+#define IDC_DESCRIPTION                 207
+#define IDC_MANUFACTURING_DATE          208
+#define IDC_SERIAL_NUMBER               209
+#define IDC_FIRMWARE_VERSION            209
+#define IDC_VIRTUAL_CONTROL             210
+#define IDC_DISABLE_CHECK               211
+#define IDC_CHECK2                      212
+#define IDC_CHECK3                      213
+#define IDC_POWER_ACTION_COMBO          214
+#define IDC_STATIC_VCP                  215
+#define IDC_STATIC_VCP_ICON             216
+#define IDC_HOTKEY_INCREASE             218
+#define IDC_HOTKEY2                     219
+#define IDC_HOTKEY_DECREASE             219
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        202
+#define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32768
-#define _APS_NEXT_CONTROL_VALUE         213
+#define _APS_NEXT_CONTROL_VALUE         220
 #define _APS_NEXT_SYMED_VALUE           103
 #endif
 #endif
