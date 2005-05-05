@@ -24,7 +24,7 @@ Class=HIDClass
 ClassGuid={745A17A0-74D3-11D0-B6FE-00A0C90F57DA}
 Provider=%WINACD%
 LayoutFile=layout.inf
-DriverVer=04/30/2005,0.1.9
+DriverVer=04/30/2005,0.2.0
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
