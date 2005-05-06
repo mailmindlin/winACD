@@ -116,44 +116,6 @@ IDB_STEP                BITMAP                  "res\\Step.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Dialog
-//
-
-IDD_DIALOG DIALOGEX 0, 0, 186, 81
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
-CAPTION "ACDMon"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,129,60,50,14
-    CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_NOTICKS | 
-                    WS_TABSTOP,7,41,172,12
-    ICON            IDR_ACDMON,IDC_STATIC,14,14,20,20
-    LTEXT           "Press ""Win + Num+ or Num-""",IDC_STATIC,53,20,104,8
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// DESIGNINFO
-//
-
-#ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
-BEGIN
-    IDD_DIALOG, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 179
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 74
-    END
-END
-#endif    // APSTUDIO_INVOKED
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // RT_MANIFEST
 //
 
