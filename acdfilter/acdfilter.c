@@ -30,7 +30,6 @@
 /**
  * New HID report descriptor.
  */
-
 UCHAR
 ACD_HidReportDescriptor [] = {
     0x05, 0x80,		/* USAGE_PAGE (Monitor)			*/
@@ -215,10 +214,14 @@ ACD_AddDevice (IN PDRIVER_OBJECT DriverObject,
     return STATUS_SUCCESS;
 }
 
+/**
+ * ACD_DriverUnload: Cleanup whatever DriverEntry might have created.
+ */
 VOID
 ACD_DriverUnload (IN PDRIVER_OBJECT DriverObject)
 {
     ACD_dbgPrint (("DriverUnload"));
+    /* Nothing to do */
 }
 
 NTSTATUS
@@ -230,6 +233,9 @@ ACD_CompleteRequest (IN PIRP Irp, IN NTSTATUS Status, IN ULONG Info)
     return Status;
 }
 
+/**
+ * ACD_DispatchAny: Our generic dispatch routine (call the lower driver).
+ */
 NTSTATUS
 ACD_DispatchAny (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 {
@@ -248,6 +254,9 @@ ACD_DispatchAny (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
     return status;
 }
 
+/**
+ * ACD_DispatchIoctl: Our own IRP_MJ_INTERNAL_DEVICE_CONTROL dispatch routine.
+ */
 NTSTATUS
 ACD_DispatchIoctl (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 {
@@ -318,6 +327,10 @@ ACD_DispatchIoctl (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
     return status;
 }
 
+/**
+ * ACD_DispatchPower: Our own Power dispatch routine. Call the lower
+ * driver with PoCallDriver instead of IoCallDriver.
+ */
 NTSTATUS
 ACD_DispatchPower (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 {
@@ -338,6 +351,10 @@ ACD_DispatchPower (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
     return status;
 }
 
+/**
+ * ACD_DispatchPnP: Our own PnP dispatch routine. Allows us to catch
+ * the IRP_MN_START_DEVICE and IRP_MN_REMOVE_DEVICE irps.
+ */
 NTSTATUS
 ACD_DispatchPnP (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 {
@@ -416,6 +433,10 @@ ACD_DispatchPnP (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
     return status;
 }
 
+/**
+ * ACD_IoCallDriverCompletion: Synchronized IoCallDriver completion routine.
+ * It will notify the waiting thread that the call as completed.
+ */
 NTSTATUS
 ACD_IoCallDriverCompletion (IN PDEVICE_OBJECT DeviceObject,
 			    IN PIRP Irp, IN PVOID Context)
@@ -427,6 +448,9 @@ ACD_IoCallDriverCompletion (IN PDEVICE_OBJECT DeviceObject,
     return STATUS_MORE_PROCESSING_REQUIRED;
 }
 
+/**
+ * ACD_CacheStringDescriptors: Cache the device string descriptors in memory.
+ */
 NTSTATUS
 ACD_CacheStringDescriptors (IN OUT PDEVICE_EXTENSION DeviceExt)
 {
@@ -485,6 +509,9 @@ ACD_CacheStringDescriptors (IN OUT PDEVICE_EXTENSION DeviceExt)
     return status;
 }
 
+/**
+ * ACD_GetStringDescriptor: Extract a USB string descriptor.
+ */
 NTSTATUS
 ACD_GetStringDescriptor (IN PDEVICE_OBJECT LowerDeviceObject,
 			 IN UCHAR Index,
@@ -540,6 +567,32 @@ ACD_GetStringDescriptor (IN PDEVICE_OBJECT LowerDeviceObject,
     return status;
 }
 
+/**
+ * ACD_FillControlDescriptorRequest: Fill an URB with the given control desc.
+ */
+NTSTATUS
+ACD_FillControlDescriptorRequest (IN PURB Urb, IN PUCHAR Buffer,
+				  IN ULONG BufferLength)
+{
+    struct _URB_CONTROL_DESCRIPTOR_REQUEST *desc =
+	(struct _URB_CONTROL_DESCRIPTOR_REQUEST *) Urb;
+    ULONG length = BufferLength < desc->TransferBufferLength
+	? BufferLength : desc->TransferBufferLength;
+
+    if (Buffer == NULL) {
+	return STATUS_INVALID_PARAMETER;
+    }
+
+    RtlCopyMemory (desc->TransferBuffer, Buffer, length);
+    desc->TransferBufferLength = length;
+
+    Urb->UrbHeader.Status = USBD_STATUS_SUCCESS;
+    return STATUS_SUCCESS;
+}
+
+/**
+ * ACD_GetPortStatus: Get the device's port status.
+ */
 NTSTATUS
 ACD_GetPortStatus (IN PDEVICE_OBJECT LowerDeviceObject, IN OUT PULONG Flags)
 {
@@ -574,6 +627,9 @@ ACD_GetPortStatus (IN PDEVICE_OBJECT LowerDeviceObject, IN OUT PULONG Flags)
     return status;
 }
 
+/**
+ * ACD_ResetPort: Reset the device's port.
+ */
 NTSTATUS
 ACD_ResetPort (IN PDEVICE_OBJECT LowerDeviceObject)
 {
@@ -601,24 +657,4 @@ ACD_ResetPort (IN PDEVICE_OBJECT LowerDeviceObject)
     }
 
     return status;
-}
-
-NTSTATUS
-ACD_FillControlDescriptorRequest (IN PURB Urb, IN PUCHAR Buffer,
-				  IN ULONG BufferLength)
-{
-    struct _URB_CONTROL_DESCRIPTOR_REQUEST *desc =
-	(struct _URB_CONTROL_DESCRIPTOR_REQUEST *) Urb;
-    ULONG length = BufferLength < desc->TransferBufferLength
-	? BufferLength : desc->TransferBufferLength;
-
-    if (Buffer == NULL) {
-	return STATUS_INVALID_PARAMETER;
-    }
-
-    RtlCopyMemory (desc->TransferBuffer, Buffer, length);
-    desc->TransferBufferLength = length;
-
-    Urb->UrbHeader.Status = USBD_STATUS_SUCCESS;
-    return STATUS_SUCCESS;
 }
