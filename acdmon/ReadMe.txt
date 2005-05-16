@@ -38,15 +38,14 @@ res\ACDMon.rc2
     This file contains resources that are not edited by Microsoft 
     Visual C++. You should place all resources not editable by
     the resource editor in this file.
+
 /////////////////////////////////////////////////////////////////////////////
 
-For the main frame window:
-    The project includes a standard MFC interface.
-MainFrm.h, MainFrm.cpp
-    These files contain the frame class CMainFrame, which is derived from
-    CFrameWnd and controls all SDI frame features.
-/////////////////////////////////////////////////////////////////////////////
-
+The application wizard creates one dialog class:
+ACDMonDlg.h, ACDMonDlg.cpp - the dialog
+    These files contain your CACDMonDlg class.  This class defines
+    the behavior of your application's main dialog.  The dialog's template is
+    in ACDMon.rc, which can be edited in Microsoft Visual C++.
 /////////////////////////////////////////////////////////////////////////////
 
 Other standard files:

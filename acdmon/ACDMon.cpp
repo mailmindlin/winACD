@@ -15,162 +15,130 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 // ACDMon.cpp : Defines the class behaviors for the application.
-//
 
 #include "stdafx.h"
-
 #include "ACDMon.h"
-#include "ACDOsd.h"
-
-#include <tlhelp32.h>
-#include <shlwapi.h>
+#include "ACDBrightnessWnd.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW
+# define new DEBUG_NEW
 #endif
 
-// CACDCommandLineInfo
-
-class CACDCommandLineInfo : public CCommandLineInfo
-{
-public:
-    virtual void ParseParam (LPCTSTR lpszParam, BOOL bFlag, BOOL bLast);
-};
+#include <assert.h>
 
 // CACDMonApp
 
-BEGIN_MESSAGE_MAP (CACDMonApp, CWinApp)
-END_MESSAGE_MAP ()
+BEGIN_MESSAGE_MAP(CACDMonApp, CWinApp)
+END_MESSAGE_MAP()
 
 
-// CACDMonApp construction
-
+/** CACDMonApp construction. */
 CACDMonApp::CACDMonApp ()
 {
-    // TODO: add construction code here,
-    // Place all significant initialization in InitInstance
+    // enumerate the ACD controls.
+    EnumHelper helper;
+    CACDHidDevice::EnumDevices (helper);
 }
 
+/** CACDMonApp destructor */
+CACDMonApp::~CACDMonApp ()
+{
+    for (INT_PTR i = 0; i <  m_DeviceArray.GetCount (); ++i)
+	delete m_DeviceArray.ElementAt (i);
+}
 
-// The one and only CACDMonApp object
-
+/** The one and only CACDMonApp object. */
 CACDMonApp theApp;
 
-// CACDMonApp initialization
-
-BOOL CACDMonApp::InitInstance ()
+/**
+ * CACDMonApp initialization.
+ */
+BOOL
+CACDMonApp::InitInstance ()
 {
-    // InitCommonControls() is required on Windows XP if an application
-    // manifest specifies use of ComCtl32.dll version 6 or later to enable
-    // visual styles.  Otherwise, any window creation will fail.
+    // required on WinXP with the use of ComCtl32.dll version 6 or later.
     InitCommonControls ();
 
+    // application initialization (we might not need the registry stuff).
     CWinApp::InitInstance ();
-
-    // Standard initialization
     SetRegistryKey (_T ("WinACD"));
 
-    // Parse the command line
-    CACDCommandLineInfo cmdInfo;
-    ParseCommandLine (cmdInfo);
+    // create the background window.
+    CACDBrightnessWnd* pBackgroundWnd = new CACDBrightnessWnd (
+	CACDBrightnessWnd::ACD_BRIGHTNESS_WND_BACKGROUND);
+    pBackgroundWnd->Create (NULL, NULL);
 
-    // To create the main window, this code creates a new frame window
-    // object and then sets it as the application's main window object
-    CACDBrightnessOsd* mainWnd = new CACDBrightnessOsd ();
-    if (!mainWnd)
-	return FALSE;
+    // create the foreground window.
+    CACDBrightnessWnd* pForegroundWnd = new CACDBrightnessWnd (
+	CACDBrightnessWnd::ACD_BRIGHTNESS_WND_FOREGROUND,
+	pBackgroundWnd
+	);
+    pForegroundWnd->Create (NULL, NULL);
+    pForegroundWnd->SetOpacity (0);
+    pForegroundWnd->ShowWindow (SW_HIDE);
+    pForegroundWnd->UpdateWindow ();
 
-    mainWnd->Create (NULL, NULL);
-    m_pMainWnd = mainWnd;
+    // the foreground window will be the one receiving events.
+    m_pMainWnd = pForegroundWnd;
 
-    ::RegisterHotKey (mainWnd->m_hWnd, ACD_BRIGHTNESS_DOWN,
-	MOD_CONTROL | MOD_ALT, VK_SUBTRACT);
-    ::RegisterHotKey (mainWnd->m_hWnd, ACD_BRIGHTNESS_UP,
-	MOD_CONTROL | MOD_ALT, VK_ADD);
+    // create & start the RegNotify thread.
+    AfxBeginThread (RegNotifyThreadMain, 0);
 
-    
-    // call DragAcceptFiles only if there's a suffix
-    //  In an SDI app, this should occur after ProcessShellCommand
     return TRUE;
 }
 
-static BOOL CALLBACK
-SendReloadCallback (HWND hwnd, LPARAM lParam)
+UINT
+CACDMonApp::RegNotifyThreadMain (LPVOID pParam)
 {
-    DWORD pid; 
+    HKEY hKey;
+    LONG lRet;
+ 
+    lRet = RegCreateKeyEx (
+	HKEY_CURRENT_USER, "SOFTWARE\\WinACD\\Preferences", 0, 0,
+	REG_OPTION_NON_VOLATILE, KEY_NOTIFY, 0, &hKey, 0);
 
-    GetWindowThreadProcessId (hwnd, &pid); 
-    if (pid == (ULONG) lParam) {
-	SendMessage (hwnd, ACD_WM_RELOAD, 0, 0);
+    if (lRet != ERROR_SUCCESS)
+	return -1;
+
+    while (TRUE) {
+	theApp.m_pMainWnd->SendMessage (ACD_WM_INIT_HOTKEYS, 0, 0);
+
+	RegNotifyChangeKeyValue (hKey, FALSE,
+	    REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE);
     }
-    return TRUE;
+
+    RegCloseKey (hKey);
+    return 0;
+}
+
+
+CACDMonApp::EnumHelper::ENUMPROC_STATUS
+CACDMonApp::EnumHelper::Callback (CACDHidDevice* pDevice)
+{
+    ENUMPROC_STATUS status = CACDHidDevice::EnumHelper::Callback (pDevice);
+
+    if (status != ENUMPROC_STATUS_SUCCESS)
+	return status;
+
+    theApp.m_DeviceArray.Add (pDevice);
+    return ENUMPROC_STATUS_SUCCESS;
+}
+
+UINT
+CACDMonApp::GetBrightness ()
+{
+    if (m_DeviceArray.GetCount () == 0)
+	return 0;
+
+    return m_DeviceArray.ElementAt (0)->GetBrightness () / 16;
 }
 
 void
-CACDCommandLineInfo::ParseParam (LPCTSTR lpszParam, BOOL bFlag, BOOL bLast)
+CACDMonApp::SetBrightness (UINT nBrightness)
 {
-    BOOL stop = FALSE;
-    BOOL reload = FALSE;
+    nBrightness = min (nBrightness, 15);
+    nBrightness = nBrightness * 16 + nBrightness;
 
-    if (!bFlag)
-	return;
-
-    char cmdLine [_MAX_PATH];
-    GetModuleFileName(GetModuleHandle (NULL), cmdLine, sizeof (cmdLine));
-	
-    if (lstrcmpi (_T ("start"), lpszParam) == 0) {
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-
-	ZeroMemory (&si, sizeof (STARTUPINFO));
-	si.cb = sizeof (STARTUPINFO );
-
-	BOOL success = CreateProcess (NULL, cmdLine, 
-	    NULL, NULL, FALSE, DETACHED_PROCESS, NULL, NULL,
-	    &si, &pi);
-
-	ExitProcess (success ? EXIT_SUCCESS : EXIT_FAILURE);
-    }
-    else if (lstrcmpi (_T ("stop"), lpszParam) == 0) {
-	stop = TRUE;
-    }
-    else if (lstrcmpi (_T ("reload"), lpszParam) == 0) {
-	reload = TRUE;
-    }
-
-    if (!stop && !reload)
-	return;
-
-    CString myExeName = PathFindFileName (cmdLine);
-    ULONG myPID = GetCurrentProcessId ();
-
-    HANDLE hProcesses = CreateToolhelp32Snapshot (TH32CS_SNAPPROCESS, 0); 
-    if (hProcesses == INVALID_HANDLE_VALUE)
-	exit (EXIT_FAILURE);
-
-    PROCESSENTRY32 pe32;
-    ZeroMemory (&pe32, sizeof (pe32));
-    pe32.dwSize = sizeof (PROCESSENTRY32);
-
-    if (Process32First (hProcesses, &pe32)) do {
-	CString exeName = PathFindFileName (pe32.szExeFile);
-
-	if (pe32.th32ProcessID == myPID
-	    || exeName.CompareNoCase (myExeName) != 0)
-	    continue;
-
-	HANDLE hProcess = OpenProcess (
-	    PROCESS_ALL_ACCESS, FALSE, pe32.th32ProcessID);
-
-	if (stop)
-	    TerminateProcess (hProcess, EXIT_SUCCESS);
-	else
-	    EnumWindows (SendReloadCallback, pe32.th32ProcessID);
-
-	CloseHandle (hProcess); 
-    }
-    while (Process32Next(hProcesses, &pe32)); 
-
-    CloseHandle (hProcesses);
-    exit (EXIT_SUCCESS);
+    for (INT_PTR i = 0; i <  m_DeviceArray.GetCount (); ++i)
+	m_DeviceArray.ElementAt (i)->SetBrightness (nBrightness);
 }

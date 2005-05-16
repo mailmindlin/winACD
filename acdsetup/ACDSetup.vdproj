@@ -15,7 +15,25 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_205D82AEA7754DE89270DF25DEFF566E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_253EEE597B434EEF898CE66174A49B73"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -45,62 +63,38 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_567B643F8ACEEF4E62126F4ED1B05EAF"
-        "OwnerKey" = "8:_387F0105DCEC4B2B8B574EA91DDD454A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6593CCC6BA78D84D108825BD7DB99099"
-        "OwnerKey" = "8:_937407A5A1624C08AE7B811C51689827"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_8F54801B7ED3026947AE151C52D30F2F"
-        "OwnerKey" = "8:_DC09C69F5F7645C78D3A602FB4C337E4"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_937407A5A1624C08AE7B811C51689827"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-        "OwnerKey" = "8:_937407A5A1624C08AE7B811C51689827"
+        "OwnerKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-        "OwnerKey" = "8:_DC09C69F5F7645C78D3A602FB4C337E4"
+        "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
-        "OwnerKey" = "8:_937407A5A1624C08AE7B811C51689827"
+        "OwnerKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
-        "OwnerKey" = "8:_DC09C69F5F7645C78D3A602FB4C337E4"
+        "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_DA35CF3B8052CC45D1E36A5810B746E4"
         "OwnerKey" = "8:_387F0105DCEC4B2B8B574EA91DDD454A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DC09C69F5F7645C78D3A602FB4C337E4"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -143,31 +137,31 @@
     {
         "CustomAction"
         {
-            "{0C9D821E-95BB-411F-BE03-2864360EBF94}:_07BED6A9B03D49E3BCD4B11D67E62DA9"
+            "{0C9D821E-95BB-411F-BE03-2864360EBF94}:_209F2EF846514051A09EDBE3EB4F4158"
             {
-            "Name" = "8:Run ACDMon.exe /start"
+            "Name" = "8:Run acdmgr.exe /Install"
             "Condition" = "8:"
-            "Object" = "8:_937407A5A1624C08AE7B811C51689827"
+            "Object" = "8:_205D82AEA7754DE89270DF25DEFF566E"
             "FileType" = "3:2"
             "InstallAction" = "3:2"
-            "Arguments" = "8:/start"
+            "Arguments" = "8:/Install"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_BCF8E644_4AFE_4BBF_8E0A_3151B695C3A4"
+            "Identifier" = "8:_7671E3BB_0D9E_4AF7_B638_1247A4E0B6DB"
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
-            "{0C9D821E-95BB-411F-BE03-2864360EBF94}:_2D59716797F449B5BECA9372CC246067"
+            "{0C9D821E-95BB-411F-BE03-2864360EBF94}:_7962CBE8E5FA4839A002618E523AB07B"
             {
-            "Name" = "8:Run ACDMon.exe /stop"
+            "Name" = "8:Run acdmgr.exe /Uninstall"
             "Condition" = "8:"
-            "Object" = "8:_937407A5A1624C08AE7B811C51689827"
+            "Object" = "8:_205D82AEA7754DE89270DF25DEFF566E"
             "FileType" = "3:2"
             "InstallAction" = "3:4"
-            "Arguments" = "8:/stop"
+            "Arguments" = "8:/Uninstall"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_77C58451_D83B_4BC6_89A4_C8B89D473B27"
+            "Identifier" = "8:_3407C172_49BF_4ECF_B73D_937A97A57348"
             "InstallerClass" = "11:FALSE"
             "CustomActionData" = "8:"
             }
@@ -249,52 +243,12 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_567B643F8ACEEF4E62126F4ED1B05EAF"
-            {
-            "SourcePath" = "8:HAL.DLL"
-            "TargetName" = "8:HAL.DLL"
-            "Tag" = "8:"
-            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_6593CCC6BA78D84D108825BD7DB99099"
-            {
-            "SourcePath" = "8:comdlg32.dll"
-            "TargetName" = "8:comdlg32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_8F54801B7ED3026947AE151C52D30F2F"
             {
             "SourcePath" = "8:POWRPROF.dll"
             "TargetName" = "8:POWRPROF.dll"
             "Tag" = "8:"
-            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
+            "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -434,18 +388,18 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:WinACD 0.2.0"
-        "ProductCode" = "8:{5AC14F92-3043-44EC-8030-D24CB8A75F44}"
-        "PackageCode" = "8:{C1B9E9D4-8B1D-416E-A088-183572FC1E4B}"
+        "ProductName" = "8:WinACD 0.2.1"
+        "ProductCode" = "8:{997E5173-E9B8-4E94-8219-06A88E54FC4A}"
+        "PackageCode" = "8:{19A653EE-CF42-4EA2-A61B-1838429D67B1}"
         "UpgradeCode" = "8:{17D2E5C3-CEF4-4E15-B5CB-F512E128FDF7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:0.2.0"
+        "ProductVersion" = "8:0.2.1"
         "Manufacturer" = "8:WinACD"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:WinACD 0.2.0"
+        "Title" = "8:WinACD 0.2.1"
         "Subject" = "8:"
         "ARPCONTACT" = "8:WinACD"
         "Keywords" = "8:"
@@ -473,16 +427,54 @@
                         {
                             "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_73E253108026461FA1FD2E5D8034FCB2"
                             {
-                            "Name" = "8:[Manufacturer]"
+                            "Name" = "8:WinACD"
                             "Condition" = "8:"
                             "AlwaysCreate" = "11:FALSE"
-                            "DeleteAtUninstall" = "11:FALSE"
+                            "DeleteAtUninstall" = "11:TRUE"
                             "Transitive" = "11:FALSE"
                                 "Keys"
                                 {
+                                    "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_310036DBEDC24F098EA809B59DBC15B1"
+                                    {
+                                    "Name" = "8:Preferences"
+                                    "Condition" = "8:"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "DeleteAtUninstall" = "11:TRUE"
+                                    "Transitive" = "11:FALSE"
+                                        "Keys"
+                                        {
+                                        }
+                                        "Values"
+                                        {
+                                            "{35AE352C-BC79-4EF9-ABD8-61F467188583}:_49532B03427142FC87A356915F2C6D73"
+                                            {
+                                            "Name" = "8:DisableButtons"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:3"
+                                            "Value" = "3:0"
+                                            }
+                                            "{35AE352C-BC79-4EF9-ABD8-61F467188583}:_4C233A6EBE9A4FA180F80F5F33D40260"
+                                            {
+                                            "Name" = "8:PowerButtonAction"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:3"
+                                            "Value" = "3:0"
+                                            }
+                                        }
+                                    }
                                 }
                                 "Values"
                                 {
+                                    "{35AE352C-BC79-4EF9-ABD8-61F467188583}:_D9D415C74A1347198C2DC8EAD482CBDA"
+                                    {
+                                    "Name" = "8:InstallPath"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "ValueTypes" = "3:1"
+                                    "Value" = "8:[TARGETDIR]"
+                                    }
                                 }
                             }
                             "{6A471EEF-D31B-40F8-BCF6-C9E8EC783F36}:_AA7D83D51E9A4899BDE02ECEFBCA5755"
@@ -672,8 +664,8 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1202"
+                            "Setting" = "3:2"
+                            "Value" = "8:WARNING: [ProductName] is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
                             "DefaultValue" = "8:#1202"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -1028,9 +1020,93 @@
         }
         "ProjectOutput"
         {
+            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
+            {
+            "SourcePath" = "8:..\\acdmon\\Debug\\acdmon.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{FF7DB4C4-2B98-4AD2-A580-B38E4C77967E}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_205D82AEA7754DE89270DF25DEFF566E"
+            {
+            "SourcePath" = "8:..\\acdutils\\Debug\\acdmgr.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{53FBDEBB-61B5-4545-B4FA-B97F96DD0A48}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_2D4E7207322B495ABD2871AC7C521FC7"
+            {
+            "SourcePath" = "8:..\\acdext\\Debug\\acdext.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:4"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{322E1E49-457D-492A-BBB3-04B29BAA6843}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_387F0105DCEC4B2B8B574EA91DDD454A"
             {
-            "SourcePath" = "8:..\\acdfilter\\objfre_wxp_x86\\i386\\acdfilter.sys"
+            "SourcePath" = "8:..\\acdfilter\\objchk_wxp_x86\\i386\\acdfilter.sys"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1061,7 +1137,7 @@
             "SourcePath" = "8:"
             "TargetName" = "8:"
             "Tag" = "8:"
-            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
+            "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1079,62 +1155,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
             "OutputProjectGuid" = "8:{7957BBA0-3555-43A5-8D20-E148B34FC034}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_937407A5A1624C08AE7B811C51689827"
-            {
-            "SourcePath" = "8:..\\acdmon\\Release\\ACDMon.exe"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{C0EDE011-217B-455E-82A3-FF01D978EB9D}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_DC09C69F5F7645C78D3A602FB4C337E4"
-            {
-            "SourcePath" = "8:..\\acdext\\Release\\ACDExt.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:4"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{322E1E49-457D-492A-BBB3-04B29BAA6843}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

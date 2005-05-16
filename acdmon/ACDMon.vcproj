@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="ACDMon"
-	ProjectGUID="{C0EDE011-217B-455E-82A3-FF01D978EB9D}"
+	ProjectGUID="{FF7DB4C4-2B98-4AD2-A580-B38E4C77967E}"
 	Keyword="MFCProj">
 	<Platforms>
 		<Platform
@@ -34,7 +34,9 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="setupapi.lib"
+				AdditionalDependencies="setupapi.lib $(WINDDK)\lib\wxp\i386\hid.lib"
+				OutputFile="$(OutDir)/acdmon.exe"
+				Version=""
 				LinkIncremental="2"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
@@ -87,7 +89,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="setupapi.lib"
+				AdditionalDependencies="setupapi.lib $(WINDDK)\lib\wxp\i386\hid.lib"
+				OutputFile="$(OutDir)/acdmon.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
@@ -129,10 +132,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\ACDMon.cpp">
+				RelativePath=".\ACDBrightnessWnd.cpp">
 			</File>
 			<File
-				RelativePath=".\ACDOsd.cpp">
+				RelativePath=".\ACDMon.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -155,10 +158,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\ACDMon.h">
+				RelativePath=".\ACDBrightnessWnd.h">
 			</File>
 			<File
-				RelativePath=".\ACDOsd.h">
+				RelativePath=".\ACDMon.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
