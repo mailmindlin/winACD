@@ -12,10 +12,10 @@ import "ocidl.idl";
 	uuid(E19D392B-381E-4E34-A0F4-48760E54539E),
 	dual,
 	nonextensible,
-	helpstring("IACDShlExt Interface"),
+	helpstring("IACDShellExt Interface"),
 	pointer_default(unique)
 ]
-interface IACDShlExt : IDispatch{
+interface IACDShellExt : IDispatch{
 };
 [
 	uuid(FE1379C5-DB1A-4478-8ED3-DC584E58406E),
@@ -27,10 +27,10 @@ library ACDExtLib
 	importlib("stdole2.tlb");
 	[
 		uuid(CF27ED67-1882-4977-97EF-CAEB537DE51F),
-		helpstring("ACDShlExt Class")
+		helpstring("ACDShellExt Class")
 	]
-	coclass ACDShlExt
+	coclass ACDShellExt
 	{
-		[default] interface IACDShlExt;
+		[default] interface IACDShellExt;
 	};
 };

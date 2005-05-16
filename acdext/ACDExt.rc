@@ -7,7 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "winres.h"
+#include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -34,7 +34,7 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""winres.h""\r\n"
+    "#include ""afxres.h""\r\n"
     "\0"
 END
 
@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,2,0,0
- PRODUCTVERSION 0,2,0,0
+ FILEVERSION 0,2,1,0
+ PRODUCTVERSION 0,2,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "Apple Cinema Display Control Panel Extension"
-            VALUE "FileVersion", "0, 2, 0, 0"
-            VALUE "InternalName", "acdext.dll"
+            VALUE "FileVersion", "0, 2, 1, 0"
+            VALUE "InternalName", "ACDExt.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0, 2, 0, 0"
+            VALUE "ProductVersion", "0, 2, 1, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -92,7 +92,7 @@ END
 //
 
 IDR_ACDEXT              REGISTRY                "ACDExt.rgs"
-IDR_ACDSHLEXT           REGISTRY                "ACDShlExt.rgs"
+IDR_ACDSHELLEXT         REGISTRY                "ACDShellExt.rgs"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -109,7 +109,7 @@ IDI_ACDMON              ICON                    "acd.ico"
 // Dialog
 //
 
-IDD_ACD_PROPPAGE DIALOGEX 20, 20, 252, 177
+IDD_ACD_PROPERTY_PAGE DIALOGEX 20, 20, 252, 177
 STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | 
     WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
@@ -117,15 +117,15 @@ CAPTION "Controls"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Virtual Control Panel",IDC_STATIC_VCP,7,3,237,52
-    ICON            IDI_ACDMON,IDC_STATIC_VCP_ICON,14,12,20,20
+    ICON            IDI_ACDMON,IDC_STATIC_VCP_ICON,13,12,20,20
     LTEXT           "None present",IDC_VIRTUAL_CONTROL,40,17,197,8,NOT 
                     WS_GROUP
-    LISTBOX         IDC_VIRTUAL_CONTROL_LIST,40,13,197,18,LBS_SORT | 
+    LISTBOX         IDC_VIRTUAL_CONTROL_LIST,40,13,197,19,LBS_SORT | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "Properties",IDC_PROPERTIES_BUTTON,161,35,75,14
     GROUPBOX        "Monitor Settings",IDC_STATIC,7,58,237,36
     CONTROL         "",IDC_BRIGHTNESS_SLIDER,"msctls_trackbar32",TBS_NOTICKS | 
-                    WS_TABSTOP,71,73,112,12
+                    WS_GROUP | WS_TABSTOP,71,73,112,12
     LTEXT           "Brightness :",IDC_STATIC,13,74,46,8,NOT WS_GROUP
     LTEXT           "0%",IDC_STATIC,58,74,12,8,NOT WS_GROUP
     LTEXT           "100%",IDC_STATIC,185,74,20,8,NOT WS_GROUP
@@ -141,13 +141,16 @@ BEGIN
                     WS_GROUP
     LTEXT           "Manufacturing date :",IDC_STATIC,13,133,68,8,NOT 
                     WS_GROUP
-    LTEXT           "N/A",IDC_DESCRIPTION,87,109,150,8,NOT WS_GROUP
-    LTEXT           "N/A",IDC_FIRMWARE_VERSION,87,121,150,8,NOT WS_GROUP
-    LTEXT           "N/A",IDC_MANUFACTURING_DATE,87,133,150,8,NOT WS_GROUP
-    PUSHBUTTON      "Options...",IDC_OPTIONS_BUTTON,7,155,75,14
+    LTEXT           "Not Available",IDC_DESCRIPTION,87,109,150,8,NOT 
+                    WS_GROUP
+    LTEXT           "Not Available",IDC_FIRMWARE_VERSION,87,121,150,8,NOT 
+                    WS_GROUP
+    LTEXT           "Not Available",IDC_MANUFACTURING_DATE,87,133,150,8,NOT 
+                    WS_GROUP
+    PUSHBUTTON      "Options...",IDC_OPTIONS_BUTTON,7,156,75,14
 END
 
-IDD_ACD_OPTIONS DIALOGEX 0, 0, 265, 218
+IDD_ACD_OPTIONS_DIALOG DIALOGEX 0, 0, 265, 218
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | 
     WS_SYSMENU
 CAPTION "Monitor Control Options"
@@ -157,15 +160,14 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,208,197,50,14
     GROUPBOX        "Power Button",IDC_STATIC,7,40,251,43
     GROUPBOX        "Monitor Control Options",IDC_STATIC,7,86,251,52
-    CONTROL         "Disable the power and brightness buttons",
-                    IDC_DISABLE_CHECK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    13,97,238,10
-    CONTROL         "Show icon on the taskbar",IDC_CHECK2,"Button",
-                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,110,238,10
-    CONTROL         "Lock brightness controls",IDC_CHECK3,"Button",
-                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,123,238,10
+    CONTROL         "Disable the brightness buttons",IDC_DISABLE_BRIGHTNESS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,97,113,10
+    CONTROL         "Disable the power button",IDC_DISABLE_POWER,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,13,110,95,10
+    CONTROL         "Show icon on the taskbar",IDC_CHECK3,"Button",
+                    BS_AUTOCHECKBOX | WS_DISABLED | WS_TABSTOP,13,123,92,10
     LTEXT           "When I press the power button on my monitor:",
-                    IDC_STATIC,13,51,238,8
+                    IDC_STATIC,13,51,154,8
     COMBOBOX        IDC_POWER_ACTION_COMBO,13,63,238,30,CBS_DROPDOWN | 
                     WS_VSCROLL | WS_TABSTOP
     ICON            IDI_ACDMON,IDC_STATIC,14,10,20,20
@@ -189,7 +191,7 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO 
 BEGIN
-    IDD_ACD_PROPPAGE, DIALOG
+    IDD_ACD_PROPERTY_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 244
@@ -197,7 +199,7 @@ BEGIN
         BOTTOMMARGIN, 170
     END
 
-    IDD_ACD_OPTIONS, DIALOG
+    IDD_ACD_OPTIONS_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 258

@@ -35,9 +35,15 @@
 #define _ATL_ALL_WARNINGS
 
 
+#include <afxwin.h>
+#include <afxdisp.h>
+#include <afxcmn.h>
+#include <afxtempl.h>
+
 #include "resource.h"
 #include <atlbase.h>
 #include <atlcom.h>
 #include <commctrl.h>
+#include <afxdlgs.h>
 
 using namespace ATL;

@@ -50,3 +50,10 @@ StdAfx.h, StdAfx.cpp
 
 Resource.h
     This is the standard header file that defines resource IDs.
+
+/////////////////////////////////////////////////////////////////////////////
+Other notes:
+
+	The MFC Support option builds the Microsoft Foundation Class libraries into your skeleton application,
+	making MFC classes, objects and functions available to you.
+/////////////////////////////////////////////////////////////////////////////

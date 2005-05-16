@@ -4,7 +4,6 @@
 	Version="7.10"
 	Name="ACDExt"
 	ProjectGUID="{322E1E49-457D-492A-BBB3-04B29BAA6843}"
-	RootNamespace="ACDExt"
 	Keyword="AtlProj">
 	<Platforms>
 		<Platform
@@ -16,6 +15,7 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="2"
+			UseOfMFC="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
@@ -36,7 +36,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="powrprof.lib comctl32.lib setupapi.lib"
+				AdditionalDependencies="powrprof.lib setupapi.lib $(WINDDK)\lib\wxp\i386\hid.lib"
 				OutputFile="$(OutDir)/acdext.dll"
 				LinkIncremental="2"
 				ModuleDefinitionFile=".\ACDExt.def"
@@ -84,6 +84,7 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
+			UseOfMFC="1"
 			UseOfATL="1"
 			ATLMinimizesCRunTimeLibraryUsage="FALSE"
 			CharacterSet="2">
@@ -101,8 +102,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="TRUE"
-				AdditionalDependencies="powrprof.lib comctl32.lib setupapi.lib"
-				OutputFile="$(OutDir)/ACDExt.dll"
+				AdditionalDependencies="powrprof.lib setupapi.lib $(WINDDK)\lib\wxp\i386\hid.lib"
+				OutputFile="$(OutDir)/acdext.dll"
 				LinkIncremental="1"
 				ModuleDefinitionFile=".\ACDExt.def"
 				GenerateDebugInformation="TRUE"
@@ -164,7 +165,16 @@
 				RelativePath=".\ACDExt.idl">
 			</File>
 			<File
-				RelativePath=".\ACDShlExt.cpp">
+				RelativePath=".\ACDOptionsDlg.cpp">
+			</File>
+			<File
+				RelativePath=".\ACDPropertyPage.cpp">
+			</File>
+			<File
+				RelativePath=".\ACDShellExt.cpp">
+			</File>
+			<File
+				RelativePath=".\ACDVirtualCP.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -187,7 +197,16 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\ACDShlExt.h">
+				RelativePath=".\ACDOptionsDlg.h">
+			</File>
+			<File
+				RelativePath=".\ACDPropertyPage.h">
+			</File>
+			<File
+				RelativePath=".\ACDShellExt.h">
+			</File>
+			<File
+				RelativePath=".\ACDVirtualCP.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
@@ -204,13 +223,16 @@
 				RelativePath=".\acd.ico">
 			</File>
 			<File
+				RelativePath=".\acdext.dll.manifest">
+			</File>
+			<File
 				RelativePath=".\ACDExt.rc">
 			</File>
 			<File
 				RelativePath=".\ACDExt.rgs">
 			</File>
 			<File
-				RelativePath=".\ACDShlExt.rgs">
+				RelativePath=".\ACDShellExt.rgs">
 			</File>
 			<File
 				RelativePath=".\icon.ico">
@@ -235,9 +257,6 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\acdext.dll.manifest">
-		</File>
 		<File
 			RelativePath=".\ReadMe.txt">
 		</File>

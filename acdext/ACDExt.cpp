@@ -13,19 +13,11 @@ public :
 
 CACDExtModule _AtlModule;
 
-
-// DLL Entry Point
-extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
-{
-    hInstance;
-    return _AtlModule.DllMain(dwReason, lpReserved); 
-}
-
-
 // Used to determine whether the DLL can be unloaded by OLE
 STDAPI DllCanUnloadNow(void)
 {
-    return _AtlModule.DllCanUnloadNow();
+    AFX_MANAGE_STATE(AfxGetStaticModuleState());
+    return (AfxDllCanUnloadNow()==S_OK && _AtlModule.GetLockCount()==0) ? S_OK : S_FALSE;
 }
 
 
@@ -41,7 +33,7 @@ STDAPI DllRegisterServer(void)
 {
     // registers object, typelib and all interfaces in typelib
     HRESULT hr = _AtlModule.DllRegisterServer();
-    return hr;
+	return hr;
 }
 
 
