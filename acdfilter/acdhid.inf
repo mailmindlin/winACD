@@ -24,7 +24,7 @@ Class=HIDClass
 ClassGuid={745A17A0-74D3-11D0-B6FE-00A0C90F57DA}
 Provider=%WINACD%
 LayoutFile=layout.inf
-DriverVer=04/30/2005,0.2.0
+DriverVer=05/16/2005,0.2.1
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
@@ -81,7 +81,7 @@ ServiceBinary	= %12%\acdfilter.sys
 LoadOrderGroup	= extended base
 
 [SourceDisksNames]
-1 = %ACD.DiskID%,,\i386
+1 = ,%ACD.DiskID%,,i386
 
 [SourceDisksFiles]
 acdfilter.sys = 1,,

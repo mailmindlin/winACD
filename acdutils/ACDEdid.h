@@ -1,18 +1,19 @@
-// Copyright (C) 2005 Laurent Morichetti
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+/* Copyright (C) 2005 Laurent Morichetti
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
 
 #pragma once
 
@@ -22,18 +23,27 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define EDID_MONOCHROME_DISPLAY_TYPE		0
-#define EDID_RGB_COLOUR_DISPLAY_TYPE		1
-#define EDID_RGB_NON_RGB_COLOUR_DISPLAY_TYPE	2
-#define EDID_UNDEFINED_DISPLAY_TYPE		3
+/**
+ * EDID_DISPLAY_TYPE (Monochrome, Colour, Undefined)
+ */
+#define EDID_DISPLAY_TYPE_MONOCHROME		0
+#define EDID_DISPLAY_TYPE_RGB_COLOUR		1
+#define EDID_DISPLAY_TYPE_NON_RGB_COLOUR	2
+#define EDID_DISPLAY_TYPE_UNDEFINED		3
 
+/**
+ * EDID_VIDEO_INPUT_TYPE (Analog/Digital)
+ */
 #define EDID_VIDEO_INPUT_ANALOG_TYPE	0
 #define EDID_VIDEO_INPUT_DIGITAL_TYPE	1
 
-#define EDID_ASPECT_RATIO_16x10	0
-#define EDID_ASPECT_RATIO_4x3	1
-#define EDID_ASPECT_RATIO_5x4	2
-#define EDID_ASPECT_RATIO_16x9	3
+/**
+ * EDID_ASPECT_RATIO (16:10, 4:3, 5:4 and 16:9)
+ */
+#define EDID_ASPECT_RATIO_16x10		0
+#define EDID_ASPECT_RATIO_4x3		1
+#define EDID_ASPECT_RATIO_5x4		2
+#define EDID_ASPECT_RATIO_16x9		3
 
 extern const PCHAR EDID_EstablishedTimingString [];
 
@@ -46,17 +56,17 @@ typedef struct _EDID_STRUCT {
 
     /** Vendor / Product Identification */
     struct _EDID_PRODUCT_IDENTIFICATION {
-	USHORT	wManufacturerID;	    /* EISA 3-character ID	*/
-	USHORT	wProductCode;		    /* Vendor assigned code	*/
-	DWORD	dwSerialNumber;		    /* 32-bit serial number	*/
-	UCHAR	bManufacturingWeek;	    /* Week number		*/
-	UCHAR	bManufacturingYear;	    /* Year			*/
+	USHORT	wManufacturerID;	    /*!< EISA 3-character ID	*/
+	USHORT	wProductCode;		    /*!< Vendor assigned code	*/
+	DWORD	dwSerialNumber;		    /*!< 32-bit serial number	*/
+	UCHAR	bManufacturingWeek;	    /*!< Week number		*/
+	UCHAR	bManufacturingYear;	    /*!< Year			*/
     } ProductIdentification;
 
     /** EDID Structure Version / Revision */
     struct _EDID_VERSION {
-	UCHAR	bVersion;		    /* EDID Version Number	*/
-	UCHAR	bRevision;		    /* EDID Revision Number	*/
+	UCHAR	bVersion;		    /*!< EDID Version Number	*/
+	UCHAR	bRevision;		    /*!< EDID Revision Number	*/
     } Version;
 
     /** Basic Display Parameters / Features */
@@ -83,10 +93,10 @@ typedef struct _EDID_STRUCT {
 		UCHAR Type		:1; /* Must be 0 */
 	    } Analog;
 	} VideoInputDefinition;
-	UCHAR	bMaxHorizontalImageSize;    /* Max. Horizontal Image Size	*/ 
-	UCHAR	bMaxVerticalImageSize;	    /* Max. Vertical Image Size		*/
-	UCHAR	bGamma;			    /* Display Transfer Characteristic	*/
-	struct _EDID_DISPLAY_FEATURES {	    /* DPMS / Feature Support		*/
+	UCHAR	bMaxHorizontalImageSize;    /*!< Max. Horizontal Image Size	*/
+	UCHAR	bMaxVerticalImageSize;	    /*!< Max. Vertical Image Size	*/
+	UCHAR	bGamma;			    /*!< Display Transfer Characteristic*/
+	struct _EDID_DISPLAY_FEATURES {	    /*!< DPMS / Feature Support		*/
 	    UCHAR DefaultGTFSupported	:1;
 	    UCHAR PreferedTimingMode	:1;
 	    UCHAR sRGB			:1;
@@ -118,8 +128,8 @@ typedef struct _EDID_STRUCT {
     /** Detailed Timing Descriptions / Descriptor blocks */
     UCHAR   DetailedTiming [4][18];
 
-    UCHAR   bExtensionFlag; /* Number of 128-byte EDID extension blocks */
-    UCHAR   bChecksum;	    /* Checksum (1-byte sum of all bytes == 0) */
+    UCHAR   bExtensionFlag; /*!< Number of 128-byte EDID extension blocks */
+    UCHAR   bChecksum;	    /*!< Checksum (1-byte sum of all bytes == 0) */
 
     UCHAR   Extension [128];
 } EDID_STRUCT, *PEDID_STRUCT;

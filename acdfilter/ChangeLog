@@ -1,3 +1,6 @@
+2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+	* WinACD 0.2.1 refresh.
+
 2005-05-05 Laurent Morichetti <l_m@pacbell.net>
 	* acdfilter.rc: Increased revision number, added missing ver info.
 	* acdhid.inf:

@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="ACDUtils"
-	ProjectGUID="{C3B9CD00-A1A1-4C63-81FD-74FBCB249FE3}"
+	Name="ACDMgr"
+	ProjectGUID="{53FBDEBB-61B5-4545-B4FA-B97F96DD0A48}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -14,13 +14,13 @@
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(WINDDK)\inc\wxp"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\acdutils&quot;;&quot;$(WINDDK)\inc\wxp&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -31,10 +31,15 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/ACDUtils.lib"
-				AdditionalLibraryDirectories=""
-				IgnoreAllDefaultLibraries="TRUE"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="setupapi.lib $(WINDDK)\lib\wxp\i386\hid.lib"
+				OutputFile="$(OutDir)/acdmgr.exe"
+				Version=""
+				LinkIncremental="2"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)/ACDMgr.pdb"
+				SubSystem="2"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -49,6 +54,8 @@
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
 			<Tool
 				Name="VCManagedWrapperGeneratorTool"/>
 			<Tool
@@ -58,12 +65,12 @@
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="$(WINDDK)\inc\wxp"
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				AdditionalIncludeDirectories="&quot;$(ProjectDir)\..\acdutils&quot;;&quot;$(WINDDK)\inc\wxp&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -72,10 +79,15 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/ACDUtils.lib"
-				AdditionalLibraryDirectories=""
-				IgnoreAllDefaultLibraries="TRUE"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="setupapi.lib $(WINDDK)\lib\wxp\i386\hid.lib"
+				OutputFile="$(OutDir)/acdmgr.exe"
+				LinkIncremental="1"
+				GenerateDebugInformation="TRUE"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -90,6 +102,8 @@
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
 			<Tool
 				Name="VCManagedWrapperGeneratorTool"/>
 			<Tool
@@ -104,13 +118,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\ACDEdid.c">
-			</File>
-			<File
-				RelativePath=".\ACDHidDev.cpp">
-			</File>
-			<File
-				RelativePath=".\ACDUtil.cpp">
+				RelativePath=".\ACDMgr.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -118,19 +126,16 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\ACDEdid.h">
-			</File>
-			<File
-				RelativePath=".\ACDHidDev.h">
-			</File>
-			<File
-				RelativePath=".\ACDUtil.h">
+				RelativePath=".\resource.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			<File
+				RelativePath=".\ACDMgr.rc">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt">
