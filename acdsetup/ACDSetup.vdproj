@@ -63,12 +63,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8F54801B7ED3026947AE151C52D30F2F"
         "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_8F54801B7ED3026947AE151C52D30F2F"
+        "OwnerKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
         "OwnerKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
         "MsmSig" = "8:_UNDEFINED"
@@ -76,7 +88,19 @@
         "Entry"
         {
         "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
+        "OwnerKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
         "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
+        "OwnerKey" = "8:_205D82AEA7754DE89270DF25DEFF566E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -88,7 +112,19 @@
         "Entry"
         {
         "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
+        "OwnerKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
         "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
+        "OwnerKey" = "8:_205D82AEA7754DE89270DF25DEFF566E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -388,18 +424,18 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:WinACD 0.2.1"
-        "ProductCode" = "8:{997E5173-E9B8-4E94-8219-06A88E54FC4A}"
-        "PackageCode" = "8:{19A653EE-CF42-4EA2-A61B-1838429D67B1}"
+        "ProductName" = "8:WinACD 0.3.0"
+        "ProductCode" = "8:{8120BB2D-2C04-42C3-ADAB-F55DB09D9A38}"
+        "PackageCode" = "8:{AACE4F73-3A48-4576-9231-3A5F0E9A93BA}"
         "UpgradeCode" = "8:{17D2E5C3-CEF4-4E15-B5CB-F512E128FDF7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:0.2.1"
+        "ProductVersion" = "8:0.3.0"
         "Manufacturer" = "8:WinACD"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:WinACD 0.2.1"
+        "Title" = "8:WinACD 0.3.0"
         "Subject" = "8:"
         "ARPCONTACT" = "8:WinACD"
         "Keywords" = "8:"
@@ -1155,6 +1191,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:ContentFiles"
             "OutputProjectGuid" = "8:{7957BBA0-3555-43A5-8D20-E148B34FC034}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_744E024B19CE431B87DBB2B00BE42186"
+            {
+            "SourcePath" = "8:..\\acdutils\\Debug\\acdpower.exe"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{4BD5C7A5-CAA8-43DC-A606-30571BEC478A}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
