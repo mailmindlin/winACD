@@ -15,7 +15,25 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_004345CEF1294C92B4891B2EC1C67F0C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0491B6B4E5FF479985ED0EAB2F5CF6CC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,12 +64,6 @@
         "Entry"
         {
         "MsmKey" = "8:_42ACC5BAE9F94407A2984153B96570B9"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4EEAFC3986554C9E92ED219A514C84F1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -219,10 +231,10 @@
         }
         "File"
         {
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_42ACC5BAE9F94407A2984153B96570B9"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_004345CEF1294C92B4891B2EC1C67F0C"
             {
-            "SourcePath" = "8:icon.ico"
-            "TargetName" = "8:icon.ico"
+            "SourcePath" = "8:LICENSE.rtf"
+            "TargetName" = "8:LICENSE.rtf"
             "Tag" = "8:"
             "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
             "Condition" = "8:"
@@ -239,10 +251,50 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_4EEAFC3986554C9E92ED219A514C84F1"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_0491B6B4E5FF479985ED0EAB2F5CF6CC"
             {
-            "SourcePath" = "8:LICENSE.txt"
-            "TargetName" = "8:LICENSE.txt"
+            "SourcePath" = "8:acdmonitor.inf"
+            "TargetName" = "8:acdmonitor.inf"
+            "Tag" = "8:"
+            "Folder" = "8:_0A496AEE819F4B699F9023961E3E2BBB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_119DC4C8B0974DD698F4B5A12BFEDF7E"
+            {
+            "SourcePath" = "8:acdbanner.bmp"
+            "TargetName" = "8:acdbanner.bmp"
+            "Tag" = "8:"
+            "Folder" = "8:_0A496AEE819F4B699F9023961E3E2BBB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:TRUE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_42ACC5BAE9F94407A2984153B96570B9"
+            {
+            "SourcePath" = "8:icon.ico"
+            "TargetName" = "8:icon.ico"
             "Tag" = "8:"
             "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
             "Condition" = "8:"
@@ -375,6 +427,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{F27BD5C5-A65D-4608-96D4-7C5DA1F76302}:_0A496AEE819F4B699F9023961E3E2BBB"
+                    {
+                    "Name" = "8:noarch"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_222D2A33C7824C67A8B24522B392F3FD"
+                        "Folders"
+                        {
+                        }
+                    }
                     "{F27BD5C5-A65D-4608-96D4-7C5DA1F76302}:_2415DBAAF96C41B8AB7E3175FF3D62D7"
                     {
                     "Name" = "8:i386"
@@ -426,7 +489,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:WinACD 0.3.0"
         "ProductCode" = "8:{8120BB2D-2C04-42C3-ADAB-F55DB09D9A38}"
-        "PackageCode" = "8:{AACE4F73-3A48-4576-9231-3A5F0E9A93BA}"
+        "PackageCode" = "8:{99EBC1ED-2E5D-4F06-A97F-9CDCCF337F2B}"
         "UpgradeCode" = "8:{17D2E5C3-CEF4-4E15-B5CB-F512E128FDF7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -482,9 +545,17 @@
                                         }
                                         "Values"
                                         {
+                                            "{35AE352C-BC79-4EF9-ABD8-61F467188583}:_111C81E4502044B6A4E20B6E4D309F6A"
+                                            {
+                                            "Name" = "8:ForceShutdown"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:3"
+                                            "Value" = "3:0"
+                                            }
                                             "{35AE352C-BC79-4EF9-ABD8-61F467188583}:_49532B03427142FC87A356915F2C6D73"
                                             {
-                                            "Name" = "8:DisableButtons"
+                                            "Name" = "8:DisabledButtons"
                                             "Condition" = "8:"
                                             "Transitive" = "11:FALSE"
                                             "ValueTypes" = "3:3"
@@ -672,9 +743,9 @@
             "Attributes" = "3:1"
                 "Dialogs"
                 {
-                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_13F0D9DEDB514856B5FAC77DE3B26EF9"
+                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_2F653D56D09D4C80AF30543EA9F04AEA"
                     {
-                    "Sequence" = "3:100"
+                    "Sequence" = "3:110"
                     "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -689,7 +760,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -701,7 +773,7 @@
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:WARNING: [ProductName] is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details."
+                            "Value" = "8:NOTE: You will be prompted to accept the \"unsigned\" HID driver and monitor INF. Click \"Continue Anyway\" to proceed with the installation."
                             "DefaultValue" = "8:#1202"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -722,7 +794,7 @@
                     }
                     "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_35CF2232BD22412F806C4CF383A9EF35"
                     {
-                    "Sequence" = "3:200"
+                    "Sequence" = "3:300"
                     "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -737,14 +809,63 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_3703FD316AEA41E9AE4C62F6A60445D2"
+                    {
+                    "Sequence" = "3:200"
+                    "DisplayName" = "8:License Agreement"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdLicenseDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "EulaText"
+                            {
+                            "Name" = "8:EulaText"
+                            "DisplayName" = "8:#1008"
+                            "Description" = "8:#1108"
+                            "Type" = "3:6"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:_004345CEF1294C92B4891B2EC1C67F0C"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Sunken"
+                            {
+                            "Name" = "8:Sunken"
+                            "DisplayName" = "8:#1007"
+                            "Description" = "8:#1107"
+                            "Type" = "3:5"
+                            "ContextData" = "8:4;True=4;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:4"
+                            "DefaultValue" = "3:4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
                     }
                     "{18ADD6EC-89FE-4ED7-AD3E-211C40278470}:_47611E1A87F24A9DAEF8165064A835D8"
                     {
-                    "Sequence" = "3:300"
+                    "Sequence" = "3:400"
                     "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
@@ -759,7 +880,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -790,7 +912,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -812,7 +935,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "CopyrightWarning"
@@ -823,8 +947,8 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1202"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
                             "DefaultValue" = "8:#1202"
                             "UsePlugInResources" = "11:TRUE"
                             }
@@ -860,7 +984,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -891,7 +1016,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -922,7 +1048,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -966,7 +1093,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -1010,7 +1138,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_119DC4C8B0974DD698F4B5A12BFEDF7E"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -1058,7 +1187,7 @@
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
             {
-            "SourcePath" = "8:..\\acdmon\\Debug\\acdmon.exe"
+            "SourcePath" = "8:..\\acdmon\\Release\\acdmon.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1086,7 +1215,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_205D82AEA7754DE89270DF25DEFF566E"
             {
-            "SourcePath" = "8:..\\acdutils\\Debug\\acdmgr.exe"
+            "SourcePath" = "8:..\\acdutils\\Release\\acdmgr.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1114,7 +1243,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_2D4E7207322B495ABD2871AC7C521FC7"
             {
-            "SourcePath" = "8:..\\acdext\\Debug\\acdext.dll"
+            "SourcePath" = "8:..\\acdext\\Release\\acdext.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1142,7 +1271,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_387F0105DCEC4B2B8B574EA91DDD454A"
             {
-            "SourcePath" = "8:..\\acdfilter\\objchk_wxp_x86\\i386\\acdfilter.sys"
+            "SourcePath" = "8:..\\acdfilter\\objfre_wxp_x86\\i386\\acdfilter.sys"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1198,7 +1327,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_744E024B19CE431B87DBB2B00BE42186"
             {
-            "SourcePath" = "8:..\\acdutils\\Debug\\acdpower.exe"
+            "SourcePath" = "8:..\\acdutils\\Release\\acdpower.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"

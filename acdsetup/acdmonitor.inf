@@ -18,6 +18,9 @@
 ; Apple Cinema (HD) Display Monitor Inf
 ;
 
+; v0.3.0: Removed non-standard modes. The seem to confuse
+; the display property settings.
+
 ; v0.2.0: ICM is currently disabled. The E-EDID reports
 ; sRGB default color space but the color characteristics
 ; on the ACD 23-inch do not match the sRGB color space.
@@ -83,25 +86,25 @@ HKR,,MaxResolution,,"2560,1600"
 HKR,,DPMS,,1
 
 [ACD20.AddReg]
-;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50-61,+,-"	; Apple
+;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"
+;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"
+HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50-61,+,-"
 HKR,,PreferredMode,,"1680,1050,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
 [ACD23.AddReg]
-;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,-"	; Apple
+;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"
+;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"
+HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,-"
 HKR,,PreferredMode,,"1920,1200,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
 [ACD30.AddReg]
-;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-;HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-;HKR,"MODES\2048,1280",Mode1,,"30.0-119.0,50-61,+,+"	; VESA
-HKR,"MODES\2560,1600",Mode1,,"30.0-119.0,50-61,+,-"	; Apple
+;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"
+;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"
+;HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,+"
+;HKR,"MODES\2048,1280",Mode1,,"30.0-119.0,50-61,+,+"
+HKR,"MODES\2560,1600",Mode1,,"30.0-119.0,50-61,+,-"
 HKR,,PreferredMode,,"2560,1600,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
