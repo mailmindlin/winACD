@@ -91,20 +91,20 @@ UINT
 CACDMonApp::RegNotifyThreadMain (LPVOID pParam)
 {
     HKEY hKey;
-    LONG lRet;
  
-    lRet = RegCreateKeyEx (
-	HKEY_CURRENT_USER, "SOFTWARE\\WinACD\\Preferences", 0, 0,
-	REG_OPTION_NON_VOLATILE, KEY_NOTIFY, 0, &hKey, 0);
-
-    if (lRet != ERROR_SUCCESS)
+    if (RegCreateKeyEx (
+	    HKEY_CURRENT_USER, "SOFTWARE\\WinACD\\Preferences", 0, 0,
+	    REG_OPTION_NON_VOLATILE, KEY_NOTIFY, 0, &hKey, 0
+	    ) != ERROR_SUCCESS)
 	return -1;
 
     while (TRUE) {
 	theApp.m_pMainWnd->SendMessage (ACD_WM_INIT_HOTKEYS, 0, 0);
 
-	RegNotifyChangeKeyValue (hKey, FALSE,
-	    REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE);
+	if (RegNotifyChangeKeyValue (hKey, FALSE,
+		REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE
+		) != ERROR_SUCCESS)
+	    break;
     }
 
     RegCloseKey (hKey);
