@@ -1,4 +1,11 @@
 2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+	* ACDHidDev.h:
+	* ACDMgr.cpp: Support for ACDPower service install/uninstall.
+	* ACDMgr.rc: Increased revision number.
+	* ACDPower.cpp:
+	* ACDPower.vcproj: Initial commit.
+
+2005-05-16 Laurent Morichetti <l_m@pacbell.net>
 	* WinACD 0.2.1 refresh.
 
 2005-05-05 Laurent Morichetti <l_m@pacbell.net>
