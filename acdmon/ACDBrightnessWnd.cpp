@@ -229,6 +229,10 @@ CACDBrightnessWnd::OnTimer (UINT nIDEvent)
 	m_nTimer = SetTimer (ACD_FADE_WND_TIMER_STEP, 20, 0);
     }
     else if (nIDEvent == ACD_FADE_WND_TIMER_STEP) {
+	if (m_nOpacity == 100)
+	    SetWindowPos (&CWnd::wndBottom, 0, 0, 0, 0,
+		SWP_NOMOVE |SWP_NOSIZE |SWP_NOACTIVATE);
+
 	SetOpacity ((int) m_nOpacity - ACD_OSD_ALPHA_STEP);
 
 	if (m_nOpacity > 0)
@@ -241,8 +245,6 @@ CACDBrightnessWnd::OnTimer (UINT nIDEvent)
    	m_pLowerWnd->ShowWindow (SW_HIDE);
 
 	// place the windows at the bottom of the z-order.
-	SetWindowPos (&CWnd::wndBottom, 0, 0, 0, 0,
-	    SWP_NOMOVE |SWP_NOSIZE |SWP_NOACTIVATE);
 	m_pLowerWnd->SetWindowPos (&CWnd::wndBottom, 0, 0, 0, 0,
 	    SWP_NOMOVE |SWP_NOSIZE |SWP_NOACTIVATE);
     }
