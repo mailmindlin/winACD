@@ -64,13 +64,6 @@
 			RelativePath=".\acdfilter.rc">
 		</File>
 		<File
-			RelativePath=".\acdhid.inf"
-			DeploymentContent="TRUE">
-		</File>
-		<File
-			RelativePath=".\acdmonitor.inf">
-		</File>
-		<File
 			RelativePath=".\makefile"
 			FileType="8">
 		</File>
@@ -79,6 +72,10 @@
 		</File>
 		<File
 			RelativePath=".\sources">
+		</File>
+		<File
+			RelativePath=".\winacd.inf"
+			DeploymentContent="TRUE">
 		</File>
 	</Files>
 	<Globals>
