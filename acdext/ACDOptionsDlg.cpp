@@ -74,7 +74,6 @@ CACDOptionsDialog::OnInitDialog ()
     m_cPowerActionComboBox.SetCurSel (selection);
 
     // set the force shutdown check.
-    m_cForceShutdown.EnableWindow (action != ACD_POWER_BUTTON_DO_NOTHING);
     m_cForceShutdown.SetCheck (ACDUtil::GetForceShutdownPref ());
 
     // set the hotkeys.
@@ -92,7 +91,10 @@ CACDOptionsDialog::OnInitDialog ()
 	(bDisabledButtons & CACDHidDevice::ACD_FLAGS_POWER_BUTTON));
 
     // disable/enable the combo-list if cDisable is checked/unchecked.
-    m_cPowerActionComboBox.EnableWindow (!m_cDisablePower.GetCheck ());
+    BOOL bEnable = !m_cDisablePower.GetCheck ();
+    m_cPowerActionComboBox.EnableWindow (bEnable);
+    bEnable &= action != ACD_POWER_BUTTON_DO_NOTHING;
+    m_cForceShutdown.EnableWindow (bEnable);
 
     return TRUE;
 }
@@ -149,7 +151,12 @@ END_MESSAGE_MAP ()
 void
 CACDOptionsDialog::OnBnClickedDisablePower ()
 {
-    m_cPowerActionComboBox.EnableWindow (!m_cDisablePower.GetCheck ());
+    BOOL bEnable = !m_cDisablePower.GetCheck ();
+    m_cPowerActionComboBox.EnableWindow (bEnable);
+    bEnable &= m_cPowerActionComboBox.GetItemData (
+	m_cPowerActionComboBox.GetCurSel ()
+	) != ACD_POWER_BUTTON_DO_NOTHING;
+    m_cForceShutdown.EnableWindow (bEnable);
 }
 
 void
