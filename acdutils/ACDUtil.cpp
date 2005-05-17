@@ -145,3 +145,41 @@ ACDUtil::SetPowerButtonActionPref (ACDPowerButtonAction iAction)
     }
 }
 
+BOOL
+ACDUtil::GetForceShutdownPref ()
+{
+    HKEY hKey;
+    DWORD type, sz, value = 0;
+    LONG lRet;
+
+    lRet = RegOpenKeyEx (HKEY_LOCAL_MACHINE, "SOFTWARE\\WinACD\\Preferences",
+	0, KEY_READ, &hKey);
+
+    if (lRet == ERROR_SUCCESS) {
+	sz = sizeof (value);
+	RegQueryValueEx (hKey, "ForceShutdown", 0,
+	    &type, (LPBYTE) &value, &sz);
+
+	RegCloseKey (hKey);
+    }
+
+    return (ACDPowerButtonAction) value;
+}
+
+void
+ACDUtil::SetForceShutdownPref (BOOL bForce)
+{
+    HKEY hKey;
+    DWORD value = bForce;
+    LONG lRet;
+
+    lRet = RegOpenKeyEx (HKEY_LOCAL_MACHINE, "SOFTWARE\\WinACD\\Preferences",
+	0, KEY_SET_VALUE, &hKey);
+
+    if (lRet == ERROR_SUCCESS) {
+        RegSetValueEx (hKey, "ForceShutdown", 0,
+	    REG_DWORD, (LPBYTE) &value, sizeof (value));
+
+	RegCloseKey (hKey);
+    }
+}

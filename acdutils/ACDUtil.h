@@ -41,4 +41,10 @@ namespace ACDUtil
 
     /** Set the action to execute when the power button is pressed. */
     void SetPowerButtonActionPref (ACDPowerButtonAction iAction);
+
+    /** Return TRUE if we should force the suspend/shutdown operation */
+    BOOL GetForceShutdownPref ();
+
+    /** Set the force suspend/shutdown operation preference */
+    void SetForceShutdownPref (BOOL bForce);
 };

@@ -73,6 +73,10 @@ CACDOptionsDialog::OnInitDialog ()
     // select the action in the combo-list.
     m_cPowerActionComboBox.SetCurSel (selection);
 
+    // set the force shutdown check.
+    m_cForceShutdown.EnableWindow (action != ACD_POWER_BUTTON_DO_NOTHING);
+    m_cForceShutdown.SetCheck (ACDUtil::GetForceShutdownPref ());
+
     // set the hotkeys.
     DWORD hotkey = ACDUtil::GetHotKeyPref (TRUE);
     m_cBrightnessIncreaseHK.SetHotKey (LOWORD (hotkey), HIWORD (hotkey));
@@ -116,6 +120,8 @@ CACDOptionsDialog::OnOK ()
     ACDUtil::SetPowerButtonActionPref ((ACDPowerButtonAction) 
 	m_cPowerActionComboBox.GetItemData (index));
 
+    ACDUtil::SetForceShutdownPref (m_cForceShutdown.GetCheck ());
+
     CDialog::OnOK ();
 }
 
@@ -128,11 +134,13 @@ CACDOptionsDialog::DoDataExchange (CDataExchange* pDX)
     DDX_Control (pDX, IDC_HOTKEY_DECREASE, m_cBrightnessDecreaseHK);
     DDX_Control (pDX, IDC_DISABLE_BRIGHTNESS, m_cDisableBrightness);
     DDX_Control (pDX, IDC_DISABLE_POWER, m_cDisablePower);
+    DDX_Control (pDX, IDC_FORCE_SHUTDOWN, m_cForceShutdown);
 }
 
 
 BEGIN_MESSAGE_MAP (CACDOptionsDialog, CDialog)
     ON_BN_CLICKED (IDC_DISABLE_POWER, OnBnClickedDisablePower)
+    ON_CBN_SELCHANGE (IDC_POWER_ACTION_COMBO, OnCbnSelchangePowerActionCombo)
 END_MESSAGE_MAP ()
 
 
@@ -142,4 +150,13 @@ void
 CACDOptionsDialog::OnBnClickedDisablePower ()
 {
     m_cPowerActionComboBox.EnableWindow (!m_cDisablePower.GetCheck ());
+}
+
+void
+CACDOptionsDialog::OnCbnSelchangePowerActionCombo ()
+{
+    int index = m_cPowerActionComboBox.GetCurSel ();
+
+    m_cForceShutdown.EnableWindow (m_cPowerActionComboBox.GetItemData (index)
+	!= ACD_POWER_BUTTON_DO_NOTHING);
 }

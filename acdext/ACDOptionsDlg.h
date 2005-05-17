@@ -34,6 +34,7 @@ private:
     CComboBox	m_cPowerActionComboBox;
     CHotKeyCtrl m_cBrightnessIncreaseHK;
     CHotKeyCtrl m_cBrightnessDecreaseHK;
+    CButton	m_cForceShutdown;
     CButton	m_cDisableBrightness;
     CButton	m_cDisablePower;
     
@@ -59,4 +60,5 @@ protected:
     DECLARE_MESSAGE_MAP ()
 public:
     afx_msg void OnBnClickedDisablePower ();
+    afx_msg void OnCbnSelchangePowerActionCombo ();
 };

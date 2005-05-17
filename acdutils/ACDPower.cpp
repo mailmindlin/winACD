@@ -36,15 +36,17 @@ static HANDLE hShutdownEvent;
 void
 ACDDoPowerButtonAction ()
 {
+    BOOL bForce = ACDUtil::GetForceShutdownPref ();
+
     switch (ACDUtil::GetPowerButtonActionPref ()) {
     case ACD_POWER_BUTTON_STAND_BY:
 	if (IsPwrSuspendAllowed ())
-	    SetSuspendState (FALSE, FALSE, FALSE);
+	    SetSuspendState (FALSE, bForce, FALSE);
 	break;
 
     case ACD_POWER_BUTTON_HIBERNATE:
 	if (IsPwrHibernateAllowed ())
-	    SetSuspendState (TRUE, FALSE, FALSE);
+	    SetSuspendState (TRUE, bForce, FALSE);
 	break;
 
     case ACD_POWER_BUTTON_SHUT_DOWN:
@@ -71,7 +73,10 @@ ACDDoPowerButtonAction ()
 	    break;
         }
        
-	ExitWindowsEx (EWX_SHUTDOWN, SHTDN_REASON_FLAG_PLANNED);
+	ExitWindowsEx (
+	    EWX_SHUTDOWN | (bForce ? EWX_FORCE : 0),
+	    SHTDN_REASON_FLAG_PLANNED
+	    );
 	break;
 
     default:
