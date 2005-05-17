@@ -1,2 +1,6 @@
+2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+	* ACDBrightnessWnd.cpp: Fix to reduce wnd flickering
+	* ACDMon.rc: Increase revision number.
+
 2005-05-05 Laurent Morichetti <l_m@pacbell.net>
 	* Initial commit.
