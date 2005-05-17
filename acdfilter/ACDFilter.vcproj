@@ -68,7 +68,7 @@
 			DeploymentContent="TRUE">
 		</File>
 		<File
-			RelativePath=".\acdmon.inf">
+			RelativePath=".\acdmonitor.inf">
 		</File>
 		<File
 			RelativePath=".\makefile"
