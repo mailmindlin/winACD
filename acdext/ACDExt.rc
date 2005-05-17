@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,2,1,0
- PRODUCTVERSION 0,2,1,0
+ FILEVERSION 0,3,0,0
+ PRODUCTVERSION 0,3,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "Apple Cinema Display Control Panel Extension"
-            VALUE "FileVersion", "0, 2, 1, 0"
+            VALUE "FileVersion", "0, 3, 0, 0"
             VALUE "InternalName", "ACDExt.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0, 2, 1, 0"
+            VALUE "ProductVersion", "0, 3, 0, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -173,12 +173,12 @@ BEGIN
     ICON            IDI_ACDMON,IDC_STATIC,14,10,20,20
     LTEXT           "Select the monitor power button action you wish to use. If multiple monitor controls are connected, the same action will be executed from any of the power buttons.",
                     IDC_STATIC,44,7,201,27
-    CONTROL         "",IDC_HOTKEY_INCREASE,"msctls_hotkey32",WS_BORDER | 
+    CONTROL         "",IDC_HOTKEY_DECREASE,"msctls_hotkey32",WS_BORDER | 
                     WS_TABSTOP,87,153,80,14
     GROUPBOX        "HotKeys",IDC_STATIC,7,142,251,51
-    LTEXT           "Increase brightness :",IDC_STATIC,14,156,69,8
-    LTEXT           "Decrease brightness :",IDC_STATIC,14,174,71,8
-    CONTROL         "",IDC_HOTKEY_DECREASE,"msctls_hotkey32",WS_BORDER | 
+    LTEXT           "Decrease brightness :",IDC_STATIC,14,156,71,8
+    LTEXT           "Increase brightness :",IDC_STATIC,14,174,69,8
+    CONTROL         "",IDC_HOTKEY_INCREASE,"msctls_hotkey32",WS_BORDER | 
                     WS_TABSTOP,87,171,80,14
 END
 
