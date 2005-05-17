@@ -38,6 +38,7 @@ public:
 	/** Enumeration iteration variables */
 	HDEVINFO	m_hDevInfo;		//!< Device information set.
 	DWORD		m_dwCurrentIndex;	//!< Device information index.
+	HANDLE		m_hDevice;		//!< Driver handle.
 
         /** USB Monitor device enumeration status */
 	enum ENUMPROC_STATUS {
@@ -419,6 +420,7 @@ CUSBMonitorHidDevice::EnumDevices (
 	}
 
 	// invoke the helper callback proc
+	helper.m_hDevice = hDevice;
 	CHelper::ENUMPROC_STATUS procStatus = helper.Callback (pDevice);
 
 	if (procStatus != CHelper::ENUMPROC_STATUS_SUCCESS) {

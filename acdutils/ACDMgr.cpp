@@ -71,7 +71,7 @@ start_ACDMon ()
     char cmdLine [_MAX_PATH];
 
     char* path = GetInstallPath ();
-    _snprintf (cmdLine, sizeof (cmdLine), "%s\\i386\\ACDMon.exe", path);
+    _snprintf (cmdLine, sizeof (cmdLine), "%s\\i386\\acdmon.exe", path);
     cmdLine [sizeof (cmdLine) - 1] = '\0';
 
     memset (&si, '\0', sizeof (STARTUPINFO));
@@ -125,9 +125,9 @@ stop_ACDMon ()
 		NULL, SE_DEBUG_NAME, &Priv.Privileges [0].Luid);
 
 	    // enable the privilege
-	    DWORD PrevPrivLength;
-	    if (!AdjustTokenPrivileges (hToken, FALSE, &Priv, sizeof (Priv),
-		    &PrevPriv, &PrevPrivLength)) {
+	    DWORD dwLength;
+	    if (!AdjustTokenPrivileges (hToken, FALSE, &Priv, sizeof (PrevPriv),
+		    &PrevPriv, &dwLength)) {
    		CloseHandle (hToken);
 		continue;
 	    }
@@ -137,8 +137,7 @@ stop_ACDMon ()
 		SYNCHRONIZE | PROCESS_TERMINATE, FALSE, pe32.th32ProcessID);
         
 	    // restore the previous privilege state
-	    AdjustTokenPrivileges (hToken, FALSE, &PrevPriv, sizeof (PrevPriv),
-		NULL, NULL);
+	    AdjustTokenPrivileges (hToken, FALSE, &PrevPriv, 0, NULL, NULL);
 
 	    CloseHandle (hToken);
 	    if (!hProcess)
@@ -161,6 +160,70 @@ stop_ACDMon ()
     return EXIT_SUCCESS;
 }
 
+static void
+install_ACDPowerService ()
+{
+    SC_HANDLE hACDPowerService, hSCM;
+    char exePath [_MAX_PATH];
+
+    char* path = GetInstallPath ();
+    _snprintf (exePath, sizeof (exePath), "%s\\i386\\acdpower.exe", path);
+    exePath [sizeof (exePath) - 1] = '\0';
+
+    hSCM = OpenSCManager (0, 0, SC_MANAGER_CREATE_SERVICE);
+    if (!hSCM)
+	return;
+
+    // create the service
+    hACDPowerService = CreateService (hSCM,
+	"ACDPowerService",
+	"WinACD Power Button Service",
+	SERVICE_ALL_ACCESS,
+	SERVICE_WIN32_OWN_PROCESS,
+	SERVICE_AUTO_START,
+	SERVICE_ERROR_NORMAL,
+	exePath, 0, 0, 0, 0, 0
+	);
+
+    if (!hACDPowerService) {
+	CloseServiceHandle (hSCM);
+	return;
+    }
+
+    SERVICE_DESCRIPTION desc = {
+	"Manages the Apple Cinema Display power button"
+    }; 
+    ChangeServiceConfig2 (hACDPowerService, SERVICE_CONFIG_DESCRIPTION, &desc);
+
+    // start the service
+    StartService (hACDPowerService, 0, 0);
+
+    CloseServiceHandle (hACDPowerService);
+    CloseServiceHandle (hSCM);
+}
+
+static void
+uninstall_ACDPowerService ()
+{
+    SC_HANDLE hACDPowerService, hSCM;
+
+    hSCM = OpenSCManager (0, 0, SC_MANAGER_ALL_ACCESS);
+    if (!hSCM)
+	return;
+
+    hACDPowerService = OpenService (hSCM, "ACDPowerService",
+	SERVICE_ALL_ACCESS);
+
+    if (hACDPowerService) {
+	SERVICE_STATUS status;
+
+	ControlService (hACDPowerService, SERVICE_CONTROL_STOP, &status);
+        DeleteService (hACDPowerService);
+    }
+
+    CloseServiceHandle (hSCM);
+}
+
 int APIENTRY
 _tWinMain(
     HINSTANCE hInstance,
@@ -171,15 +234,18 @@ _tWinMain(
     for (int i = 1; i < __argc; ++i) {
 	if (_stricmp (__argv [i], "/Install") == 0) {
 	    restore_FactoryDefault ();
-	    return start_ACDMon ();
+	    install_ACDPowerService ();
+	    start_ACDMon ();
 	}
 	else if (_stricmp (__argv [i], "/Uninstall") == 0) {
 	    restore_FactoryDefault ();
-	    return stop_ACDMon ();
+	    uninstall_ACDPowerService ();
+	    stop_ACDMon ();
 	}
-
-	cerr << "Unknown option '" << __argv [i] << "'.";
-	return EXIT_FAILURE;
+	else {
+	    cerr << "Unknown option '" << __argv [i] << "'.";
+	    return EXIT_FAILURE;
+	}
     }
 
     // should not reach this
