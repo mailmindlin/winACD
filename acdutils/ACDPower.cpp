@@ -19,12 +19,14 @@
 
 #include <windows.h>
 #include <winsvc.h>
+#include <dbt.h>
 
 #include "ACDUtil.h"
 
 #include <stdlib.h>
 #include <iostream>
 #include <tchar.h>
+#include <atlconv.h>
 
 extern "C" {
 #include <powrprof.h>
@@ -93,13 +95,13 @@ DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 	char report [2];
 
 	if (!ReadFile (hDevice, report, sizeof (report), &dwBytesRead, NULL))
-	    continue;
+	    break;
 
 	if (report [1] == 0x0A)
 	    ACDDoPowerButtonAction ();
     }
 
-    // should never reach here
+    CloseHandle (hDevice);
     return 0;
 }
 
@@ -142,10 +144,70 @@ ACDSetPowerServiceStatus (
     return SetServiceStatus (hServiceStatus, &ServiceStatus);
 }
 
-void WINAPI
-ACDPowerServiceCtrlHandler (DWORD nControlCode)
+static void
+ACDHandleDeviceArrival (PDEV_BROADCAST_HDR pdb)
 {
-    switch (nControlCode) {	
+    USES_CONVERSION;
+
+    if (pdb->dbch_devicetype != DBT_DEVTYP_DEVICEINTERFACE)
+	return;
+
+    PDEV_BROADCAST_DEVICEINTERFACE pdbi =
+	(PDEV_BROADCAST_DEVICEINTERFACE) pdb;
+
+    HANDLE hDevice = CreateFile (
+	W2CA ((LPCWSTR)pdbi->dbcc_name),    /* filename */
+	GENERIC_READ | GENERIC_WRITE,	    /* desired access */
+	FILE_SHARE_READ | FILE_SHARE_WRITE, /* share mode */
+	NULL,				    /* security attributes */
+	OPEN_EXISTING,			    /* creation disposition */
+	0,				    /* flags and attributes */
+	NULL				    /* template file */
+	);
+
+    if (hDevice == INVALID_HANDLE_VALUE)
+	return;
+
+    //
+    // Check the collection USAGE_PAGE (must be monitor)
+    // 
+
+    PHIDP_PREPARSED_DATA ppData;
+    if (!HidD_GetPreparsedData (hDevice, &ppData)) {
+        CloseHandle (hDevice);
+        return;
+    }
+
+    HIDP_CAPS caps;
+    NTSTATUS hidStatus = HidP_GetCaps (ppData, &caps);
+    if (hidStatus != HIDP_STATUS_SUCCESS
+	|| caps.UsagePage != CUSBMonitorHidDevice::USAGE_PAGE_MONITOR) {
+        HidD_FreePreparsedData (ppData);
+        CloseHandle (hDevice);
+        return;
+    }
+
+    CACDHidDevice *pDevice = new CACDHidDevice (hDevice, ppData);
+    if (pDevice == NULL) {
+        HidD_FreePreparsedData (ppData);
+        CloseHandle (hDevice);
+	return;
+    }
+
+    if (!pDevice->IsSupportedCinemaDisplay ()) {
+	delete pDevice;
+	return;
+    }
+
+    DWORD dwThreadID;
+    CreateThread (0, 0, ACDServiceThreadProc, hDevice, 0, &dwThreadID);
+}
+
+DWORD WINAPI
+ACDPowerServiceCtrlHandler (DWORD dwControl, DWORD dwEventType,
+			    LPVOID lpEventData, LPVOID lpContext)
+{
+    switch (dwControl) {	
     case SERVICE_CONTROL_SHUTDOWN:
     case SERVICE_CONTROL_STOP:
 	ACDSetPowerServiceStatus (
@@ -158,17 +220,24 @@ ACDPowerServiceCtrlHandler (DWORD nControlCode)
 	ACDSetPowerServiceStatus (
 	    SERVICE_STOPPED, NO_ERROR, 0, 0, 0
 	    );
-	return;
+	return NO_ERROR;
+
+    case SERVICE_CONTROL_DEVICEEVENT:
+	if (dwEventType == DBT_DEVICEARRIVAL)
+	    ACDHandleDeviceArrival ((PDEV_BROADCAST_HDR) lpEventData);
+	return NO_ERROR;
+
     default:
-	break;
+	return ERROR_CALL_NOT_IMPLEMENTED;
     }
 }
 
 static void WINAPI
 ACDPowerServiceMain (DWORD argc, LPTSTR *argv)
 {
-    hServiceStatus = RegisterServiceCtrlHandler (
-	"ACDPowerService", ACDPowerServiceCtrlHandler);
+    DEV_BROADCAST_DEVICEINTERFACE NotificationFilter;
+    hServiceStatus = RegisterServiceCtrlHandlerEx (
+	"ACDPowerService", ACDPowerServiceCtrlHandler, NULL);
 
     if (!hServiceStatus)
 	return;
@@ -178,12 +247,27 @@ ACDPowerServiceMain (DWORD argc, LPTSTR *argv)
 	))
 	return;
 
+    ZeroMemory (&NotificationFilter, sizeof (NotificationFilter));
+    NotificationFilter.dbcc_size = sizeof (DEV_BROADCAST_DEVICEINTERFACE);
+    NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
+    HidD_GetHidGuid (&NotificationFilter.dbcc_classguid);
+
+    if (!RegisterDeviceNotification (
+	hServiceStatus, &NotificationFilter, DEVICE_NOTIFY_SERVICE_HANDLE
+	))
+	return;
+
+    if (!ACDSetPowerServiceStatus (
+	SERVICE_START_PENDING, NO_ERROR, 0, 2, 3000
+	))
+	return;
+
     hShutdownEvent = CreateEvent (0, TRUE, FALSE, 0);
     if (!hShutdownEvent)
 	return;
 
     if (!ACDSetPowerServiceStatus (
-	SERVICE_START_PENDING, NO_ERROR, 0, 2, 1000
+	SERVICE_START_PENDING, NO_ERROR, 0, 3, 3000
 	))
 	return;
 

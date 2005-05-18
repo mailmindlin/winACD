@@ -59,7 +59,7 @@ public:
     /** Convenience type for the EnumHelper */
     typedef EnumHelperTmpl<CUSBMonitorHidDevice> EnumHelper;
 
-protected:
+public:
 
     /** USB Monitor usage pages. */
     enum UsagePage {
@@ -260,23 +260,25 @@ public:
     }
 
     /** Return the display's brightness */
-    UCHAR GetBrightness () const
+    BOOL GetBrightness (PUCHAR pbBrightness) const
     {
-	ULONG brightness;
-	GetFeatureValue (
+	ULONG nBrightness;
+	BOOL bRet = GetFeatureValue (
 	    USAGE_PAGE_VESA_VIRTUAL_CONTROLS,
 	    USAGE_BRIGHTNESS,
-	    &brightness
+	    &nBrightness
 	    );
-	return (UCHAR) brightness;
+	if (bRet)
+	    *pbBrightness = (UCHAR) nBrightness;
+	return bRet;
     }
 
     /** Set the display's brightness. */
-    void SetBrightness (
+    BOOL SetBrightness (
 	UCHAR bBrightness
 	) const
     {
-	SetFeatureValue (
+	return SetFeatureValue (
 	    USAGE_PAGE_VESA_VIRTUAL_CONTROLS,
 	    USAGE_BRIGHTNESS,
 	    (ULONG) bBrightness
@@ -284,11 +286,11 @@ public:
     }
 
     /** Extract the diplay's EDID data */
-    void GetEDID (
+    BOOL GetEDID (
 	PEDID_STRUCT pEdid
 	) const
     {
-	GetFeatureValueArray (
+	return GetFeatureValueArray (
 	    USAGE_PAGE_MONITOR,
 	    USAGE_EDID_INFO,
 	    (PCHAR)pEdid,
@@ -410,7 +412,7 @@ CUSBMonitorHidDevice::EnumDevices (
 	//
 	// we have a usb monitor hid device!
 	//
-	
+
 	CHelper::CDevice *pDevice = new CHelper::CDevice (hDevice, ppData);
 	if (pDevice == NULL) {
 	    HidD_FreePreparsedData (ppData);

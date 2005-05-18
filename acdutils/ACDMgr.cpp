@@ -68,7 +68,7 @@ start_ACDMon ()
 {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
-    char cmdLine [_MAX_PATH];
+    char cmdLine [MAX_PATH];
 
     char* path = GetInstallPath ();
     _snprintf (cmdLine, sizeof (cmdLine), "%s\\i386\\acdmon.exe", path);
@@ -164,7 +164,7 @@ static void
 install_ACDPowerService ()
 {
     SC_HANDLE hACDPowerService, hSCM;
-    char exePath [_MAX_PATH];
+    char exePath [MAX_PATH];
 
     char* path = GetInstallPath ();
     _snprintf (exePath, sizeof (exePath), "%s\\i386\\acdpower.exe", path);
@@ -276,7 +276,7 @@ GetInstallPath ()
     if (lRet != ERROR_SUCCESS)
 	return NULL;
 
-    static char path [_MAX_PATH];
+    static char path [MAX_PATH];
     DWORD type, len = sizeof (path);
     RegQueryValueEx (hKey, "InstallPath", 0, &type, (LPBYTE) path, &len);
     path [sizeof (path) - 1] = '\0';

@@ -23,6 +23,7 @@
 #include "ACDUtil.h"
 
 #include <assert.h>
+#include <dbt.h>
 
 // CBrightnessWnd
 
@@ -99,6 +100,7 @@ BEGIN_MESSAGE_MAP (CACDBrightnessWnd, CFrameWnd)
     ON_WM_CREATE ()
     ON_WM_PAINT()
     ON_WM_ERASEBKGND ()
+    ON_WM_DEVICECHANGE ()
     ON_MESSAGE (WM_HOTKEY, OnHotKey)
     ON_MESSAGE (ACD_WM_INIT_HOTKEYS, OnInitHotKeys)
 END_MESSAGE_MAP ()
@@ -174,7 +176,8 @@ CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 
     int from, to;
 
-    m_nBrightness = theApp.GetBrightness ();
+    if (!theApp.GetBrightness (&m_nBrightness))
+	return -1;
 
     switch (wParam) {
     case ACD_BRIGHTNESS_UP_HOTKEY:
@@ -294,4 +297,21 @@ CACDBrightnessWnd::OnInitHotKeys (WPARAM wParam, LPARAM lParam)
 	    wModifiers, wVirtualKeyCode);
 
     return 0;
+}
+
+BOOL
+CACDBrightnessWnd::OnDeviceChange (UINT nEventType, DWORD_PTR dwData)
+{
+    PDEV_BROADCAST_HDR pdb = (PDEV_BROADCAST_HDR) dwData;
+
+    switch (nEventType) {
+    case DBT_DEVICEARRIVAL:
+    case DBT_DEVICEREMOVECOMPLETE:
+	if (pdb->dbch_devicetype == DBT_DEVTYP_DEVICEINTERFACE)
+	    if (theApp.OnDeviceChange (nEventType,
+		((PDEV_BROADCAST_DEVICEINTERFACE)pdb)->dbcc_name))
+		return TRUE;
+    default:
+	return CFrameWnd::OnDeviceChange (nEventType, dwData);
+    }
 }

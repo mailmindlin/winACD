@@ -74,7 +74,7 @@ private:
 private:
 
     /** Initialize the current instance */
-    void InitializeFeatures (void);
+    BOOL InitializeFeatures (void);
 
 public:
 
@@ -124,7 +124,10 @@ public:
      */
     BOOL CheckBrightness () const
     {
-	return m_bBrightness == m_Device.GetBrightness ();
+	UCHAR bBrightness;
+	if (!m_Device.GetBrightness (&bBrightness))
+	    return FALSE;
+	return m_bBrightness == bBrightness;
     }
 
     /** Return the current brightness (cached in m_bBrightness). */
@@ -148,8 +151,8 @@ public:
     }
 
     /** Apply the current settings. */
-    void Apply ();
+    BOOL Apply ();
 
     /** Revert to the initial or last applied settings. */
-    void Reset ();
+    BOOL Reset ();
 };

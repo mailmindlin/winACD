@@ -25,6 +25,7 @@
 #endif
 
 #include <assert.h>
+#include <dbt.h>
 
 // CACDMonApp
 
@@ -84,8 +85,27 @@ CACDMonApp::InitInstance ()
     // create & start the RegNotify thread.
     AfxBeginThread (RegNotifyThreadMain, 0);
 
+    DEV_BROADCAST_DEVICEINTERFACE NotificationFilter;
+    ZeroMemory (&NotificationFilter, sizeof (NotificationFilter));
+    NotificationFilter.dbcc_size = sizeof (DEV_BROADCAST_DEVICEINTERFACE);
+    NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
+    HidD_GetHidGuid (&NotificationFilter.dbcc_classguid);
+    m_hDevNotify = RegisterDeviceNotification (
+	pForegroundWnd->m_hWnd,
+	&NotificationFilter,
+	DEVICE_NOTIFY_WINDOW_HANDLE
+	);
+
     return TRUE;
 }
+
+int
+CACDMonApp::ExitInstance ()
+{
+    UnregisterDeviceNotification (m_hDevNotify);
+    return CWinApp::ExitInstance ();
+}
+
 
 UINT
 CACDMonApp::RegNotifyThreadMain (LPVOID pParam)
@@ -124,21 +144,52 @@ CACDMonApp::EnumHelper::Callback (CACDHidDevice* pDevice)
     return ENUMPROC_STATUS_SUCCESS;
 }
 
-UINT
-CACDMonApp::GetBrightness ()
+BOOL
+CACDMonApp::GetBrightness (PUCHAR pbBrightness)
 {
     if (m_DeviceArray.GetCount () == 0)
-	return 0;
+	return FALSE;
 
-    return m_DeviceArray.ElementAt (0)->GetBrightness () / 16;
+    BOOL bRet = m_DeviceArray.ElementAt (0)->GetBrightness (pbBrightness);
+    if (bRet)
+	*pbBrightness /= 16;
+
+    return bRet;
 }
 
-void
-CACDMonApp::SetBrightness (UINT nBrightness)
+BOOL
+CACDMonApp::SetBrightness (UCHAR nBrightness)
 {
     nBrightness = min (nBrightness, 15);
     nBrightness = nBrightness * 16 + nBrightness;
 
+    BOOL bRet = TRUE;
     for (INT_PTR i = 0; i <  m_DeviceArray.GetCount (); ++i)
-	m_DeviceArray.ElementAt (i)->SetBrightness (nBrightness);
+	bRet &= m_DeviceArray.ElementAt (i)->SetBrightness (nBrightness);
+
+    return bRet;
+}
+
+BOOL
+CACDMonApp::OnDeviceChange (UINT nEventType, LPTSTR lpcDeviceName)
+{
+    if (nEventType == DBT_DEVICEREMOVECOMPLETE
+	|| nEventType == DBT_DEVICEARRIVAL) {
+	// at some point we might check if we actually have an open
+	// handle for the disconnected device. for now, we just purge
+	// all the HID device in the DeviceArray and reload them all.
+
+	INT_PTR iCount = m_DeviceArray.GetCount ();
+	for (INT_PTR i = 0; i <  iCount; ++i)
+	    delete m_DeviceArray.ElementAt (i);
+
+	m_DeviceArray.RemoveAll ();
+
+	EnumHelper helper;
+	CACDHidDevice::EnumDevices (helper);
+
+	return iCount != m_DeviceArray.GetCount ();
+    }
+
+    return FALSE;
 }

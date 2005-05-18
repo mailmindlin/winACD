@@ -38,6 +38,8 @@ private:
 
     /** Array of ACD hid devices */
     CArray <CACDHidDevice*> m_DeviceArray;
+    /** The device notification handle */
+    HDEVNOTIFY m_hDevNotify;
 
     struct EnumHelper : CACDHidDevice::EnumHelper {
 	/** the callbuf proc (call when we find a matching device */
@@ -53,10 +55,10 @@ public:
     virtual ~CACDMonApp ();
 
     /** Return the current brightness [0-15] */
-    UINT GetBrightness ();
+    BOOL GetBrightness (PUCHAR pbBrightness);
 
     /** Set the current brightness [0-15] */
-    void SetBrightness (UINT nBrightness);
+    BOOL SetBrightness (UCHAR nBrightness);
 
 
     // Overrides
@@ -64,6 +66,8 @@ public:
 
     /** CMonApp instance initialization */
     virtual BOOL InitInstance ();
+    /** Called by the framework to exit CMonApp  */
+    virtual int ExitInstance ();
 
 protected:
     /** Registry change notification thread main proc */
@@ -71,6 +75,8 @@ protected:
 
     DECLARE_MESSAGE_MAP ()
 public:
+    /** Called when an HID device is inserted/removed */
+    BOOL OnDeviceChange (UINT nEventType, LPTSTR lpcDeviceName);
 };
 
 extern CACDMonApp theApp;

@@ -56,8 +56,7 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
 	0		    /* flags */
 	);
     
-    length += (ULONG) strlen (buffer);
-    LPSTR name = (LPSTR) malloc (length);
+    LPSTR name = (LPSTR) malloc (length + strlen (buffer));
     if (!name)
 	return ENUMPROC_STATUS_CONTINUE;
 
@@ -70,6 +69,7 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
 	0		    /* flags */
 	) != CR_SUCCESS)
 	    return ENUMPROC_STATUS_CONTINUE;
+    name [length - 1] = '\0';
 
     strcat (name, buffer);
     pVCP->m_lpDeviceName = name;
@@ -96,31 +96,35 @@ CACDVirtualCP::~CACDVirtualCP (void)
     delete m_lpDeviceID;
 }
 
-void
+BOOL
 CACDVirtualCP::InitializeFeatures (void)
 {
-    m_bBrightness = m_Device.GetBrightness ();
-    m_bInitialBrightness = m_bBrightness;
+    BOOL bRet = m_Device.GetBrightness (&m_bBrightness);
+    if (bRet)
+	m_bInitialBrightness = m_bBrightness;
+    return bRet;
 }
 
-void
+BOOL
 CACDVirtualCP::Reset (void)
 {
-    if (CheckBrightness ())
-	SetBrightness (m_bInitialBrightness);
-    else
-	InitializeFeatures ();
-
     m_bModified = FALSE;
+
+    if (!CheckBrightness ())
+	return InitializeFeatures ();
+
+    m_bBrightness = m_bInitialBrightness;
+    return m_Device.SetBrightness (m_bBrightness);
 }
 
-void
+BOOL
 CACDVirtualCP::Apply (void)
 {
-    if (CheckBrightness ())
-	m_bInitialBrightness = m_bBrightness;
-    else
-	InitializeFeatures ();
-
     m_bModified = FALSE;
+
+    if (!CheckBrightness ())
+	return InitializeFeatures ();
+
+    m_bInitialBrightness = m_bBrightness;
+    return TRUE;
 }

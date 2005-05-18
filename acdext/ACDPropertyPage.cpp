@@ -23,6 +23,8 @@
 #include "ACDOptionsDlg.h"
 #include "ACDUtil.h"
 
+#include <dbt.h>
+
 // CACDPropertyPage dialog
 
 IMPLEMENT_DYNAMIC (CACDPropertyPage, CPropertyPage)
@@ -46,6 +48,9 @@ void
 CACDPropertyPage::PostNcDestroy ()
 {
     CPropertyPage::PostNcDestroy ();
+
+    UnregisterDeviceNotification (m_hDevNotify);
+
     delete this;
 }
 
@@ -98,17 +103,34 @@ CACDPropertyPage::UpdateControls ()
     GetDlgItem (IDC_MANUFACTURING_DATE)->SetWindowText (buffer);
 }
 
-BOOL
-CACDPropertyPage::OnInitDialog ()
+void
+CACDPropertyPage::InitializeControls ()
 {
-    CPropertyPage::OnInitDialog ();
+    BOOL bShow = m_VirtualControlPanels.GetCount () != 0;
 
-    // initialize the brightness slider range.
-    m_cBrightnessSlider.SetRange (0, 255);
-    // we only need to type 0-100, limit edit text to 3 chars.
-    m_cBrightnessEdit.SetLimitText (3);
+    for (CWnd* child = GetWindow (GW_CHILD);
+	child != NULL;
+        child = child->GetNextWindow ()
+	)
+	child->ShowWindow (bShow);
 
     switch (m_VirtualControlPanels.GetCount ()) {
+    case 0:
+	// no ACD found
+	GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText ("None present");
+	GetDlgItem (IDC_STATIC_VCP)->ShowWindow (SW_SHOW);
+	GetDlgItem (IDC_STATIC_VCP_ICON)->ShowWindow (SW_SHOW);
+	GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_SHOW);
+	return;
+
+    case 1:
+	// one ACD connected
+	m_pCurrentVirtualCP = m_VirtualControlPanels.ElementAt (0);
+	m_cVirtualControlList.ShowWindow (SW_HIDE);
+	GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText (
+	    m_pCurrentVirtualCP->GetDeviceName ());
+	break;
+
     default: 
 	// multiple ACDs connected
 	for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i) {
@@ -125,32 +147,35 @@ CACDPropertyPage::OnInitDialog ()
 	m_cVirtualControlList.SetCurSel (0);
 	GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_HIDE);
 	break;
-
-    case 0:
-	// no ACD found
-	for (
-	    CWnd* child = GetWindow (GW_CHILD);
-	    child != NULL;
-	    child = child->GetNextWindow ()
-	) child->ShowWindow (SW_HIDE);
-
-	GetDlgItem (IDC_STATIC_VCP)->ShowWindow (SW_SHOW);
-	GetDlgItem (IDC_STATIC_VCP_ICON)->ShowWindow (SW_SHOW);
-	GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_SHOW);
-	return TRUE;
-
-    case 1:
-	// one ACD connected
-	m_pCurrentVirtualCP = m_VirtualControlPanels.ElementAt (0);
-	m_cVirtualControlList.ShowWindow (SW_HIDE);
-	GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText (
-	    m_pCurrentVirtualCP->GetDeviceName ());
-	break;
     }
 
     UpdateControls ();
+}
 
-    SetTimer (ACD_SETTINGS_TIMER, 500, 0);
+BOOL
+CACDPropertyPage::OnInitDialog ()
+{
+    DEV_BROADCAST_DEVICEINTERFACE NotificationFilter;
+
+    CPropertyPage::OnInitDialog ();
+
+    // register the HID device notification.
+    ZeroMemory (&NotificationFilter, sizeof (NotificationFilter));
+    NotificationFilter.dbcc_size = sizeof (DEV_BROADCAST_DEVICEINTERFACE);
+    NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
+    HidD_GetHidGuid (&NotificationFilter.dbcc_classguid);
+    m_hDevNotify = RegisterDeviceNotification (
+	m_hWnd, &NotificationFilter, DEVICE_NOTIFY_WINDOW_HANDLE);
+
+    // initialize the brightness slider range.
+    m_cBrightnessSlider.SetRange (0, 255);
+    // we only need to type 0-100, limit edit text to 3 chars.
+    m_cBrightnessEdit.SetLimitText (3);
+
+    InitializeControls ();
+
+    if (m_VirtualControlPanels.GetCount () > 0)
+	SetTimer (ACD_SETTINGS_TIMER, 500, 0);
 
     return TRUE;
 }
@@ -204,6 +229,7 @@ CACDPropertyPage::DoDataExchange (CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP (CACDPropertyPage, CPropertyPage)
+    ON_WM_DEVICECHANGE ()
     ON_WM_HSCROLL ()
     ON_WM_TIMER ()
     ON_BN_CLICKED (IDC_PROPERTIES_BUTTON, OnBnClickedPropertiesButton)
@@ -243,9 +269,9 @@ CACDPropertyPage::OnTimer (UINT nIDEvent)
 {
     if (nIDEvent == ACD_SETTINGS_TIMER) {
 	if (!m_pCurrentVirtualCP->CheckBrightness ()) {
-	    m_pCurrentVirtualCP->Reset ();
 	    SetModified (FALSE);
-	    UpdateControls ();
+	    if (m_pCurrentVirtualCP->Reset ())
+		UpdateControls ();
 	}
     }
     else
@@ -336,4 +362,35 @@ CACDPropertyPage::OnEnChangeBrightnessEdit ()
     m_pCurrentVirtualCP->SetBrightness (brightness);
 
     SetModified (TRUE);
+}
+
+BOOL
+CACDPropertyPage::OnDeviceChange (UINT nEventType, DWORD_PTR dwData)
+{
+    PDEV_BROADCAST_HDR pdb = (PDEV_BROADCAST_HDR) dwData;
+
+    switch (nEventType) {
+    case DBT_DEVICEARRIVAL:
+    case DBT_DEVICEREMOVECOMPLETE:
+	if (pdb->dbch_devicetype != DBT_DEVTYP_DEVICEINTERFACE)
+	    break;
+
+        KillTimer (ACD_SETTINGS_TIMER);
+
+	for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i)
+	    delete m_VirtualControlPanels.ElementAt (i);
+	m_VirtualControlPanels.RemoveAll ();
+
+        CACDVirtualCP::FindKnownVirtualCPs (m_VirtualControlPanels);
+	InitializeControls ();
+        SetModified (FALSE);
+
+	if (m_VirtualControlPanels.GetCount () > 0)
+	    SetTimer (ACD_SETTINGS_TIMER, 500, 0);
+	break;
+
+    default:
+	break;
+    }
+    return CPropertyPage::OnDeviceChange (nEventType, dwData);
 }

@@ -31,6 +31,8 @@ private:
     CACDVirtualCP::CVirtualCPArray m_VirtualControlPanels;
     /** Current virtual control panel */
     CACDVirtualCP* m_pCurrentVirtualCP;
+    /** HID device notification handle */
+    HDEVNOTIFY m_hDevNotify;
 
     /**
      * Member controls:
@@ -58,6 +60,8 @@ public:
 
 protected:
 
+    /** Initalize the dlg controls. */
+    void InitializeControls ();
     /** Update the dlg controls (when the current VCP has changed). */
     void UpdateControls ();
     /** Update the window text for the brightness edit control. */
@@ -88,4 +92,6 @@ public:
     afx_msg void OnBnClickedOptionsButton ();
     /** When text is entered in the brightness edit */
     afx_msg void OnEnChangeBrightnessEdit ();
+    /** Called when an HID device is inserted/removed */
+    afx_msg BOOL OnDeviceChange (UINT nEventType, DWORD_PTR dwData);
 };

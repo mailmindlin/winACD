@@ -66,7 +66,7 @@ private:
     CBitmap	m_bStep;	//!< Bitmap used for each individual steps.
     UINT_PTR	m_nTimer;	//!< Current active timer.
     UINT	m_nOpacity;	//!< Current wnd opacity.
-    UINT	m_nBrightness;	//!< Current ACD(s) brightness.
+    UCHAR	m_nBrightness;	//!< Current ACD(s) brightness.
 
 public:
 
@@ -103,6 +103,8 @@ public:
     afx_msg int OnCreate (LPCREATESTRUCT lpCs);
     /** Called by the framework when the fade timer expires */
     afx_msg void OnTimer (UINT nIDEvent);
+    /** Called when an HID device is inserted/removed */
+    afx_msg BOOL OnDeviceChange (UINT nEventType, DWORD_PTR dwData);
 };
 
 
