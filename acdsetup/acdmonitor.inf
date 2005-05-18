@@ -18,7 +18,7 @@
 ; Apple Cinema (HD) Display Monitor Inf
 ;
 
-; v0.3.0: Removed non-standard modes. The seem to confuse
+; v0.3.0: Removed non-standard modes. They seem to confuse
 ; the display property settings.
 
 ; v0.2.0: ICM is currently disabled. The E-EDID reports
@@ -30,7 +30,7 @@ Signature="$CHICAGO$"
 Class=Monitor
 ClassGuid={4D36E96E-E325-11CE-BFC1-08002BE10318}
 Provider=%WINACD%
-DriverVer=05/16/2005,0.3.0
+DriverVer=05/18/2005,0.3.1
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
@@ -86,25 +86,17 @@ HKR,,MaxResolution,,"2560,1600"
 HKR,,DPMS,,1
 
 [ACD20.AddReg]
-;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"
-;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"
-HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50-61,+,-"
+HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50.0-61.0,+,+"
 HKR,,PreferredMode,,"1680,1050,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
 [ACD23.AddReg]
-;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"
-;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"
-HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,-"
+HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50.0-61.0,+,+"
 HKR,,PreferredMode,,"1920,1200,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
 [ACD30.AddReg]
-;HKR,"MODES\1024,640",Mode1,,"30.0-119.0,50-61,+,+"
-;HKR,"MODES\1280,800",Mode1,,"30.0-119.0,50-61,+,+"
-;HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50-61,+,+"
-;HKR,"MODES\2048,1280",Mode1,,"30.0-119.0,50-61,+,+"
-HKR,"MODES\2560,1600",Mode1,,"30.0-119.0,50-61,+,-"
+HKR,"MODES\2560,1600",Mode1,,"30.0-119.0,50.0-61.0,+,+"
 HKR,,PreferredMode,,"2560,1600,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 

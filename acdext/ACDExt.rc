@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,3,0,0
- PRODUCTVERSION 0,3,0,0
+ FILEVERSION 0,3,1,0
+ PRODUCTVERSION 0,3,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "Apple Cinema Display Control Panel Extension"
-            VALUE "FileVersion", "0, 3, 0, 0"
+            VALUE "FileVersion", "0, 3, 1, 0"
             VALUE "InternalName", "ACDExt.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0, 3, 0, 0"
+            VALUE "ProductVersion", "0, 3, 1, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -109,7 +109,7 @@ IDI_ACDMON              ICON                    "acd.ico"
 // Dialog
 //
 
-IDD_ACD_PROPERTY_PAGE DIALOGEX 20, 20, 252, 177
+IDD_ACD_PROPERTY_PAGE DIALOGEX 20, 20, 252, 175
 STYLE DS_SETFONT | DS_MODALFRAME | DS_NOIDLEMSG | DS_3DLOOK | DS_FIXEDSYS | 
     WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
@@ -117,7 +117,7 @@ CAPTION "Controls"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     GROUPBOX        "Virtual Control Panel",IDC_STATIC_VCP,7,3,237,52
-    ICON            IDI_ACDMON,IDC_STATIC_VCP_ICON,13,12,20,20
+    ICON            IDI_ACDMON,IDC_STATIC_VCP_ICON,13,12,21,20
     LTEXT           "None present",IDC_VIRTUAL_CONTROL,40,17,197,8,NOT 
                     WS_GROUP
     LISTBOX         IDC_VIRTUAL_CONTROL_LIST,40,13,197,19,LBS_SORT | 
@@ -147,7 +147,7 @@ BEGIN
                     WS_GROUP
     LTEXT           "Not Available",IDC_MANUFACTURING_DATE,87,133,150,8,NOT 
                     WS_GROUP
-    PUSHBUTTON      "Options...",IDC_OPTIONS_BUTTON,7,156,75,14
+    PUSHBUTTON      "Options...",IDC_OPTIONS_BUTTON,7,154,75,14
 END
 
 IDD_ACD_OPTIONS_DIALOG DIALOGEX 0, 0, 265, 220
@@ -197,7 +197,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 244
         TOPMARGIN, 2
-        BOTTOMMARGIN, 170
+        BOTTOMMARGIN, 168
     END
 
     IDD_ACD_OPTIONS_DIALOG, DIALOG
