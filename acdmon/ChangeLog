@@ -1,3 +1,9 @@
+2005-05-18 Laurent Morichetti <l_m@pacbell.net>
+	* ACDBrightnessWnd.cpp:
+	* ACDBrightnessWnd.h:
+	* ACDMon.cpp:
+	* ACDMond.h: Added support for DeviceInterfaceChange notification.
+
 2005-05-17 Laurent Morichetti <l_m@pacbell.net>
 	* ACDMon.cpp: Break an infinite loop if RegNotifyChangeKeyValue fails.
 

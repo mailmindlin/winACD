@@ -1,3 +1,8 @@
+2005-05-18 Laurent Morichetti <l_m@pacbell.net>
+	* ACDHidDev.h:
+	* ACDMgr.cpp:
+	* ACDPower.cpp: Added support for DeviceInterfaceChange notification.
+
 2005-05-16 Laurent Morichetti <l_m@pacbell.net>
 	* ACDHidDev.h:
 	* ACDMgr.cpp: Support for ACDPower service install/uninstall.

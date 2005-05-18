@@ -1,3 +1,9 @@
+2005-05-18 Laurent Morichetti <l_m@pacbell.net>
+	* ACDVirtualCP.h:
+	* ACDVirtualCP.cpp:
+	* ACDPropertyPage.hpp: 
+	* ACDPropertyPage.cpp: Added support for DeviceInterfaceChange notification.
+
 2005-05-16 Laurent Morichetti <l_m@pacbell.net>
 	* ACDExt.rc: Increased revision number.
 
