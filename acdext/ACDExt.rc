@@ -166,7 +166,7 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,13,124,95,10
     LTEXT           "When I press the power button on my monitor:",
                     IDC_STATIC,13,51,154,8
-    COMBOBOX        IDC_POWER_ACTION_COMBO,13,63,238,30,CBS_DROPDOWN | 
+    COMBOBOX        IDC_POWER_ACTION_COMBO,13,63,238,30,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     ICON            IDI_ACDMON,IDC_STATIC,14,10,20,20
     LTEXT           "Select the monitor power button action you wish to use. If multiple monitor controls are connected, the same action will be executed from any of the power buttons.",
