@@ -303,28 +303,14 @@ CACDPropertyPage::OnBnClickedOptionsButton ()
     if (dlg.DoModal () != IDOK)
 	return;
 
-    UCHAR bDisabledButtons = ACDUtil::GetDisabledButtonsPref ();
-    ACDPowerButtonAction iAction =
-	ACDUtil::GetPowerButtonActionPref ();
+    UCHAR bFlags, bMask;
+    ACDUtil::GetFlagsFromPrefs (bFlags, bMask);
 
     for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i) {
 	CACDHidDevice& Device = m_VirtualControlPanels.ElementAt (i)
 	    ->GetDevice ();
-	UCHAR bFlags = Device.GetFlags ();
 
-	if (iAction != ACD_POWER_BUTTON_DO_NOTHING || bDisabledButtons != 0)
-	    bFlags |= CACDHidDevice::ACD_FLAGS_MANAGED_PANEL;
-
-	if (iAction == ACD_POWER_BUTTON_DO_NOTHING)
-	    bFlags &= ~CACDHidDevice::ACD_FLAGS_MANAGED_POWER;
-	else
-	    bFlags |= CACDHidDevice::ACD_FLAGS_MANAGED_POWER;
-
-	const UCHAR bMask = CACDHidDevice::ACD_FLAGS_BRIGHTNESS_BUTTON
-	    | CACDHidDevice::ACD_FLAGS_POWER_BUTTON;
-	bFlags = (bFlags & ~bMask) | (bDisabledButtons ^ bMask);
-
-	Device.SetFlags (bFlags);
+	Device.SetFlags (Device.GetFlags () & ~bMask | bFlags);
     }
 }
 

@@ -20,6 +20,9 @@
 
 namespace ACDUtil
 {
+    /** Set the flags and mask from the registry prefs. */
+    void GetFlagsFromPrefs (UCHAR& bFlags, UCHAR& bMask);
+
     /**
      * Registry functions:
      */

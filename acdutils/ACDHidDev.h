@@ -148,6 +148,12 @@ public:
 	IN CHelper&
 	);
 
+    /** Return the HID device handle */
+    HANDLE GetHandle (void) const
+    {
+	return m_hDevice;
+    }
+
     /** Return the manufacturer's product string */
     void GetProductString (
 	OUT PVOID pBuffer,

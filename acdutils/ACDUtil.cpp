@@ -183,3 +183,25 @@ ACDUtil::SetForceShutdownPref (BOOL bForce)
 	RegCloseKey (hKey);
     }
 }
+
+void
+ACDUtil::GetFlagsFromPrefs (UCHAR& bFlags, UCHAR& bMask)
+{
+    UCHAR bDisabledButtons = ACDUtil::GetDisabledButtonsPref ();
+    ACDPowerButtonAction iAction = ACDUtil::GetPowerButtonActionPref ();
+
+    bFlags = 0;
+    if (iAction != ACD_POWER_BUTTON_DO_NOTHING || bDisabledButtons != 0)
+	bFlags |= CACDHidDevice::ACD_FLAGS_MANAGED_PANEL;
+
+    if (iAction == ACD_POWER_BUTTON_DO_NOTHING)
+	bFlags &= ~CACDHidDevice::ACD_FLAGS_MANAGED_POWER;
+    else
+	bFlags |= CACDHidDevice::ACD_FLAGS_MANAGED_POWER;
+
+    bFlags |= bDisabledButtons
+	^ CACDHidDevice::ACD_FLAGS_BUTTONS_MASK_IN_PLACE;
+    bMask = CACDHidDevice::ACD_FLAGS_BUTTONS_MASK_IN_PLACE
+	| CACDHidDevice::ACD_FLAGS_MANAGED_PANEL_MASK_IN_PLACE
+	| CACDHidDevice::ACD_FLAGS_MANAGED_POWER_MASK_IN_PLACE;
+}
