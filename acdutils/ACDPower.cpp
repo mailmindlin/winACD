@@ -88,8 +88,13 @@ ACDDoPowerButtonAction ()
 
 DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 {
-    HANDLE hDevice = (HANDLE) pParam;
+    CACDHidDevice* pDevice = (CACDHidDevice*) pParam;
 
+    UCHAR bFlags, bMask;
+    ACDUtil::GetFlagsFromPrefs (bFlags, bMask);
+    pDevice->SetFlags (pDevice->GetFlags () & ~bMask | bFlags);
+
+    HANDLE hDevice = pDevice->GetHandle ();
     while (TRUE) {
 	DWORD dwBytesRead;
 	char report [2];
@@ -101,7 +106,7 @@ DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 	    ACDDoPowerButtonAction ();
     }
 
-    CloseHandle (hDevice);
+    delete pDevice;
     return 0;
 }
 
@@ -114,7 +119,7 @@ struct EnumHelper : CACDHidDevice::EnumHelper
 	    return status;
 
 	DWORD dwThreadID;
-	CreateThread (0, 0, ACDServiceThreadProc, m_hDevice, 0, &dwThreadID);
+	CreateThread (0, 0, ACDServiceThreadProc, pDevice, 0, &dwThreadID);
 
 	return ENUMPROC_STATUS_SUCCESS;
     }
