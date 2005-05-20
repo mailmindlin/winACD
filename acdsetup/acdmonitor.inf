@@ -30,7 +30,7 @@ Signature="$CHICAGO$"
 Class=Monitor
 ClassGuid={4D36E96E-E325-11CE-BFC1-08002BE10318}
 Provider=%WINACD%
-DriverVer=05/18/2005,0.3.1
+DriverVer=05/20/2005,0.3.2.1
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
