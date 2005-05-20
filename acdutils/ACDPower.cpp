@@ -205,7 +205,7 @@ ACDHandleDeviceArrival (PDEV_BROADCAST_HDR pdb)
     }
 
     DWORD dwThreadID;
-    CreateThread (0, 0, ACDServiceThreadProc, hDevice, 0, &dwThreadID);
+    CreateThread (0, 0, ACDServiceThreadProc, pDevice, 0, &dwThreadID);
 }
 
 DWORD WINAPI
