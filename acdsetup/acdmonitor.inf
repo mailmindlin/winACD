@@ -53,6 +53,7 @@ DefaultDestDir=11
 [APPLE_MON]
 %Monitor\APP921D%=ACD20.Install, Monitor\APP921D
 %Monitor\APP921E%=ACD23.Install, Monitor\APP921E
+%Monitor\APP921F%=ACD23.Install, Monitor\APP921F
 %Monitor\APP9220%=ACD30.Install, Monitor\APP9220
 
 [ACD20.Install]
@@ -106,4 +107,5 @@ APPLE			= "Apple Computer, Inc."
 MonitorClassName	= "Monitor"
 Monitor\APP921D		= "Apple Cinema Display 20-inch"
 Monitor\APP921E		= "Apple Cinema HD Display 23-inch"
+Monitor\APP921F		= "Apple Cinema HD Display 23-inch"
 Monitor\APP9220		= "Apple Cinema HD Display 30-inch"

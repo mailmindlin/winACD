@@ -40,6 +40,7 @@ ACD_Inst.CopyFilesDLL.NT = 11
 [APPLE_HID]
 %USB\VID_05AC&PID_921D.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921D
 %USB\VID_05AC&PID_921E.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921E
+%USB\VID_05AC&PID_921F.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921F
 %USB\VID_05AC&PID_9220.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9220
 
 [ACD_Inst.NT]
@@ -95,6 +96,7 @@ ACD.DiskID	= "Apple Cinema Display HID Device Installation Disk"
 
 USB\VID_05AC&PID_921D.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_921E.DeviceDesc = "Apple HID Monitor Controls"
+USB\VID_05AC&PID_921F.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9220.DeviceDesc = "Apple HID Monitor Controls"
 
 SERVICE_KERNEL_DRIVER = 1
