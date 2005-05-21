@@ -17,8 +17,6 @@
 #include "ACDHidDev.h"
 #include "ACDEdid.h"
 
-#include <assert.h>
-
 CUSBMonitorHidDevice::CUSBMonitorHidDevice (
     HANDLE hDevice,
     PHIDP_PREPARSED_DATA pPpd
@@ -30,14 +28,14 @@ CUSBMonitorHidDevice::CUSBMonitorHidDevice (
 
     if (pPpd == NULL) {
 	ret = HidD_GetPreparsedData (hDevice, &m_pPpd);
-	assert (ret);
+	ASSERT (ret);
     }
 
     ret = HidD_GetAttributes (hDevice, &m_Attributes);
-    assert (ret);
+    ASSERT (ret);
 
     status = HidP_GetCaps (m_pPpd, &m_Caps);
-    assert (status == HIDP_STATUS_SUCCESS);
+    ASSERT (status == HIDP_STATUS_SUCCESS);
 
     // TODO: initialize the inputs data.
     m_pInputValueCaps = NULL;
@@ -50,7 +48,7 @@ CUSBMonitorHidDevice::CUSBMonitorHidDevice (
     // TODO: initialize the features data
     m_pFeatureValueCaps = NULL;
     m_pFeatureReportBuffer = new CHAR [m_Caps.FeatureReportByteLength];
-    assert (m_pFeatureReportBuffer != NULL);
+    ASSERT (m_pFeatureReportBuffer != NULL);
 }
 
 

@@ -22,7 +22,6 @@
 #include "ACDBrightnessWnd.h"
 #include "ACDUtil.h"
 
-#include <assert.h>
 #include <dbt.h>
 
 // CBrightnessWnd
@@ -80,7 +79,7 @@ CACDBrightnessWnd::PreCreateWindow (CREATESTRUCT& cs)
 void
 CACDBrightnessWnd::SetOpacity (int opacity)
 {
-    assert (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
 
     // range is [0-100]
     m_nOpacity = max (0, min (opacity, 100));
@@ -172,7 +171,7 @@ CACDBrightnessWnd::OnCreate (LPCREATESTRUCT lpCs)
 LRESULT
 CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 {
-    assert (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
 
     int from, to;
 
@@ -225,7 +224,7 @@ CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 void
 CACDBrightnessWnd::OnTimer (UINT nIDEvent) 
 {
-    assert (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
 
     if (nIDEvent == ACD_FADE_WND_TIMER_START) {
 	KillTimer (ACD_FADE_WND_TIMER_START);
@@ -258,7 +257,7 @@ CACDBrightnessWnd::OnTimer (UINT nIDEvent)
 LRESULT
 CACDBrightnessWnd::OnInitHotKeys (WPARAM wParam, LPARAM lParam)
 {
-    assert (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
 
     DWORD dwIncreaseHotKey = ACDUtil::GetHotKeyPref (TRUE);
     WORD wVirtualKeyCode, wModifiers;

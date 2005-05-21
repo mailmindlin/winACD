@@ -24,7 +24,6 @@
 # define new DEBUG_NEW
 #endif
 
-#include <assert.h>
 #include <dbt.h>
 
 // CACDMonApp
