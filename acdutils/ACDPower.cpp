@@ -96,13 +96,14 @@ DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 
     HANDLE hDevice = pDevice->GetHandle ();
     while (TRUE) {
-	DWORD dwBytesRead;
-	char report [2];
+	DWORD dwBytesRead = 0;
+	UCHAR pbReport [2];
 
-	if (!ReadFile (hDevice, report, sizeof (report), &dwBytesRead, NULL))
+	pbReport [0] = pbReport [1] = '\0';
+	if (!ReadFile (hDevice, pbReport, sizeof (pbReport), &dwBytesRead, NULL))
 	    break;
 
-	if (report [1] == 0x0A)
+	if (dwBytesRead == 2 && pbReport [1] == 0x0A)
 	    ACDDoPowerButtonAction ();
     }
 

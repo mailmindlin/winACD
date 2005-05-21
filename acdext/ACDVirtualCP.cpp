@@ -56,22 +56,28 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
 	0		    /* flags */
 	);
     
-    LPSTR name = (LPSTR) malloc (length + strlen (buffer));
+    const char* lpcVirtualPanel = "Virtual Panel on ";
+    LPSTR name = (LPSTR) malloc (
+	strlen (lpcVirtualPanel) + length + strlen (buffer));
     if (!name)
 	return ENUMPROC_STATUS_CONTINUE;
 
+    name [0] = '\0';
+    strcat (name, lpcVirtualPanel);
+
+    char *start = &name [strlen (name)];
     if (CM_Get_DevNode_Registry_Property (
 	devInst,	    /* devInst */
 	CM_DRP_DEVICEDESC,  /* property */
 	NULL,		    /* registry data type */
-	name,		    /* buffer */
+	start,		    /* buffer */
 	&length,	    /* length */
 	0		    /* flags */
 	) != CR_SUCCESS)
 	    return ENUMPROC_STATUS_CONTINUE;
-    name [length - 1] = '\0';
+    start [length - 1] = '\0';
 
-    strcat (name, buffer);
+    strcat (start, buffer);
     pVCP->m_lpDeviceName = name;
 
     if (CM_Get_Device_ID (
