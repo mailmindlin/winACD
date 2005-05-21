@@ -545,18 +545,18 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:WinACD 0.3.2"
-        "ProductCode" = "8:{C19F3C98-CEE9-41E1-93D0-FE69054BD62D}"
-        "PackageCode" = "8:{AA142F44-2BD1-429F-A5CB-FD50A62A2B30}"
+        "ProductName" = "8:WinACD 0.3.3"
+        "ProductCode" = "8:{6DEFA5F5-90F7-4836-9DE1-D1B2DECAE569}"
+        "PackageCode" = "8:{B2004BB0-CF93-4C2A-9E84-6FCE5A9EBAF5}"
         "UpgradeCode" = "8:{17D2E5C3-CEF4-4E15-B5CB-F512E128FDF7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:0.3.2"
+        "ProductVersion" = "8:0.3.3"
         "Manufacturer" = "8:WinACD"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:WinACD 0.3.2"
+        "Title" = "8:WinACD 0.3.3"
         "Subject" = "8:"
         "ARPCONTACT" = "8:WinACD"
         "Keywords" = "8:"
@@ -1245,7 +1245,7 @@
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
             {
-            "SourcePath" = "8:..\\acdmon\\Debug\\acdmon.exe"
+            "SourcePath" = "8:..\\acdmon\\Release\\acdmon.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1273,7 +1273,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_205D82AEA7754DE89270DF25DEFF566E"
             {
-            "SourcePath" = "8:..\\acdutils\\Debug\\acdmgr.exe"
+            "SourcePath" = "8:..\\acdutils\\Release\\acdmgr.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1301,7 +1301,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_2D4E7207322B495ABD2871AC7C521FC7"
             {
-            "SourcePath" = "8:..\\acdext\\Debug\\acdext.dll"
+            "SourcePath" = "8:..\\acdext\\Release\\acdext.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1329,7 +1329,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_387F0105DCEC4B2B8B574EA91DDD454A"
             {
-            "SourcePath" = "8:..\\acdfilter\\objchk_wxp_x86\\i386\\acdfilter.sys"
+            "SourcePath" = "8:..\\acdfilter\\objfre_wxp_x86\\i386\\acdfilter.sys"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
@@ -1385,7 +1385,7 @@
             }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_744E024B19CE431B87DBB2B00BE42186"
             {
-            "SourcePath" = "8:..\\acdutils\\Debug\\acdpower.exe"
+            "SourcePath" = "8:..\\acdutils\\Release\\acdpower.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_2415DBAAF96C41B8AB7E3175FF3D62D7"
