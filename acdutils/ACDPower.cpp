@@ -103,9 +103,13 @@ DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 	if (!ReadFile (hDevice, pbReport, sizeof (pbReport), &dwBytesRead, NULL))
 	    break;
 
-	if (dwBytesRead == 2 && pbReport [1] == 0x0A)
+	if (dwBytesRead == 2 && pbReport [1] == 0x0A) {
 	    ACDDoPowerButtonAction ();
-    }
+
+	    // Delete all the pending input reports
+	    HidD_FlushQueue (hDevice);
+	}
+    } 
 
     delete pDevice;
     return 0;
