@@ -51,10 +51,17 @@ DefaultDestDir=11
 %APPLE%=APPLE_MON
 
 [APPLE_MON]
+%Monitor\APP9217%=ACD17.Install, Monitor\APP9217
+%Monitor\APP9219%=ACD20.Install, Monitor\APP9219
+%Monitor\APP9218%=ACD23.Install, Monitor\APP9218
 %Monitor\APP921D%=ACD20.Install, Monitor\APP921D
 %Monitor\APP921E%=ACD23.Install, Monitor\APP921E
 %Monitor\APP921F%=ACD23.Install, Monitor\APP921F
 %Monitor\APP9220%=ACD30.Install, Monitor\APP9220
+
+[ACD17.Install]
+DelReg=ACD.DelReg
+AddReg=ACD17.AddReg, 1280, DPMS
 
 [ACD20.Install]
 DelReg=ACD.DelReg
@@ -74,6 +81,9 @@ HKR,,MaxResolution
 HKR,,DPMS
 HKR,,ICMProfile
 
+[1280]
+HKR,,MaxResolution,,"1280,1024"
+
 [1680]
 HKR,,MaxResolution,,"1680,1050"
 
@@ -85,6 +95,11 @@ HKR,,MaxResolution,,"2560,1600"
 
 [DPMS]
 HKR,,DPMS,,1
+
+[ACD17.AddReg]
+HKR,"MODES\1280,1024",Mode1,,"30.0-119.0,50.0-61.0,+,+"
+HKR,,PreferredMode,,"1280,1024,60"
+;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
 [ACD20.AddReg]
 HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50.0-61.0,+,+"
@@ -105,6 +120,9 @@ HKR,,PreferredMode,,"2560,1600,60"
 WINACD			= "WinACD"
 APPLE			= "Apple Computer, Inc."
 MonitorClassName	= "Monitor"
+Monitor\APP9217		= "Apple Studio Display 17-inch"
+Monitor\APP9219		= "Apple Cinema Display 20-inch"
+Monitor\APP9218		= "Apple Cinema HD Display 23-inch"
 Monitor\APP921D		= "Apple Cinema Display 20-inch"
 Monitor\APP921E		= "Apple Cinema HD Display 23-inch"
 Monitor\APP921F		= "Apple Cinema HD Display 23-inch"
