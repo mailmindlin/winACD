@@ -34,6 +34,7 @@ extern "C" {
 
 static SERVICE_STATUS_HANDLE hServiceStatus; 
 static HANDLE hShutdownEvent;
+static HDEVNOTIFY hDevNotify;
 
 void
 ACDDoPowerButtonAction ()
@@ -226,6 +227,7 @@ ACDPowerServiceCtrlHandler (DWORD dwControl, DWORD dwEventType,
 
 	// signal the service main
 	SetEvent (hShutdownEvent);
+	UnregisterDeviceNotification (hDevNotify);
 
 	ACDSetPowerServiceStatus (
 	    SERVICE_STOPPED, NO_ERROR, 0, 0, 0
@@ -262,9 +264,9 @@ ACDPowerServiceMain (DWORD argc, LPTSTR *argv)
     NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
     HidD_GetHidGuid (&NotificationFilter.dbcc_classguid);
 
-    if (!RegisterDeviceNotification (
-	hServiceStatus, &NotificationFilter, DEVICE_NOTIFY_SERVICE_HANDLE
-	))
+    hDevNotify = RegisterDeviceNotification (
+	hServiceStatus, &NotificationFilter, DEVICE_NOTIFY_SERVICE_HANDLE);
+    if (!hDevNotify)
 	return;
 
     if (!ACDSetPowerServiceStatus (
