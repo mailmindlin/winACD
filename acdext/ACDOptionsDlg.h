@@ -27,6 +27,9 @@ class CACDOptionsDialog : public CDialog
 
 private:
 
+    /** Array of virtual control panels currently connected */
+    CACDVirtualCP::CVirtualCPArray& m_VirtualControlPanels;
+
     /**
      * Member controls:
      */
@@ -40,7 +43,10 @@ private:
     
 public:
     /** Constructor. */
-    CACDOptionsDialog (CWnd* pParent = NULL);
+    CACDOptionsDialog (
+	CACDVirtualCP::CVirtualCPArray& cArray,
+	CWnd* pParent = NULL
+	);
     /** Destructor. */
     virtual ~CACDOptionsDialog ();
 

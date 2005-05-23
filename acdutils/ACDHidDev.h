@@ -202,6 +202,10 @@ protected:
 
     /** Supported cinema display product ids */
     enum ProductID {
+	CLEAR_STUDIO_DISPLAY_17INCH		= 0x9217,
+	CLEAR_CINEMA_DISPLAY_20INCH		= 0x9219,
+	CLEAR_CINEMA_HD_DISPLAY_23INCH		= 0x9218,
+
 	ALUMINUM_CINEMA_DISPLAY_20INCH		= 0x921D,
 	ALUMINUM_CINEMA_HD_DISPLAY_23INCH	= 0x921E,
 	ALUMINUM_CINEMA_HD_DISPLAY_23INCH_X	= 0x921F,
@@ -250,13 +254,25 @@ public:
 	) : CUSBMonitorHidDevice (hDevice, pPpd)
     { }
 
-    /** Return TRUE if this HidDevice is a supported Cinema Display model. */
-    BOOL IsSupportedCinemaDisplay () const
+    /** return TRUE if this is a clear cinema display */
+    BOOL IsSupportedClearCinemaDisplay () const
     {
-	if (GetDeviceVendorID () != APPLE_VENDORID)
-	    return FALSE;
-
 	switch (GetDeviceProductID ()) {
+	/* Clear enclosure models: */
+	case CLEAR_STUDIO_DISPLAY_17INCH:
+	case CLEAR_CINEMA_DISPLAY_20INCH:
+	case CLEAR_CINEMA_HD_DISPLAY_23INCH:
+	    return TRUE;
+	default:
+	    return FALSE;
+	}
+    }
+
+    /** return TRUE if this is an aluminum cinema display */
+    BOOL IsSupportedAluminumCinemaDisplay () const
+    {
+	switch (GetDeviceProductID ()) {
+	/* All aluminum models: */
 	case ALUMINUM_CINEMA_DISPLAY_20INCH:
 	case ALUMINUM_CINEMA_HD_DISPLAY_23INCH:
 	case ALUMINUM_CINEMA_HD_DISPLAY_23INCH_X:
@@ -265,6 +281,16 @@ public:
 	default:
 	    return FALSE;
 	}
+    }
+
+    /** Return TRUE if this HidDevice is a supported Cinema Display model */
+    BOOL IsSupportedCinemaDisplay () const
+    {
+	if (GetDeviceVendorID () != APPLE_VENDORID)
+	    return FALSE;
+
+	return IsSupportedAluminumCinemaDisplay ()
+	    || IsSupportedClearCinemaDisplay ();
     }
 
     /** Return the display's brightness */

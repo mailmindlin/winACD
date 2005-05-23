@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,3,3,0
- PRODUCTVERSION 0,3,3,0
+ FILEVERSION 0,3,4,0
+ PRODUCTVERSION 0,3,4,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "Apple Cinema Display Control Panel Extension"
-            VALUE "FileVersion", "0, 3, 3, 0"
+            VALUE "FileVersion", "0, 3, 4, 0"
             VALUE "InternalName", "ACDExt.dll"
             VALUE "LegalCopyright", "GNU General Public License"
             VALUE "OriginalFilename", "acdext.dll"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0, 3, 3, 0"
+            VALUE "ProductVersion", "0, 3, 4, 0"
         END
     END
     BLOCK "VarFileInfo"
@@ -158,14 +158,15 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,153,199,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,208,199,50,14
-    GROUPBOX        "Power Button",IDC_STATIC,7,40,251,57
-    GROUPBOX        "Monitor Control Options",IDC_STATIC,7,100,251,40
+    GROUPBOX        "Power Button",IDC_POWER_BUTTON_GROUP,7,40,251,57
+    GROUPBOX        "Monitor Control Options",IDC_MONITOR_CONTROL_GROUP,7,
+                    100,251,40
     CONTROL         "Disable the brightness buttons",IDC_DISABLE_BRIGHTNESS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,111,113,10
     CONTROL         "Disable the power button",IDC_DISABLE_POWER,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,13,124,95,10
     LTEXT           "When I press the power button on my monitor:",
-                    IDC_STATIC,13,51,154,8
+                    IDC_POWER_COMBO_STATIC,13,51,154,8
     COMBOBOX        IDC_POWER_ACTION_COMBO,13,63,238,30,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP
     ICON            IDI_ACDMON,IDC_STATIC,14,10,20,20

@@ -299,7 +299,7 @@ CACDPropertyPage::OnBnClickedPropertiesButton ()
 void
 CACDPropertyPage::OnBnClickedOptionsButton ()
 {
-    CACDOptionsDialog dlg (this);
+    CACDOptionsDialog dlg (m_VirtualControlPanels, this);
     if (dlg.DoModal () != IDOK)
 	return;
 
@@ -310,7 +310,8 @@ CACDPropertyPage::OnBnClickedOptionsButton ()
 	CACDHidDevice& Device = m_VirtualControlPanels.ElementAt (i)
 	    ->GetDevice ();
 
-	Device.SetFlags (Device.GetFlags () & ~bMask | bFlags);
+	if (Device.IsSupportedAluminumCinemaDisplay ())
+	    Device.SetFlags (Device.GetFlags () & ~bMask | bFlags);
     }
 }
 

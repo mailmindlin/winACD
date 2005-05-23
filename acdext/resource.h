@@ -31,6 +31,9 @@
 #define IDC_HOTKEY_INCREASE             218
 #define IDC_HOTKEY_DECREASE             219
 #define IDC_FORCE_SHUTDOWN              220
+#define IDC_POWER_BUTTON_GROUP          221
+#define IDC_POWER_COMBO_STATIC          222
+#define IDC_MONITOR_CONTROL_GROUP       223
 
 // Next default values for new objects
 // 
@@ -38,7 +41,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32768
-#define _APS_NEXT_CONTROL_VALUE         221
+#define _APS_NEXT_CONTROL_VALUE         224
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif
