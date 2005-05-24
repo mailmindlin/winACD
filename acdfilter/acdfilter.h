@@ -48,6 +48,8 @@ typedef struct _DEVICE_EXTENSION {
 
     IO_REMOVE_LOCK removeLock;
 
+    USHORT idProduct;
+
 } DEVICE_EXTENSION, *PDEVICE_EXTENSION;
 
 typedef struct _ACD_CONFIGURATION_DESCRIPTOR {
@@ -57,7 +59,7 @@ typedef struct _ACD_CONFIGURATION_DESCRIPTOR {
     HID_DESCRIPTOR			Hid0;
     USB_ENDPOINT_DESCRIPTOR		EndPoint1;
 
-} ACD_CONFIGURATION_DESCRIPTOR, *ACD_PCONFIGURATION_DESCRIPTOR;
+} ACD_CONFIGURATION_DESCRIPTOR, *PACD_CONFIGURATION_DESCRIPTOR;
 
 NTSTATUS
 DriverEntry (
@@ -129,7 +131,6 @@ ACD_CacheStringDescriptors (
     IN OUT PDEVICE_EXTENSION DeviceExt
     );
 
-
 NTSTATUS
 ACD_GetStringDescriptor (
     IN PDEVICE_OBJECT LowerDeviceObject,
@@ -138,5 +139,11 @@ ACD_GetStringDescriptor (
     IN ULONG Size
     );
 
+NTSTATUS
+ACD_GetDeviceDescriptor (
+    IN PDEVICE_OBJECT LowerDeviceObject,
+    IN OUT PUSB_DEVICE_DESCRIPTOR pDescriptor,
+    IN ULONG Size
+    );
 
 #endif /* !defined _ACD_FILTER_H_ */
