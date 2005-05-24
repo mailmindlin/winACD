@@ -310,7 +310,7 @@ CACDPropertyPage::OnBnClickedOptionsButton ()
 	CACDHidDevice& Device = m_VirtualControlPanels.ElementAt (i)
 	    ->GetDevice ();
 
-	if (Device.IsSupportedAluminumCinemaDisplay ())
+	if (Device.IsAluminumCinemaDisplay ())
 	    Device.SetFlags (Device.GetFlags () & ~bMask | bFlags);
     }
 }

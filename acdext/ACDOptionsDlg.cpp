@@ -101,7 +101,7 @@ CACDOptionsDialog::OnInitDialog ()
     BOOL bIsAluminum = FALSE;
     for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i)
 	bIsAluminum |= m_VirtualControlPanels.ElementAt (i)
-	    ->GetDevice ().IsSupportedAluminumCinemaDisplay ();
+	    ->GetDevice ().IsAluminumCinemaDisplay ();
 
     if (!bIsAluminum) {
 	GetDlgItem (IDC_POWER_BUTTON_GROUP)->EnableWindow (FALSE);
