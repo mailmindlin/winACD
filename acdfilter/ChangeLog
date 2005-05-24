@@ -1,18 +1,23 @@
-2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+2005-05-23 Laurent Morichetti <l_m@users.sourceforge.net>
+	* ACDFilter.vcproj: Added acddescriptors.c
+	* acdfilter.c: Added new hid descriptor for the clear cinema displays
+	* acddescriptors.c: Initial commit	
+
+2005-05-16 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDFilter.vcproj: Fixed acdmonitor.inf.
 	* acdfilter.rc:
 	* acdhid.inf:
 	* acdmonitor.inf: Increased revision number.
 
-2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+2005-05-16 Laurent Morichetti <l_m@users.sourceforge.net>
 	* WinACD 0.2.1 refresh.
 
-2005-05-05 Laurent Morichetti <l_m@pacbell.net>
+2005-05-05 Laurent Morichetti <l_m@users.sourceforge.net>
 	* acdfilter.rc: Increased revision number, added missing ver info.
 	* acdhid.inf:
 	* acdmonitor.inf: Increased revision number
 
-2005-05-01 Laurent Morichetti <l_m@pacbell.net>
+2005-05-01 Laurent Morichetti <l_m@users.sourceforge.net>
 	* acdfilter.c:
 	* acdhid.inf:
 	* acdfilter.rc:
@@ -27,25 +32,25 @@
 	Acdfilter.vcproj is a Makefile project which calls ddkbuild.bat.
 
 
-2005-04-26 Laurent Morichetti <l_m@pacbell.net>
+2005-04-26 Laurent Morichetti <l_m@users.sourceforge.net>
 	* acdfilter.[c|h]: Added string descriptor caching. The device seems
 	to lock up if the TransbufferBufferLength exceeds the length of the desc.
 	Fixed a couple of problems with the IoStatus.Status value (should now
 	pass the WHQL universal tests).
 	* acdfilter.rc: Increased revision number.
 
-2005-04-24 Laurent Morichetti <l_m@pacbell.net>
+2005-04-24 Laurent Morichetti <l_m@users.sourceforge.net>
 	* acdfilter.c: Fixed incorrect report counts.
 	* acdfilter.rc: Increased revision number.
 
-2005-04-21 Laurent Morichetti <l_m@pacbell.net>
+2005-04-21 Laurent Morichetti <l_m@users.sourceforge.net>
 	* acdfilter.c: Added reports 0xE1, 0xE3 and 0xE8 to the HID descriptor.
 	* acdfilter.rc: Increased revision number.
 	* acdhid.inf: Changed provider string to WinACD, Increased revision number.
 
-2005-04-19 Laurent Morichetti <l_m@pacbell.net>
+2005-04-19 Laurent Morichetti <l_m@users.sourceforge.net>
 	* acdfilter.[c|h|rc]: Fixed indentation (for tab=8).
 	* acdhid.inf: Initial commit.
 
-2005-04-16 Laurent Morichetti <l_m@pacbell.net>
+2005-04-16 Laurent Morichetti <l_m@users.sourceforge.net>
 	* Initial commit.

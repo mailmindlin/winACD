@@ -1,15 +1,21 @@
-2005-05-18 Laurent Morichetti <l_m@pacbell.net>
+2005-05-23 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDBrightnessWnd.cpp:
 	* ACDBrightnessWnd.h:
 	* ACDMon.cpp:
-	* ACDMond.h: Added support for DeviceInterfaceChange notification.
+	* ACDMon.h: Support for BnClicked broadcast messages.
 
-2005-05-17 Laurent Morichetti <l_m@pacbell.net>
+2005-05-18 Laurent Morichetti <l_m@users.sourceforge.net>
+	* ACDBrightnessWnd.cpp:
+	* ACDBrightnessWnd.h:
+	* ACDMon.cpp:
+	* ACDMon.h: Added support for DeviceInterfaceChange notification.
+
+2005-05-17 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDMon.cpp: Break an infinite loop if RegNotifyChangeKeyValue fails.
 
-2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+2005-05-16 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDBrightnessWnd.cpp: Fix to reduce wnd flickering
 	* ACDMon.rc: Increase revision number.
 
-2005-05-05 Laurent Morichetti <l_m@pacbell.net>
+2005-05-05 Laurent Morichetti <l_m@users.sourceforge.net>
 	* Initial commit.

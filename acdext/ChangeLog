@@ -1,16 +1,21 @@
-2005-05-18 Laurent Morichetti <l_m@pacbell.net>
+2005-05-23 Laurent Morichetti <l_m@users.sourceforge.net>
+	* ACDOptionsDlg.cpp:
+	* ACDPropertyPage.cpp: Cleanups.
+	* ACDExt.rc: Increased revision number.
+
+2005-05-18 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDVirtualCP.h:
 	* ACDVirtualCP.cpp:
 	* ACDPropertyPage.hpp: 
 	* ACDPropertyPage.cpp: Added support for DeviceInterfaceChange notification.
 
-2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+2005-05-16 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDExt.rc: Increased revision number.
 
-2005-05-16 Laurent Morichetti <l_m@pacbell.net>
+2005-05-16 Laurent Morichetti <l_m@users.sourceforge.net>
 	* WinACD 0.2.1 refresh (now using MFC).
 
-2005-05-05 Laurent Morichetti <l_m@pacbell.net>
+2005-05-05 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDHidDev.[cpp|h]: Moved to the ACDUtils library.
 
 	* acd.ico: Inital commit.
@@ -22,7 +27,7 @@
 	* ACDShlExt.cpp: New property page layout. Added Options dialog.
 
 
-2005-05-01 Laurent Morichetti <l_m@pacbell.net>
+2005-05-01 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDExt.vcproj: Statically link against runtime so that we do not
 	have to package the vcrt DLLs in the distribution.
 
@@ -41,7 +46,7 @@
 
 	* LICENSE.txt: Initial commit.
 
-2005-04-24 Laurent Morichetti <l_m@pacbell.net>
+2005-04-24 Laurent Morichetti <l_m@users.sourceforge.net>
 	* ACDExt.vcproj: Added a new file item ".\acdext.dll.manifest" for
 	xp themes support. See comment for the new file. Added
 	ISOLATION_AWARE_ENABLED preprocessor definition.
@@ -64,5 +69,5 @@
 	feel as the other PSP in the device panel.
 
 
-2005-04-22 Laurent Morichetti <l_m@pacbell.net>
+2005-04-22 Laurent Morichetti <l_m@users.sourceforge.net>
 	* Inital commit.
