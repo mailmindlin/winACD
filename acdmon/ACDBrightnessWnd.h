@@ -45,8 +45,9 @@ class CACDBrightnessWnd : public CFrameWnd
 
     /** Timers */
     enum {
-	ACD_FADE_WND_TIMER_START = 1,
-	ACD_FADE_WND_TIMER_STEP	 = 2
+	ACD_FADE_WND_TIMER_START	= 1,
+	ACD_FADE_WND_TIMER_STEP		= 2,
+	ACD_BRIGHTNESS_REFRESH_TIMER	= 3
     };
 
 public:
@@ -85,12 +86,17 @@ public:
     /** Set the window opacity (must be called on the Foreground wnd only) */
     void SetOpacity (int opacity);
 
+    /** Update the brightness value */
+    void UpdateBrightness ();
+
 protected:
 
     DECLARE_MESSAGE_MAP()
 
 public:
 
+    /** Called by MonApp when a bezel button is clicked */
+    afx_msg LRESULT OnBezelBnClicked (WPARAM wParam, LPARAM lParam);
     /** Initialize the HotKeys (called by init and the MonApp notify thread) */
     afx_msg LRESULT OnInitHotKeys (WPARAM wParam = 0, LPARAM lParam = 0);
     /** Called when a HotKey (Brightness UP/DOWN) is pressed */

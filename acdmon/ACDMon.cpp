@@ -127,9 +127,9 @@ CACDMonApp::RegNotifyThreadMain (LPVOID pParam)
     }
 
     RegCloseKey (hKey);
+
     return 0;
 }
-
 
 CACDMonApp::EnumHelper::ENUMPROC_STATUS
 CACDMonApp::EnumHelper::Callback (CACDHidDevice* pDevice)

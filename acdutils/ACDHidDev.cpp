@@ -165,7 +165,7 @@ CUSBMonitorHidDevice::GetFeatureValueArray (
 	0,		/* link collection */
 	Feature,	/* usage */
 	pValue,		/* usage value ptr */
-	wLength,		/* usage value byte length */
+	wLength,	/* usage value byte length */
 	m_pPpd,		/* preparsed data */
 	m_pFeatureReportBuffer, /* report */
 	(ULONG) m_Caps.FeatureReportByteLength /* report length */
@@ -175,7 +175,7 @@ CUSBMonitorHidDevice::GetFeatureValueArray (
 UCHAR
 CACDHidDevice::GetFlags ()
 {
-    ULONG ulManagedPanel, ulManagedPower, ulButtonMask;
+    ULONG ulManagedPanel, ulManagedPower, ulButtonsMask;
 
     GetFeatureValue (
 	    USAGE_PAGE_VESA_VIRTUAL_CONTROLS,
@@ -185,7 +185,7 @@ CACDHidDevice::GetFlags ()
     GetFeatureValue (
 	    USAGE_PAGE_VESA_VIRTUAL_CONTROLS,
 	    (CUSBMonitorHidDevice::Usage) ACD_USAGE_BUTTONS_MASK,
-	    &ulButtonMask
+	    &ulButtonsMask
 	    );
     GetFeatureValue (
 	    USAGE_PAGE_VESA_VIRTUAL_CONTROLS,
@@ -193,9 +193,14 @@ CACDHidDevice::GetFlags ()
 	    &ulManagedPower
 	    );
 
+    if (IsClearCinemaDisplay ())
+	ulButtonsMask &= ~ACD_FLAGS_BRIGHTNESS_BUTTON;
+    else if (IsAluminumCinemaDisplay ())
+	ulButtonsMask &= ~ACD_FLAGS_USER_ACTION_BUTTON;
+
     return (ulManagedPanel == 0 ? 0 : ACD_FLAGS_MANAGED_PANEL)
 	| (ulManagedPower == 0 ? 0 : ACD_FLAGS_MANAGED_POWER)
-	| (UCHAR) (ulButtonMask <<  ACD_FLAGS_BUTTONS_SHIFT
+	| (UCHAR) (ulButtonsMask <<  ACD_FLAGS_BUTTONS_SHIFT
 	   & ACD_FLAGS_BUTTONS_MASK_IN_PLACE);
 }
 
@@ -212,10 +217,18 @@ CACDHidDevice::SetFlags (UCHAR bFlags)
 	(CUSBMonitorHidDevice::Usage) ACD_USAGE_MANAGED_POWER,
 	(ULONG) (bFlags & ACD_FLAGS_MANAGED_POWER_MASK_IN_PLACE) != 0
 	);
+
+    ULONG ulButtonsMask = (ULONG) (bFlags & ACD_FLAGS_BUTTONS_MASK_IN_PLACE)
+	>> ACD_FLAGS_BUTTONS_SHIFT;
+
+    if (IsClearCinemaDisplay ())
+	ulButtonsMask &= ~ACD_FLAGS_BRIGHTNESS_BUTTON;
+    else if (IsAluminumCinemaDisplay ())
+	ulButtonsMask &= ~ACD_FLAGS_USER_ACTION_BUTTON;
+
     SetFeatureValue (
 	USAGE_PAGE_VESA_VIRTUAL_CONTROLS,
 	(CUSBMonitorHidDevice::Usage) ACD_USAGE_BUTTONS_MASK,
-	(ULONG) (bFlags & ACD_FLAGS_BUTTONS_MASK_IN_PLACE)
-	    >> ACD_FLAGS_BUTTONS_SHIFT
+	ulButtonsMask
 	);
 }

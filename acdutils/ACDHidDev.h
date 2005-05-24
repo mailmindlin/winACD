@@ -195,7 +195,8 @@ protected:
     enum ACDUsage {
 	ACD_USAGE_POWERSTATE		= 0xD6, //!< Monitor power state
 	ACD_USAGE_MANAGED_PANEL		= 0xE1, //!< Managed panel
-	ACD_USAGE_UNKNOWN		= 0xE3, //!< Don't know yet!
+	ACD_USAGE_UNKNOWN_1		= 0xE3, //!< Don't know yet!
+	ACD_USAGE_UNKNOWN_2		= 0xE6, //!< Don't know yet!
 	ACD_USAGE_BUTTONS_MASK		= 0xE7, //!< Panel buttons mask
 	ACD_USAGE_MANAGED_POWER		= 0xE8  //!< Power button override
     };
@@ -217,8 +218,9 @@ public:
     /** ACD flags */
     enum Flags {
 	ACD_FLAGS_POWER_BUTTON			= 0x01,
+	ACD_FLAGS_USER_ACTION_BUTTON		= 0x02,
 	ACD_FLAGS_BRIGHTNESS_BUTTON		= 0x04,
-	ACD_FLAGS_BUTTONS_MASK_IN_PLACE		= 0x05,
+	ACD_FLAGS_BUTTONS_MASK_IN_PLACE		= 0x07,
 	ACD_FLAGS_BUTTONS_SHIFT			=    0,
 
 	ACD_FLAGS_MANAGED_PANEL			= 0x08,
@@ -255,7 +257,7 @@ public:
     { }
 
     /** return TRUE if this is a clear cinema display */
-    BOOL IsSupportedClearCinemaDisplay () const
+    BOOL IsClearCinemaDisplay () const
     {
 	switch (GetDeviceProductID ()) {
 	/* Clear enclosure models: */
@@ -269,7 +271,7 @@ public:
     }
 
     /** return TRUE if this is an aluminum cinema display */
-    BOOL IsSupportedAluminumCinemaDisplay () const
+    BOOL IsAluminumCinemaDisplay () const
     {
 	switch (GetDeviceProductID ()) {
 	/* All aluminum models: */
@@ -289,8 +291,8 @@ public:
 	if (GetDeviceVendorID () != APPLE_VENDORID)
 	    return FALSE;
 
-	return IsSupportedAluminumCinemaDisplay ()
-	    || IsSupportedClearCinemaDisplay ();
+	return IsAluminumCinemaDisplay ()
+	    || IsClearCinemaDisplay ();
     }
 
     /** Return the display's brightness */
@@ -470,11 +472,22 @@ CUSBMonitorHidDevice::EnumDevices (
     return TRUE;
 }
 
+
+/**
+ * Bezel button codes.
+ */
+enum BezelButtonCode {
+    ACD_BUTTON_BRIGHTNESS_UP	= 0x03,
+    ACD_BUTTON_BRIGHTNESS_DOWN	= 0x04,
+    ACD_BUTTON_USER_ACTION	= 0x05,
+    ACD_BUTTON_POWER		= 0x0A
+};
+
 /**
  * Power button action.
  */
 enum ACDPowerButtonAction {
-    ACD_POWER_BUTTON_DO_NOTHING,
+    ACD_POWER_BUTTON_DO_NOTHING = 0,
     ACD_POWER_BUTTON_STAND_BY,
     ACD_POWER_BUTTON_HIBERNATE,
     ACD_POWER_BUTTON_SHUT_DOWN

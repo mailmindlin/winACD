@@ -87,6 +87,31 @@ ACDDoPowerButtonAction ()
     }
 }
 
+static BOOL
+BroadcastButtonEvents ()
+{
+    HKEY hKey;
+    DWORD type, sz, value = 0;
+    LONG lRet;
+
+    lRet = RegOpenKeyEx (HKEY_LOCAL_MACHINE, "SOFTWARE\\WinACD\\Preferences",
+	0, KEY_READ, &hKey);
+
+    if (lRet == ERROR_SUCCESS) {
+	sz = sizeof (value);
+	RegQueryValueEx (hKey, "BroadcastButtonEvents", 0,
+	    &type, (LPBYTE) &value, &sz);
+
+	RegCloseKey (hKey);
+    }
+
+    return value != 0;
+}
+
+static const UINT
+UWM_BEZEL_BN_CLICKED = ::RegisterWindowMessage (
+    _T ("ACD_WM_BEZEL_BN_CLICKED"));
+
 DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 {
     CACDHidDevice* pDevice = (CACDHidDevice*) pParam;
@@ -101,10 +126,17 @@ DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
 	UCHAR pbReport [2];
 
 	pbReport [0] = pbReport [1] = '\0';
-	if (!ReadFile (hDevice, pbReport, sizeof (pbReport), &dwBytesRead, NULL))
+	if (!ReadFile (hDevice, pbReport, 2, &dwBytesRead, NULL))
 	    break;
 
-	if (dwBytesRead == 2 && pbReport [1] == 0x0A) {
+	if (dwBytesRead != 2)
+	    continue;
+
+	if (BroadcastButtonEvents ())
+	    PostMessage (HWND_BROADCAST, UWM_BEZEL_BN_CLICKED,
+		pbReport [1], 0);
+
+	if (pbReport [1] == ACD_BUTTON_POWER) {
 	    ACDDoPowerButtonAction ();
 
 	    // Delete all the pending input reports

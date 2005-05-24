@@ -94,6 +94,31 @@ CACDBrightnessWnd::SetOpacity (int opacity)
 	0, (255 * m_nOpacity * ACD_OSD_ALPHA) / (100 * 100), LWA_ALPHA);
 }
 
+void
+CACDBrightnessWnd::UpdateBrightness ()
+{
+    BOOL bRet;
+
+    bRet = theApp.GetBrightness (&m_nBrightness);
+    if (m_nBrightness == m_pLowerWnd->m_nBrightness || !bRet)
+	return;
+
+    m_pLowerWnd->m_nBrightness = m_nBrightness;
+
+    RECT rect;
+    rect.left = ACD_OSD_STEP_LEFT;
+    rect.top = ACD_OSD_STEP_TOP;
+    rect.right = ACD_OSD_STEP_LEFT + 16 * ACD_OSD_STEP_CX;
+    rect.bottom = ACD_OSD_STEP_TOP + ACD_OSD_STEP_CY;
+
+    m_pLowerWnd->InvalidateRect (&rect, TRUE);
+    InvalidateRect (&rect, TRUE);
+}
+
+static const UINT
+UWM_BEZEL_BN_CLICKED = ::RegisterWindowMessage (
+    _T ("ACD_WM_BEZEL_BN_CLICKED"));
+
 BEGIN_MESSAGE_MAP (CACDBrightnessWnd, CFrameWnd)
     ON_WM_TIMER ()
     ON_WM_CREATE ()
@@ -102,6 +127,7 @@ BEGIN_MESSAGE_MAP (CACDBrightnessWnd, CFrameWnd)
     ON_WM_DEVICECHANGE ()
     ON_MESSAGE (WM_HOTKEY, OnHotKey)
     ON_MESSAGE (ACD_WM_INIT_HOTKEYS, OnInitHotKeys)
+    ON_REGISTERED_MESSAGE (UWM_BEZEL_BN_CLICKED, OnBezelBnClicked)
 END_MESSAGE_MAP ()
 
 // CBrightnessWnd message handlers
@@ -187,12 +213,15 @@ CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 	to = m_nBrightness;
 	m_nBrightness = from = max (0, min (to - 1, 15));
 	break;
+    default:
+	from = to = 0;
+	break;
     }
-    m_pLowerWnd->m_nBrightness = m_nBrightness;
-
-    theApp.SetBrightness (m_nBrightness);
 
     if (from != to) {
+	m_pLowerWnd->m_nBrightness = m_nBrightness;
+	theApp.SetBrightness (m_nBrightness);
+
 	RECT rect;
 	rect.left = ACD_OSD_STEP_LEFT + ACD_OSD_STEP_CX * from;
 	rect.top = ACD_OSD_STEP_TOP;
@@ -250,7 +279,10 @@ CACDBrightnessWnd::OnTimer (UINT nIDEvent)
 	m_pLowerWnd->SetWindowPos (&CWnd::wndBottom, 0, 0, 0, 0,
 	    SWP_NOMOVE |SWP_NOSIZE |SWP_NOACTIVATE);
     }
-    else
+    else if (nIDEvent == ACD_BRIGHTNESS_REFRESH_TIMER) {
+	UpdateBrightness ();
+    }
+    else 
 	CFrameWnd::OnTimer (nIDEvent);
 }
 
@@ -313,4 +345,77 @@ CACDBrightnessWnd::OnDeviceChange (UINT nEventType, DWORD_PTR dwData)
     default:
 	return CFrameWnd::OnDeviceChange (nEventType, dwData);
     }
+}
+
+static UINT
+RunDisplayProperties (LPVOID pParam)
+{
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    ZeroMemory (&si, sizeof (si));
+    si.cb = sizeof (si);
+
+     if (CreateProcess (NULL,
+	    "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,3",
+	    NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi
+	    )) {
+	WaitForSingleObject (pi.hProcess, INFINITE);
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+    }
+    return 0;
+}
+
+LRESULT
+CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
+{
+    if (m_bType != ACD_BRIGHTNESS_WND_FOREGROUND)
+	return 0;
+
+    DWORD dwCurrentSessionId;
+    if (!ProcessIdToSessionId (GetCurrentProcessId (), &dwCurrentSessionId))
+	return -1;
+
+    /* we are not the current session, ignore the event */
+    if (dwCurrentSessionId != WTSGetActiveConsoleSessionId ())
+	return 0;
+
+    switch (wParam) {
+	case 0:
+	    if (m_nTimer == ACD_BRIGHTNESS_REFRESH_TIMER) {
+		KillTimer (ACD_BRIGHTNESS_REFRESH_TIMER);
+		m_nTimer = SetTimer (ACD_FADE_WND_TIMER_START, 1000, 0);
+		UpdateBrightness ();
+	    }
+	    break;
+
+	case ACD_BUTTON_BRIGHTNESS_UP:
+	case ACD_BUTTON_BRIGHTNESS_DOWN:
+	    UpdateBrightness ();
+
+	    if (m_nTimer)
+		KillTimer (m_nTimer);
+
+	    if (m_nOpacity < 100) {
+		// place the windows at the top of the z-order.
+		m_pLowerWnd->SetWindowPos (&CWnd::wndTopMost, 0, 0, 0, 0,
+		    SWP_NOMOVE |SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+		SetWindowPos (&CWnd::wndTopMost, 0, 0, 0, 0,
+		    SWP_NOMOVE |SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+
+		SetOpacity (100);
+	    }
+
+	    m_nTimer = SetTimer (ACD_BRIGHTNESS_REFRESH_TIMER, 50, 0);
+	    break;
+
+	case ACD_BUTTON_USER_ACTION:
+	    AfxBeginThread (RunDisplayProperties, 0);
+	    break;
+
+	default:
+	    break;
+    }
+    return 0;
 }
