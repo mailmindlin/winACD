@@ -3,3 +3,5 @@
 # that is shared by all the driver components of the Windows NT DDK
 
 !INCLUDE $(NTMAKEENV)\makefile.def
+
+acdfilter.c: acdfilter.h acddescriptors.c
