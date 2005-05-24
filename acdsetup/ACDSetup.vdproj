@@ -487,18 +487,18 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:WinACD 0.3.4"
-        "ProductCode" = "8:{1AC7A31D-0566-4A63-AECB-1DE5F061A2D6}"
-        "PackageCode" = "8:{AB297669-C8BD-4392-9156-7C3455216F57}"
+        "ProductName" = "8:WinACD 0.4.0"
+        "ProductCode" = "8:{2762968B-3AF1-4A55-A92C-C06DBBCEAB01}"
+        "PackageCode" = "8:{DEDBA029-609F-4ECE-8F55-12AEB0EB3752}"
         "UpgradeCode" = "8:{17D2E5C3-CEF4-4E15-B5CB-F512E128FDF7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:0.3.4"
+        "ProductVersion" = "8:0.4.0"
         "Manufacturer" = "8:WinACD"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:WinACD 0.3.4"
+        "Title" = "8:WinACD 0.4.0"
         "Subject" = "8:"
         "ARPCONTACT" = "8:WinACD"
         "Keywords" = "8:"
@@ -568,6 +568,14 @@
                                             "Transitive" = "11:FALSE"
                                             "ValueTypes" = "3:3"
                                             "Value" = "3:0"
+                                            }
+                                            "{35AE352C-BC79-4EF9-ABD8-61F467188583}:_732DB4D03D2641149D18A01021E4AEF8"
+                                            {
+                                            "Name" = "8:BroadcastButtonEvents"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:3"
+                                            "Value" = "3:1"
                                             }
                                         }
                                     }
