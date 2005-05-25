@@ -130,7 +130,8 @@ CACDOptionsDialog::OnOK ()
 
     ACDUtil::SetDisabledButtonsPref (
 	(m_cDisableBrightness.GetCheck ()
-	    ? CACDHidDevice::ACD_FLAGS_BRIGHTNESS_BUTTON : 0)
+	    ? CACDHidDevice::ACD_FLAGS_BRIGHTNESS_BUTTON
+	    | CACDHidDevice::ACD_FLAGS_USER_ACTION_BUTTON : 0)
 	| (m_cDisablePower.GetCheck ()
 	    ? CACDHidDevice::ACD_FLAGS_POWER_BUTTON : 0)
 	);
