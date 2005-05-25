@@ -52,16 +52,24 @@ class CACDBrightnessWnd : public CFrameWnd
 
 public:
 
-    /** Window type (foreground/background wnd) */
-    enum ACD_BRIGHTNESS_WND_TYPE {
-	ACD_BRIGHTNESS_WND_BACKGROUND,
-	ACD_BRIGHTNESS_WND_FOREGROUND
+    /** OSD type */
+    enum ACD_OSD_TYPE {
+	ACD_OSD_NONE = 0,
+	ACD_OSD_BRIGHTNESS,
+	ACD_OSD_POWER
+    };
+
+    /** Window position (foreground/background wnd) */
+    enum ACD_OSD_WND_POS {
+	ACD_OSD_WND_BACKGROUND,
+	ACD_OSD_WND_FOREGROUND
     };
 
 private:
 
-    ACD_BRIGHTNESS_WND_TYPE m_bType;	    //!< The window type.
-    CACDBrightnessWnd*	    m_pLowerWnd;    //!< bkgrnd wnd if type is fgrnd.
+    ACD_OSD_WND_POS	m_bPos;		//!< The window pos.
+    ACD_OSD_TYPE	m_bType;	//!< The OSD type.
+    CACDBrightnessWnd*	m_pLowerWnd;    //!< bkgrnd wnd if type is fgrnd.
 
     CBitmap	m_bBackground;	//!< Background bitmap.
     CBitmap	m_bStep;	//!< Bitmap used for each individual steps.
@@ -73,7 +81,7 @@ public:
 
     /** CACDBrightnessWnd construction. */
     CACDBrightnessWnd (
-	ACD_BRIGHTNESS_WND_TYPE bType,
+	ACD_OSD_WND_POS bType,
 	CACDBrightnessWnd* pLowerWnd = NULL
 	);
 
@@ -88,6 +96,9 @@ public:
 
     /** Update the brightness value */
     void UpdateBrightness ();
+
+    /** Set the OSD message type (power/brightness) */
+    void SetOSDType (ACD_OSD_TYPE type);
 
 protected:
 

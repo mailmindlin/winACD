@@ -29,9 +29,9 @@
 IMPLEMENT_DYNAMIC (CACDBrightnessWnd, CFrameWnd)
 
 CACDBrightnessWnd::CACDBrightnessWnd (
-    ACD_BRIGHTNESS_WND_TYPE bType,
+    ACD_OSD_WND_POS bPos,
     CACDBrightnessWnd *pLowerWnd
-    ) : m_bType (bType), m_pLowerWnd (pLowerWnd),
+    ) : m_bPos (bPos), m_bType (ACD_OSD_NONE), m_pLowerWnd (pLowerWnd),
 	m_nOpacity (0), m_nTimer (0), m_nBrightness (0)
 {
 }
@@ -46,12 +46,18 @@ CACDBrightnessWnd::PreCreateWindow (CREATESTRUCT& cs)
     if (!CFrameWnd::PreCreateWindow (cs))
 	return FALSE;
 
-    if (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND)
+#if 0
+    if (m_bPos == ACD_OSD_WND_FOREGROUND)
 	m_bBackground.LoadBitmap (IDB_FOREGROUND);
     else {
         m_bBackground.LoadBitmap (IDB_BACKGROUND);
 	m_bStep.LoadBitmap (IDB_STEP);
     }
+    m_bType = ACD_OSD_BRIGHTNESS;
+#else
+    if (m_bPos == ACD_OSD_WND_BACKGROUND)
+	m_bStep.LoadBitmap (IDB_STEP);
+#endif
 
     // Modify the Window style.
     cs.dwExStyle = WS_EX_LAYERED | WS_EX_TOOLWINDOW
@@ -79,7 +85,7 @@ CACDBrightnessWnd::PreCreateWindow (CREATESTRUCT& cs)
 void
 CACDBrightnessWnd::SetOpacity (int opacity)
 {
-    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bPos == ACD_OSD_WND_FOREGROUND);
 
     // range is [0-100]
     m_nOpacity = max (0, min (opacity, 100));
@@ -92,6 +98,40 @@ CACDBrightnessWnd::SetOpacity (int opacity)
 
     m_pLowerWnd->SetLayeredWindowAttributes (
 	0, (255 * m_nOpacity * ACD_OSD_ALPHA) / (100 * 100), LWA_ALPHA);
+}
+
+void
+CACDBrightnessWnd::SetOSDType (ACD_OSD_TYPE type)
+{
+    ASSERT (m_bPos == ACD_OSD_WND_FOREGROUND);
+
+    if (type != 0 && type != m_bType) {
+	m_bBackground.DeleteObject ();
+	m_pLowerWnd->m_bBackground.DeleteObject ();
+    }
+
+    if (type == m_bType)
+	return;
+
+    if (type == ACD_OSD_BRIGHTNESS) {
+	m_bBackground.LoadBitmap (IDB_FOREGROUND);
+	m_pLowerWnd->m_bBackground.LoadBitmap (IDB_BACKGROUND);
+    }
+    else if (type == ACD_OSD_POWER) {
+	m_bBackground.LoadBitmap (IDB_PWR_FOREGROUND);
+	m_pLowerWnd->m_bBackground.LoadBitmap (IDB_PWR_BACKGROUND);
+    }
+
+    m_pLowerWnd->m_bType = m_bType = type;
+
+    RECT rect;
+    rect.left = 0;
+    rect.top = 0;
+    rect.right = ACD_OSD_CX;
+    rect.bottom = ACD_OSD_CY;
+
+    m_pLowerWnd->InvalidateRect (&rect, TRUE);
+    InvalidateRect (&rect, TRUE);
 }
 
 void
@@ -157,7 +197,10 @@ CACDBrightnessWnd::OnPaint ()
 {
     CPaintDC dc (this);
 
-    if (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND) {
+    if (m_bType != ACD_OSD_BRIGHTNESS)
+	return;
+
+    if (m_bPos == ACD_OSD_WND_FOREGROUND) {
 	for (UINT i = 0; i <= m_nBrightness; ++i)
 	    dc.FillSolidRect (ACD_OSD_STEP_LEFT + ACD_OSD_STEP_CX * i,
 		ACD_OSD_STEP_TOP, 12, 15, RGB (255, 255, 255));
@@ -197,26 +240,32 @@ CACDBrightnessWnd::OnCreate (LPCREATESTRUCT lpCs)
 LRESULT
 CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 {
-    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bPos == ACD_OSD_WND_FOREGROUND);
 
-    int from, to;
+    int to, from = m_nBrightness;
 
     if (!theApp.GetBrightness (&m_nBrightness))
 	return -1;
 
+    to = m_nBrightness;
     switch (wParam) {
     case ACD_BRIGHTNESS_UP_HOTKEY:
-	from = m_nBrightness;
-	m_nBrightness = to = max (0, min (from + 1, 15));
+	++to;
 	break;
     case ACD_BRIGHTNESS_DOWN_HOTKEY:
-	to = m_nBrightness;
-	m_nBrightness = from = max (0, min (to - 1, 15));
+	--to;
 	break;
     default:
-	from = to = 0;
 	break;
     }
+
+    m_nBrightness = max (0, min (to, 15));
+    if (m_nBrightness < from) {
+	to = from;
+	from = m_nBrightness;
+    }
+    else 
+	to = m_nBrightness;
 
     if (from != to) {
 	m_pLowerWnd->m_nBrightness = m_nBrightness;
@@ -234,6 +283,8 @@ CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 
     if (m_nTimer)
 	KillTimer (m_nTimer);
+
+    SetOSDType (ACD_OSD_BRIGHTNESS);
 
     if (m_nOpacity < 100) {
 	// place the windows at the top of the z-order.
@@ -253,7 +304,7 @@ CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
 void
 CACDBrightnessWnd::OnTimer (UINT nIDEvent) 
 {
-    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bPos == ACD_OSD_WND_FOREGROUND);
 
     if (nIDEvent == ACD_FADE_WND_TIMER_START) {
 	KillTimer (ACD_FADE_WND_TIMER_START);
@@ -289,7 +340,7 @@ CACDBrightnessWnd::OnTimer (UINT nIDEvent)
 LRESULT
 CACDBrightnessWnd::OnInitHotKeys (WPARAM wParam, LPARAM lParam)
 {
-    ASSERT (m_bType == ACD_BRIGHTNESS_WND_FOREGROUND);
+    ASSERT (m_bPos == ACD_OSD_WND_FOREGROUND);
 
     DWORD dwIncreaseHotKey = ACDUtil::GetHotKeyPref (TRUE);
     WORD wVirtualKeyCode, wModifiers;
@@ -370,7 +421,7 @@ RunDisplayProperties (LPVOID pParam)
 LRESULT
 CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
 {
-    if (m_bType != ACD_BRIGHTNESS_WND_FOREGROUND)
+    if (m_bPos != ACD_OSD_WND_FOREGROUND)
 	return 0;
 
     DWORD dwCurrentSessionId;
@@ -384,10 +435,29 @@ CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
     switch (wParam) {
 	case 0:
 	    if (m_nTimer == ACD_BRIGHTNESS_REFRESH_TIMER) {
+		UpdateBrightness ();
 		KillTimer (ACD_BRIGHTNESS_REFRESH_TIMER);
 		m_nTimer = SetTimer (ACD_FADE_WND_TIMER_START, 1000, 0);
-		UpdateBrightness ();
 	    }
+	    break;
+
+	case ACD_BUTTON_POWER:
+	    if (m_nTimer)
+		KillTimer (m_nTimer);
+
+	    SetOSDType (ACD_OSD_POWER);
+
+	    if (m_nOpacity < 100) {
+		// place the windows at the top of the z-order.
+		m_pLowerWnd->SetWindowPos (&CWnd::wndTopMost, 0, 0, 0, 0,
+		    SWP_NOMOVE |SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+		SetWindowPos (&CWnd::wndTopMost, 0, 0, 0, 0,
+		    SWP_NOMOVE |SWP_NOSIZE | SWP_NOACTIVATE | SWP_SHOWWINDOW);
+
+		SetOpacity (100);
+	    }
+
+	    m_nTimer = SetTimer (ACD_FADE_WND_TIMER_START, 1000, 0);
 	    break;
 
 	case ACD_BUTTON_BRIGHTNESS_UP:
@@ -396,6 +466,8 @@ CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
 
 	    if (m_nTimer)
 		KillTimer (m_nTimer);
+
+	    SetOSDType (ACD_OSD_BRIGHTNESS);
 
 	    if (m_nOpacity < 100) {
 		// place the windows at the top of the z-order.

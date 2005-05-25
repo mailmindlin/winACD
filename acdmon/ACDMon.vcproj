@@ -192,6 +192,12 @@
 			<File
 				RelativePath=".\res\Step.bmp">
 			</File>
+			<File
+				RelativePath=".\res\PwrBackground.bmp">
+			</File>
+			<File
+				RelativePath=".\res\PwrForeground.bmp">
+			</File>
 		</Filter>
 		<File
 			RelativePath=".\res\ACDMon.manifest">

@@ -113,6 +113,8 @@ END
 IDB_STEP                BITMAP                  "res\\Step.bmp"
 IDB_FOREGROUND          BITMAP                  "res\\Foreground.bmp"
 IDB_BACKGROUND          BITMAP                  "res\\Background.bmp"
+IDB_PWR_FOREGROUND      BITMAP                  "res\\PwrForeground.bmp"
+IDB_PWR_BACKGROUND      BITMAP                  "res\\PwrBackground.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

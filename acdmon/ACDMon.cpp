@@ -65,12 +65,12 @@ CACDMonApp::InitInstance ()
 
     // create the background window.
     CACDBrightnessWnd* pBackgroundWnd = new CACDBrightnessWnd (
-	CACDBrightnessWnd::ACD_BRIGHTNESS_WND_BACKGROUND);
+	CACDBrightnessWnd::ACD_OSD_WND_BACKGROUND);
     pBackgroundWnd->Create (NULL, NULL);
 
     // create the foreground window.
     CACDBrightnessWnd* pForegroundWnd = new CACDBrightnessWnd (
-	CACDBrightnessWnd::ACD_BRIGHTNESS_WND_FOREGROUND,
+	CACDBrightnessWnd::ACD_OSD_WND_FOREGROUND,
 	pBackgroundWnd
 	);
     pForegroundWnd->Create (NULL, NULL);
