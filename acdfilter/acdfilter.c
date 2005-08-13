@@ -206,6 +206,12 @@ ACD_DispatchIoctl (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 	    && desc->DescriptorType == USB_CONFIGURATION_DESCRIPTOR_TYPE) {
 	    /* return our own device configuration descriptor */
 	    switch (deviceExt->idProduct) {
+	    case 0x9216:
+		status = ACD_FillControlDescriptorRequest (
+		    urb, (PUCHAR) &ACD_9216_ConfigurationDescriptor,
+		    sizeof (ACD_CONFIGURATION_DESCRIPTOR)
+		    );
+		break;
 	    case 0x9217: case 0x9218: case 0x9219:
 		status = ACD_FillControlDescriptorRequest (
 		    urb, (PUCHAR) &ACD_Clear_ConfigurationDescriptor,
@@ -225,6 +231,12 @@ ACD_DispatchIoctl (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 		 && desc->DescriptorType == HID_REPORT_DESCRIPTOR_TYPE) {
 	    /* return our own interface report descriptor */
 	    switch (deviceExt->idProduct) {
+	    case 0x9216:
+		status = ACD_FillControlDescriptorRequest (
+		    urb, (PUCHAR) ACD_9216_HidReportDescriptor,
+		    sizeof (ACD_9216_HidReportDescriptor)
+		    );
+		break;
 	    case 0x9217: case 0x9218: case 0x9219:
 		status = ACD_FillControlDescriptorRequest (
 		    urb, (PUCHAR) ACD_Clear_HidReportDescriptor,

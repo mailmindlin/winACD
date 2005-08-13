@@ -30,7 +30,7 @@ Signature="$CHICAGO$"
 Class=Monitor
 ClassGuid={4D36E96E-E325-11CE-BFC1-08002BE10318}
 Provider=%WINACD%
-DriverVer=05/23/2005,0.4.0.0
+DriverVer=08/10/2005,0.4.1.0
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
@@ -53,6 +53,7 @@ DefaultDestDir=11
 [APPLE_MON]
 %Monitor\APP9217%=ACD17.Install, Monitor\APP9217
 %Monitor\APP9219%=ACD20.Install, Monitor\APP9219
+%Monitor\APP9216%=ACD22.Install, Monitor\APP9216
 %Monitor\APP9218%=ACD23.Install, Monitor\APP9218
 %Monitor\APP921D%=ACD20.Install, Monitor\APP921D
 %Monitor\APP921E%=ACD23.Install, Monitor\APP921E
@@ -66,6 +67,10 @@ AddReg=ACD17.AddReg, 1280, DPMS
 [ACD20.Install]
 DelReg=ACD.DelReg
 AddReg=ACD20.AddReg, 1680, DPMS
+
+[ACD22.Install]
+DelReg=ACD.DelReg
+AddReg=ACD22.AddReg, 1600, DPMS
 
 [ACD23.Install]
 DelReg=ACD.DelReg
@@ -83,6 +88,9 @@ HKR,,ICMProfile
 
 [1280]
 HKR,,MaxResolution,,"1280,1024"
+
+[1600]
+HKR,,MaxResolution,,"1600,1024"
 
 [1680]
 HKR,,MaxResolution,,"1680,1050"
@@ -106,6 +114,11 @@ HKR,"MODES\1680,1050",Mode1,,"30.0-119.0,50.0-61.0,+,+"
 HKR,,PreferredMode,,"1680,1050,60"
 ;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
 
+[ACD22.AddReg]
+HKR,"MODES\1600,1024",Mode1,,"30.0-119.0,50.0-61.0,+,+"
+HKR,,PreferredMode,,"1600,1024,60"
+;HKR,,ICMProfile,0x00010000,"sRGB Color Space Profile.icm"
+
 [ACD23.AddReg]
 HKR,"MODES\1920,1200",Mode1,,"30.0-119.0,50.0-61.0,+,+"
 HKR,,PreferredMode,,"1920,1200,60"
@@ -120,6 +133,7 @@ HKR,,PreferredMode,,"2560,1600,60"
 WINACD			= "WinACD"
 APPLE			= "Apple Computer, Inc."
 MonitorClassName	= "Monitor"
+Monitor\APP9216		= "Apple Cinema Display 22-inch"
 Monitor\APP9217		= "Apple Studio Display 17-inch"
 Monitor\APP9219		= "Apple Cinema Display 20-inch"
 Monitor\APP9218		= "Apple Cinema HD Display 23-inch"

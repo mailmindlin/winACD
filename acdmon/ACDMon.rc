@@ -72,8 +72,8 @@ IDR_MAINFRAME           ICON                    "res\\ACDMon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,4,0,0
- PRODUCTVERSION 0,4,0,0
+ FILEVERSION 0,4,1,0
+ PRODUCTVERSION 0,4,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -90,12 +90,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "Apple Cinema Display Monitor"
-            VALUE "FileVersion", "0, 4, 0, 0"
+            VALUE "FileVersion", "0, 4, 1, 0"
             VALUE "InternalName", "ACDMon.exe"
             VALUE "LegalCopyright", "GNU Library General Public License"
             VALUE "OriginalFilename", "ACDMon.exe"
             VALUE "ProductName", "WinACD"
-            VALUE "ProductVersion", "0, 4, 0, 0"
+            VALUE "ProductVersion", "0, 4, 1, 0"
         END
     END
     BLOCK "VarFileInfo"

@@ -457,7 +457,7 @@ CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
 		SetOpacity (100);
 	    }
 
-	    m_nTimer = SetTimer (ACD_FADE_WND_TIMER_START, 1000, 0);
+	    m_nTimer = SetTimer (ACD_FADE_WND_TIMER_START, 500, 0);
 	    break;
 
 	case ACD_BUTTON_BRIGHTNESS_UP:

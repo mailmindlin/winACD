@@ -203,6 +203,7 @@ protected:
 
     /** Supported cinema display product ids */
     enum ProductID {
+	CLEAR_CINEMA_DISPLAY_22INCH		= 0x9216,
 	CLEAR_STUDIO_DISPLAY_17INCH		= 0x9217,
 	CLEAR_CINEMA_DISPLAY_20INCH		= 0x9219,
 	CLEAR_CINEMA_HD_DISPLAY_23INCH		= 0x9218,
@@ -261,6 +262,7 @@ public:
     {
 	switch (GetDeviceProductID ()) {
 	/* Clear enclosure models: */
+	case CLEAR_CINEMA_DISPLAY_22INCH:
 	case CLEAR_STUDIO_DISPLAY_17INCH:
 	case CLEAR_CINEMA_DISPLAY_20INCH:
 	case CLEAR_CINEMA_HD_DISPLAY_23INCH:

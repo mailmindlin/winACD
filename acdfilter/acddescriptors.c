@@ -22,6 +22,80 @@
 # error "Must be included by acdfilter.c"
 #endif /* !defined _ACD_FILTER_C */
 
+static UCHAR
+ACD_9216_HidReportDescriptor [] = {
+    0x05, 0x80,		/* USAGE_PAGE (Monitor)			*/
+    0x09, 0x01,		/* USAGE (Monitor Control)		*/
+    0xA1, 0x01,		/* COLLECTION (Application)		*/
+    0x15, 0x00,		/*   LOGICAL_MINIMUM (0)		*/
+    0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
+    0x75, 0x08,		/*   REPORT_SIZE (8)			*/
+    0x85, 0x02,		/*   REPORT_ID (2)			*/
+    0x96, 0x00, 0x01,	/*   REPORT_COUNT (256)			*/
+    0x09, 0x02,		/*   USAGE (EDID Information)		*/
+    0xB2, 0x02, 0x01,	/*   FEATURE (Data,Var,Abs,Buf)		*/
+    0x05, 0x82,		/*   USAGE_PAGE (VESA Virtual Controls)	*/
+    0x95, 0x01,		/*   REPORT_COUNT (1)			*/
+    0x85, 0x10,		/*   REPORT_ID (16)			*/
+    0x09, 0x10,		/*   USAGE (Brightness)			*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+    0x25, 0x04,		/*   LOGICAL_MAXIMUM (4)		*/
+    0x85, 0xD6,		/*   REPORT_ID (214)			*/
+    0x09, 0xD6,		/*   USAGE (214)			*/
+    0xB1, 0x02,		/*   FEATURE (Data,Var,Abs)		*/
+    0x85, 0xE4,		/*   REPORT_ID (230)			*/
+    0x09, 0xE4,		/*   USAGE (230)			*/
+    0x81, 0x02,		/*   INPUT (Data,Var,Abs)		*/
+    0xC0		/* END_COLLECTION			*/
+};
+
+/**
+ * New configuration descriptor (since we changed the HID report size)
+ */
+static ACD_CONFIGURATION_DESCRIPTOR
+ACD_9216_ConfigurationDescriptor = {
+    { /* USB Configuration descriptor */
+	sizeof (USB_CONFIGURATION_DESCRIPTOR),	/* bLength		*/
+	USB_CONFIGURATION_DESCRIPTOR_TYPE,	/* bDescriptorType	*/
+	sizeof (ACD_CONFIGURATION_DESCRIPTOR),	/* wTotalLength		*/
+	1,					/* bNumInterfaces	*/
+	1,					/* bConfigurationValue	*/
+	0,					/* iConfiguration	*/
+	0xE0,					/* bmAttributes		*/
+	1					/* MaxPower		*/
+    },
+    { /* USB Interface descriptor */
+	sizeof (USB_INTERFACE_DESCRIPTOR),	/* bLength		*/
+	USB_INTERFACE_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+	0,					/* bInterfaceNumber	*/
+	0,					/* bAlternateSetting	*/
+	1,					/* bNumEndPoints	*/
+	3,					/* bInterfaceClass	*/
+	0,					/* bInterfaceSubClass	*/
+	0,					/* bInterfaceProtocol	*/
+	0					/* iInterface		*/
+    },
+    { /* HID Descriptor */
+	sizeof (HID_DESCRIPTOR),		/* bLength		*/
+	HID_HID_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+	0x111,					/* bcdHID		*/
+	0,					/* bCountry		*/
+	1,					/* bNumDescriptors	*/
+	{
+	    HID_REPORT_DESCRIPTOR_TYPE,		/* bReportType		*/
+	    sizeof (ACD_9216_HidReportDescriptor) /* wReportLength	*/
+	}
+    },
+    { /* Endpoint 0x81 - Interrupt Input */
+	sizeof (USB_ENDPOINT_DESCRIPTOR),	/* bLength		*/
+	USB_ENDPOINT_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+	0x81,					/* bEndPointAddress	*/
+	USB_ENDPOINT_TYPE_INTERRUPT,		/* bmAttributes		*/
+	8,					/* wMaxPacketSize	*/
+	16					/* bInterval		*/
+    }		
+};
+
 /**
  * New HID report descriptor (clear enclosure). We only have to change the
  * report count sizes (should not include the report_id byte), everything else
