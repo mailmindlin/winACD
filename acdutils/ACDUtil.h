@@ -50,4 +50,7 @@ namespace ACDUtil
 
     /** Set the force suspend/shutdown operation preference */
     void SetForceShutdownPref (BOOL bForce);
+
+    /** Return TRUE if OSD is disabled */
+    BOOL GetDisableOSDPref ();
 };

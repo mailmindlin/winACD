@@ -270,7 +270,12 @@ CACDBrightnessWnd::OnHotKey (WPARAM wParam, LPARAM lParam)
     if (from != to) {
 	m_pLowerWnd->m_nBrightness = m_nBrightness;
 	theApp.SetBrightness (m_nBrightness);
+    }
 
+    if (ACDUtil::GetDisableOSDPref ())
+	return 0;
+
+    if (from != to) {
 	RECT rect;
 	rect.left = ACD_OSD_STEP_LEFT + ACD_OSD_STEP_CX * from;
 	rect.top = ACD_OSD_STEP_TOP;
@@ -442,6 +447,9 @@ CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
 	    break;
 
 	case ACD_BUTTON_POWER:
+	    if (ACDUtil::GetDisableOSDPref ())
+		break;
+
 	    if (m_nTimer)
 		KillTimer (m_nTimer);
 
@@ -463,6 +471,9 @@ CACDBrightnessWnd::OnBezelBnClicked (WPARAM wParam, LPARAM lParam)
 	case ACD_BUTTON_BRIGHTNESS_UP:
 	case ACD_BUTTON_BRIGHTNESS_DOWN:
 	    UpdateBrightness ();
+
+	    if (ACDUtil::GetDisableOSDPref ())
+		break;
 
 	    if (m_nTimer)
 		KillTimer (m_nTimer);

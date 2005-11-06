@@ -16,6 +16,29 @@
 
 #include "ACDUtil.h"
 
+    
+BOOL
+ACDUtil::GetDisableOSDPref ()
+{
+    HKEY hKey;
+    DWORD type, sz, value = 0;
+    LONG lRet;
+
+    lRet = RegOpenKeyEx (HKEY_CURRENT_USER, "SOFTWARE\\WinACD\\Preferences",
+	0, KEY_READ, &hKey);
+
+    if (lRet == ERROR_SUCCESS) {
+	sz = sizeof (value);
+	RegQueryValueEx (hKey, "DisableOSD", 0,
+	    &type, (LPBYTE) &value, &sz);
+
+	RegCloseKey (hKey);
+    }
+
+    return value != 0;
+}
+
+
 DWORD
 ACDUtil::GetHotKeyPref (BOOL bIncreaseBrightness)
 {

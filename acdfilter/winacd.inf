@@ -24,7 +24,7 @@ Class=HIDClass
 ClassGuid={745A17A0-74D3-11D0-B6FE-00A0C90F57DA}
 Provider=%WINACD%
 LayoutFile=layout.inf
-DriverVer=08/10/2005,0.4.1.0
+DriverVer=11/05/2005,0.4.3.0
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
@@ -38,6 +38,7 @@ ACD_Inst.CopyFilesDLL.NT = 11
 %APPLE%=APPLE_HID
 
 [APPLE_HID]
+%USB\VID_05AC&PID_9212.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9212
 %USB\VID_05AC&PID_9216.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9216
 %USB\VID_05AC&PID_9217.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9217
 %USB\VID_05AC&PID_9218.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9218
@@ -46,6 +47,7 @@ ACD_Inst.CopyFilesDLL.NT = 11
 %USB\VID_05AC&PID_921E.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921E
 %USB\VID_05AC&PID_921F.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921F
 %USB\VID_05AC&PID_9220.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9220
+%USB\VID_05AC&PID_9232.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9232
 
 [ACD_Inst.NT]
 CopyFiles=ACD_Inst.CopyFiles.NT, ACD_Inst.CopyFilesDLL.NT
@@ -98,6 +100,7 @@ ACD.SvcDesc	= "ACD HID Filter Driver"
 HID.SvcDesc	= "Microsoft HID Class Driver"
 ACD.DiskID	= "Apple Cinema Display HID Device Installation Disk"
 
+USB\VID_05AC&PID_9212.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9216.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9217.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9218.DeviceDesc = "Apple HID Monitor Controls"
@@ -106,6 +109,7 @@ USB\VID_05AC&PID_921D.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_921E.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_921F.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9220.DeviceDesc = "Apple HID Monitor Controls"
+USB\VID_05AC&PID_9232.DeviceDesc = "Apple HID Monitor Controls"
 
 SERVICE_KERNEL_DRIVER = 1
 SERVICE_DEMAND_START  = 3
