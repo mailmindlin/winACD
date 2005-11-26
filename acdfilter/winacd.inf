@@ -47,6 +47,7 @@ ACD_Inst.CopyFilesDLL.NT = 11
 %USB\VID_05AC&PID_921E.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921E
 %USB\VID_05AC&PID_921F.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921F
 %USB\VID_05AC&PID_9220.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9220
+%USB\VID_05AC&PID_9222.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9222
 %USB\VID_05AC&PID_9232.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9232
 
 [ACD_Inst.NT]
@@ -109,6 +110,7 @@ USB\VID_05AC&PID_921D.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_921E.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_921F.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9220.DeviceDesc = "Apple HID Monitor Controls"
+USB\VID_05AC&PID_9222.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9232.DeviceDesc = "Apple HID Monitor Controls"
 
 SERVICE_KERNEL_DRIVER = 1

@@ -52,14 +52,15 @@ DefaultDestDir=11
 
 [APPLE_MON]
 %Monitor\APP9212%=ACD20.Install, Monitor\APP9212
-%Monitor\APP9217%=ACD17.Install, Monitor\APP9217
-%Monitor\APP9219%=ACD20.Install, Monitor\APP9219
 %Monitor\APP9216%=ACD22.Install, Monitor\APP9216
+%Monitor\APP9217%=ACD17.Install, Monitor\APP9217
 %Monitor\APP9218%=ACD23.Install, Monitor\APP9218
+%Monitor\APP9219%=ACD20.Install, Monitor\APP9219
 %Monitor\APP921D%=ACD20.Install, Monitor\APP921D
 %Monitor\APP921E%=ACD23.Install, Monitor\APP921E
 %Monitor\APP921F%=ACD23.Install, Monitor\APP921F
 %Monitor\APP9220%=ACD30.Install, Monitor\APP9220
+%Monitor\APP9222%=ACD20.Install, Monitor\APP9222
 %Monitor\APP9232%=ACD30.Install, Monitor\APP9232
 
 [ACD17.Install]
@@ -138,10 +139,11 @@ MonitorClassName	= "Monitor"
 Monitor\APP9212		= "Apple Cinema Display 20-inch"
 Monitor\APP9216		= "Apple Cinema Display 22-inch"
 Monitor\APP9217		= "Apple Studio Display 17-inch"
-Monitor\APP9219		= "Apple Cinema Display 20-inch"
 Monitor\APP9218		= "Apple Cinema HD Display 23-inch"
+Monitor\APP9219		= "Apple Cinema Display 20-inch"
 Monitor\APP921D		= "Apple Cinema Display 20-inch"
 Monitor\APP921E		= "Apple Cinema HD Display 23-inch"
 Monitor\APP921F		= "Apple Cinema HD Display 23-inch"
 Monitor\APP9220		= "Apple Cinema HD Display 30-inch"
+Monitor\APP9222		= "Apple Cinema Display 20-inch"
 Monitor\APP9232		= "Apple Cinema HD Display 30-inch"
