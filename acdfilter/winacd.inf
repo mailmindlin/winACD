@@ -24,7 +24,7 @@ Class=HIDClass
 ClassGuid={745A17A0-74D3-11D0-B6FE-00A0C90F57DA}
 Provider=%WINACD%
 LayoutFile=layout.inf
-DriverVer=11/05/2005,0.4.3.0
+DriverVer=12/18/2006,0.4.6.0
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
@@ -48,6 +48,7 @@ ACD_Inst.CopyFilesDLL.NT = 11
 %USB\VID_05AC&PID_921F.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_921F
 %USB\VID_05AC&PID_9220.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9220
 %USB\VID_05AC&PID_9222.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9222
+%USB\VID_05AC&PID_9223.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9223
 %USB\VID_05AC&PID_9232.DeviceDesc%=ACD_Inst,USB\VID_05AC&PID_9232
 
 [ACD_Inst.NT]
@@ -111,6 +112,7 @@ USB\VID_05AC&PID_921E.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_921F.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9220.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9222.DeviceDesc = "Apple HID Monitor Controls"
+USB\VID_05AC&PID_9223.DeviceDesc = "Apple HID Monitor Controls"
 USB\VID_05AC&PID_9232.DeviceDesc = "Apple HID Monitor Controls"
 
 SERVICE_KERNEL_DRIVER = 1

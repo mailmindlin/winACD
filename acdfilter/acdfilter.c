@@ -189,7 +189,8 @@ ACD_DispatchIoctl (IN PDEVICE_OBJECT FilterDeviceObject, IN PIRP Irp)
 
 	if (function == URB_FUNCTION_GET_DESCRIPTOR_FROM_DEVICE
 	    && desc->DescriptorType == USB_STRING_DESCRIPTOR_TYPE) {
-	    if (desc->Index <= ACD_LAST_DRIVER_STRING_DESCRIPTOR) {
+	    if (desc->Index <= ACD_LAST_DRIVER_STRING_DESCRIPTOR
+		&& deviceExt->stringDescriptor [desc->Index] != NULL) {
 		status = ACD_FillControlDescriptorRequest (urb,
 		    (PUCHAR) deviceExt->stringDescriptor [desc->Index],
 		    deviceExt->stringDescriptor [desc->Index]->bLength
@@ -414,6 +415,7 @@ ACD_CacheStringDescriptors (IN OUT PDEVICE_EXTENSION DeviceExt)
     UCHAR index;
 
     /* allocate desc0 */
+    DeviceExt->stringDescriptor [0] = NULL;
     desc0 = ExAllocatePool (NonPagedPool, sizeof (USB_STRING_DESCRIPTOR));
     if (desc0 == NULL)
 	return STATUS_INSUFFICIENT_RESOURCES;
@@ -422,6 +424,7 @@ ACD_CacheStringDescriptors (IN OUT PDEVICE_EXTENSION DeviceExt)
 	PUSB_STRING_DESCRIPTOR desc;
 
 	/* get StringDescN->bLenth */
+	DeviceExt->stringDescriptor [index] = NULL;
 	RtlZeroMemory (desc0, sizeof (USB_STRING_DESCRIPTOR));
 	status = ACD_GetStringDescriptor (
 	    DeviceExt->lowerDeviceObject, index,

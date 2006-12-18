@@ -155,12 +155,12 @@ public:
     }
 
     /** Return the manufacturer's product string */
-    void GetProductString (
+    BOOLEAN GetProductString (
 	OUT PVOID pBuffer,
 	IN ULONG lLength
 	) const
     {
-	HidD_GetProductString (m_hDevice, pBuffer, lLength);
+	return HidD_GetProductString (m_hDevice, pBuffer, lLength);
     }
 
     /** Return the HID device's vendor ID */
@@ -213,6 +213,7 @@ protected:
 	ALUMINUM_CINEMA_DISPLAY_20INCH_X	= 0x9222,
 	ALUMINUM_CINEMA_HD_DISPLAY_23INCH	= 0x921E,
 	ALUMINUM_CINEMA_HD_DISPLAY_23INCH_X	= 0x921F,
+	ALUMINUM_CINEMA_HD_DISPLAY_23INCH_Y	= 0x9223,
 	ALUMINUM_CINEMA_HD_DISPLAY_30INCH	= 0x9220,
 	ALUMINUM_CINEMA_HD_DISPLAY_30INCH_X	= 0x9232
     };
@@ -285,6 +286,7 @@ public:
 	case ALUMINUM_CINEMA_DISPLAY_20INCH_X:
 	case ALUMINUM_CINEMA_HD_DISPLAY_23INCH:
 	case ALUMINUM_CINEMA_HD_DISPLAY_23INCH_X:
+	case ALUMINUM_CINEMA_HD_DISPLAY_23INCH_Y:
 	case ALUMINUM_CINEMA_HD_DISPLAY_30INCH:
 	case ALUMINUM_CINEMA_HD_DISPLAY_30INCH_X:
 	    return TRUE;

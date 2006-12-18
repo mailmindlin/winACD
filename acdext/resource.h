@@ -5,6 +5,7 @@
 #define IDR_MANIFEST                    2
 #define IDS_PROJNAME                    100
 #define IDR_ACDEXT                      101
+#define IDS_STATIC_VCP                  101
 #define IDR_ACDSHELLEXT                 103
 #define IDD_ACD_PROPERTY_PAGE           106
 #define IDI_ICON                        201
@@ -34,6 +35,7 @@
 #define IDC_POWER_BUTTON_GROUP          221
 #define IDC_POWER_COMBO_STATIC          222
 #define IDC_MONITOR_CONTROL_GROUP       223
+#define IDC_STATIC_MONITOR_SETTINGS     224
 
 // Next default values for new objects
 // 
@@ -41,7 +43,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        204
 #define _APS_NEXT_COMMAND_VALUE         32768
-#define _APS_NEXT_CONTROL_VALUE         224
+#define _APS_NEXT_CONTROL_VALUE         225
 #define _APS_NEXT_SYMED_VALUE           104
 #endif
 #endif

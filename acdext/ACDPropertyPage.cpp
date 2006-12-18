@@ -83,9 +83,10 @@ CACDPropertyPage::UpdateControls ()
     UpdateBrightnessEdit ();
 
     // set the device description.
-    Device.GetProductString (buffer, sizeof (buffer));
-    buffer [sizeof (buffer) - 1] = '\0';
-    GetDlgItem (IDC_DESCRIPTION)->SetWindowText (W2T ((LPCWSTR)buffer));
+    if (!Device.GetProductString (buffer, sizeof (buffer))) 
+	GetDlgItem (IDC_DESCRIPTION)->SetWindowText ("(Not Available)");
+    else
+	GetDlgItem (IDC_DESCRIPTION)->SetWindowText (W2T ((LPCWSTR)buffer));
 
     // set the firmware revision.
     int nVersion = Device.GetDeviceVersionNumber ();

@@ -81,66 +81,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_8F54801B7ED3026947AE151C52D30F2F"
-        "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8F54801B7ED3026947AE151C52D30F2F"
-        "OwnerKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-        "OwnerKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-        "OwnerKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-        "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-        "OwnerKey" = "8:_205D82AEA7754DE89270DF25DEFF566E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
-        "OwnerKey" = "8:_0A8CE5BAEB5245C1A29AE1FC7A79F0EC"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
-        "OwnerKey" = "8:_744E024B19CE431B87DBB2B00BE42186"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
-        "OwnerKey" = "8:_2D4E7207322B495ABD2871AC7C521FC7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C7BC1BF0712F3CA171B8113E4FC4A261"
-        "OwnerKey" = "8:_205D82AEA7754DE89270DF25DEFF566E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_DA35CF3B8052CC45D1E36A5810B746E4"
         "OwnerKey" = "8:_387F0105DCEC4B2B8B574EA91DDD454A"
         "MsmSig" = "8:_UNDEFINED"
@@ -331,66 +271,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_8F54801B7ED3026947AE151C52D30F2F"
-            {
-            "SourcePath" = "8:POWRPROF.dll"
-            "TargetName" = "8:POWRPROF.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_B3D2F69D1E80232A49DF5AD107B9A3BC"
-            {
-            "SourcePath" = "8:HID.DLL"
-            "TargetName" = "8:HID.DLL"
-            "Tag" = "8:"
-            "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C7BC1BF0712F3CA171B8113E4FC4A261"
-            {
-            "SourcePath" = "8:SETUPAPI.dll"
-            "TargetName" = "8:SETUPAPI.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_A2C04D0793464EEEA94C135A99B85F2B"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_DA35CF3B8052CC45D1E36A5810B746E4"
             {
             "SourcePath" = "8:NTOSKRNL.EXE"
@@ -487,18 +367,18 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:WinACD 0.4.3"
-        "ProductCode" = "8:{65548C5C-CD5A-48C8-BC75-0227000E74D3}"
-        "PackageCode" = "8:{860939DD-80D6-49EF-9DE2-8B57140C5092}"
+        "ProductName" = "8:WinACD 0.4.6"
+        "ProductCode" = "8:{32C08F15-9190-4D10-AEE3-681D3BFEE6C5}"
+        "PackageCode" = "8:{77C052CD-C02E-452E-B094-B1EC0AB2A3FC}"
         "UpgradeCode" = "8:{17D2E5C3-CEF4-4E15-B5CB-F512E128FDF7}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:0.4.3"
+        "ProductVersion" = "8:0.4.6"
         "Manufacturer" = "8:WinACD"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:WinACD 0.4.3"
+        "Title" = "8:WinACD 0.4.6"
         "Subject" = "8:"
         "ARPCONTACT" = "8:WinACD"
         "Keywords" = "8:"

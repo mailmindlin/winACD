@@ -30,7 +30,7 @@ Signature="$CHICAGO$"
 Class=Monitor
 ClassGuid={4D36E96E-E325-11CE-BFC1-08002BE10318}
 Provider=%WINACD%
-DriverVer=11/05/2005,0.4.3.0
+DriverVer=12/18/2006,0.4.6.0
 DriverPackageType=PlugAndPlay
 
 [ControlFlags]
@@ -61,6 +61,7 @@ DefaultDestDir=11
 %Monitor\APP921F%=ACD23.Install, Monitor\APP921F
 %Monitor\APP9220%=ACD30.Install, Monitor\APP9220
 %Monitor\APP9222%=ACD20.Install, Monitor\APP9222
+%Monitor\APP9223%=ACD23.Install, Monitor\APP9223
 %Monitor\APP9232%=ACD30.Install, Monitor\APP9232
 
 [ACD17.Install]
@@ -146,4 +147,5 @@ Monitor\APP921E		= "Apple Cinema HD Display 23-inch"
 Monitor\APP921F		= "Apple Cinema HD Display 23-inch"
 Monitor\APP9220		= "Apple Cinema HD Display 30-inch"
 Monitor\APP9222		= "Apple Cinema Display 20-inch"
+Monitor\APP9223		= "Apple Cinema HD Display 23-inch"
 Monitor\APP9232		= "Apple Cinema HD Display 30-inch"

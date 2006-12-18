@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,4,3,0
- PRODUCTVERSION 0,4,3,0
+ FILEVERSION 0,4,6,0
+ PRODUCTVERSION 0,4,6,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -71,12 +71,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "WinACD"
             VALUE "FileDescription", "ACDMgr Application"
-            VALUE "FileVersion", "0, 4, 3, 0"
+            VALUE "FileVersion", "0, 4, 5, 0"
             VALUE "InternalName", "ACDMgr"
             VALUE "LegalCopyright", "GNU Library General Public License"
             VALUE "OriginalFilename", "ACDMgr.exe"
             VALUE "ProductName", " ACDMgr Application"
-            VALUE "ProductVersion", "0, 4, 3, 0"
+            VALUE "ProductVersion", "0, 4, 5, 0"
         END
     END
     BLOCK "VarFileInfo"
