@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemGroup Label="ProjectConfigurations">
+		<ProjectConfiguration Include="Debug|Win32">
+			<Configuration>Debug</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|Win32">
+			<Configuration>Release</Configuration>
+			<Platform>Win32</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Debug|x64">
+			<Configuration>Debug</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+		<ProjectConfiguration Include="Release|x64">
+			<Configuration>Release</Configuration>
+			<Platform>x64</Platform>
+		</ProjectConfiguration>
+	</ItemGroup>
+	<PropertyGroup Label="Globals">
+		<VCProjectVersion>16.0</VCProjectVersion>
+		<ProjectGuid>{AFDD8F21-A56E-4DBE-AB67-4EA5A6B4A3BF}</ProjectGuid>
+		<Keyword>Win32Proj</Keyword>
+		<WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<UseDebugLibraries>true</UseDebugLibraries>
+		<PlatformToolset>v142</PlatformToolset>
+		<UseOfMfc>Dynamic</UseOfMfc>
+		<UseOfAtl>Static</UseOfAtl>
+		<CharacterSet>MultiByte</CharacterSet>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+		<ConfigurationType>DynamicLibrary</ConfigurationType>
+		<UseDebugLibraries>false</UseDebugLibraries>
+		<PlatformToolset>v142</PlatformToolset>
+		<UseOfMfc>Dynamic</UseOfMfc>
+		<UseOfAtl>Static</UseOfAtl>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<UseDebugLibraries>true</UseDebugLibraries>
+		<PlatformToolset>v142</PlatformToolset>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+		<ConfigurationType>Application</ConfigurationType>
+		<UseDebugLibraries>false</UseDebugLibraries>
+		<PlatformToolset>v142</PlatformToolset>
+	</PropertyGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+	<ImportGroup Label="ExtensionSettings">
+	</ImportGroup>
+	<ImportGroup Label="Shared">
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+	</ImportGroup>
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<LinkIncremental>true</LinkIncremental>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<LinkIncremental>true</LinkIncremental>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<ClCompile>
+			<PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;ACDEXT_EXPORTS;ISOLATION_AWARE_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+			<Optimization>Disabled</Optimization>
+			<AdditionalIncludeDirectories>$(ProjectDir)\..\acdutils;$(WINDDK)\inc\wxp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<PrecompiledHeader>NotUsing</PrecompiledHeader>
+		</ClCompile>
+		<Link>
+			<TargetMachine>MachineX86</TargetMachine>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Windows</SubSystem>
+			<AdditionalDependencies>powrprof.lib;setupapi.lib;$(WINDDK)\lib\wxp\i386\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<ModuleDefinitionFile>.\ACDExt.def</ModuleDefinitionFile>
+		</Link>
+		<Midl>
+			<PreprocessorDefinitions>_DEBUG</PreprocessorDefinitions>
+		</Midl>
+		<Midl>
+			<MkTypLibCompatible>false</MkTypLibCompatible>
+		</Midl>
+		<Midl>
+			<GenerateStublessProxies>true</GenerateStublessProxies>
+			<InterfaceIdentifierFileName>ACDExt_i.c</InterfaceIdentifierFileName>
+			<ProxyFileName>ACDExt_p.c</ProxyFileName>
+			<HeaderFileName>ACDExt.h</HeaderFileName>
+		</Midl>
+		<ResourceCompile>
+			<AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<PostBuildEvent>
+			<Message>Performing registration</Message>
+		</PostBuildEvent>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<ClCompile>
+			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ACDEXT_EXPORTS;ISOLATION_AWARE_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+			<WarningLevel>Level3</WarningLevel>
+			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+			<AdditionalIncludeDirectories>$(ProjectDir)\..\acdutils;$(WINDDK)\inc\wxp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<TargetMachine>MachineX86</TargetMachine>
+			<GenerateDebugInformation>true</GenerateDebugInformation>
+			<SubSystem>Windows</SubSystem>
+			<EnableCOMDATFolding>true</EnableCOMDATFolding>
+			<OptimizeReferences>true</OptimizeReferences>
+			<AdditionalDependencies>powrprof.lib;setupapi.lib;$(WINDDK)\lib\wxp\i386\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<ModuleDefinitionFile>.\ACDExt.def</ModuleDefinitionFile>
+		</Link>
+		<ResourceCompile>
+			<AdditionalIncludeDirectories>$(IntDir)</AdditionalIncludeDirectories>
+		</ResourceCompile>
+		<Midl>
+			<PreprocessorDefinitions>NDEBUG</PreprocessorDefinitions>
+		</Midl>
+		<Midl>
+			<MkTypLibCompatible>false</MkTypLibCompatible>
+		</Midl>
+		<Midl>
+			<GenerateStublessProxies>true</GenerateStublessProxies>
+			<InterfaceIdentifierFileName>ACDExt_i.c</InterfaceIdentifierFileName>
+			<ProxyFileName>ACDExt_p.c</ProxyFileName>
+			<HeaderFileName>ACDExt.h</HeaderFileName>
+		</Midl>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ClCompile Include="ACDExt.cpp" />
+		<ClCompile Include="ACDOptionsDlg.cpp" />
+		<ClCompile Include="ACDPropertyPage.cpp" />
+		<ClCompile Include="ACDShellExt.cpp" />
+		<ClCompile Include="ACDVirtualCP.cpp" />
+		<ClCompile Include="stdafx.cpp">
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+			<PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+		</ClCompile>
+	</ItemGroup>
+	<ItemGroup>
+		<Midl Include="ACDExt.idl" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="ACDExt.def" />
+		<None Include="ACDExt.rgs" />
+		<None Include="ACDShellExt.rgs" />
+	</ItemGroup>
+	<ItemGroup>
+		<ClInclude Include="ACDOptionsDlg.h" />
+		<ClInclude Include="ACDPropertyPage.h" />
+		<ClInclude Include="ACDShellExt.h" />
+		<ClInclude Include="ACDVirtualCP.h" />
+		<ClInclude Include="resource.h" />
+		<ClInclude Include="stdafx.h" />
+	</ItemGroup>
+	<ItemGroup>
+		<ResourceCompile Include="ACDExt.rc" />
+	</ItemGroup>
+	<ItemGroup>
+		<Image Include="acd.ico" />
+		<Image Include="icon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<Manifest Include="acdext.dll.manifest" />
+	</ItemGroup>
+	<ItemGroup>
+		<Text Include="ReadMe.txt" />
+	</ItemGroup>
+	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+	<ImportGroup Label="ExtensionTargets">
+	</ImportGroup>
+</Project>
