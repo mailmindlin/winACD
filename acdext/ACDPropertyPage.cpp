@@ -29,7 +29,7 @@
 
 IMPLEMENT_DYNAMIC (CACDPropertyPage, CPropertyPage)
 CACDPropertyPage::CACDPropertyPage ()
-    : CPropertyPage (CACDPropertyPage::IDD), m_pCurrentVirtualCP (NULL)
+    : CPropertyPage (CACDPropertyPage::IDD), m_pCurrentVirtualCP (NULL), m_hDevNotify(NULL)
 {
     m_psp.dwFlags |= PSP_USEICONID | PSP_USEREFPARENT;
     m_psp.pszIcon = MAKEINTRESOURCE (IDI_ICON);
