@@ -208,9 +208,9 @@ CACDPropertyPage::OnReset ()
 void
 CACDPropertyPage::SetModified (BOOL bChanged)
 {
-    if (bChanged)
-	CPropertyPage::SetModified (TRUE);
-    else {
+	if (bChanged) {
+		CPropertyPage::SetModified(TRUE);
+	} else {
 	// if any of the VCPs have modified settings, we can't clear the
 	// modified flags.
 	for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i)
