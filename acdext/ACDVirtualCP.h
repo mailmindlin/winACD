@@ -18,8 +18,7 @@
 
 #include "ACDHidDev.h"
 
-class CACDVirtualCP
-{
+class CACDVirtualCP {
 public:
 
     /** The VCP array type. TODO: replace with MFC CArray */
@@ -32,19 +31,19 @@ private:
      */
     struct EnumHelper : CACDHidDevice::EnumHelperTmpl <CACDVirtualCP>
     {
-	/** Convenience type to access the base class */
-	typedef CACDHidDevice::EnumHelperTmpl <CACDVirtualCP> CBase;
+		/** Convenience type to access the base class */
+		typedef CACDHidDevice::EnumHelperTmpl <CACDVirtualCP> CBase;
 
-	/** Helper member: the CPs array we are supposed to fill */
-	CVirtualCPArray& m_Array;
+		/** Helper member: the CPs array we are supposed to fill */
+		CVirtualCPArray& m_Array;
 
-	/** Constructor */
-	EnumHelper (CVirtualCPArray& Array) : m_Array (Array) { }
+		/** Constructor */
+		EnumHelper (CVirtualCPArray& Array) : m_Array (Array) { }
 
-	/* The enumerator callback */
-	ENUMPROC_STATUS Callback (
-	    IN CACDVirtualCP* pCP
-	    );
+		/* The enumerator callback */
+		ENUMPROC_STATUS Callback (
+				IN CACDVirtualCP* pCP
+		);
     };
 
 private:
@@ -80,8 +79,8 @@ public:
 
     /** Constructor */
     CACDVirtualCP (
-	HANDLE hDevice,
-	PHIDP_PREPARSED_DATA pPpd = NULL
+			HANDLE hDevice,
+			PHIDP_PREPARSED_DATA pPpd = NULL
 	) : m_Device (hDevice, pPpd),
 	    m_lpDeviceName (NULL),
 	    m_lpDeviceID (NULL),
@@ -94,28 +93,24 @@ public:
 public:
 
     /** Find supported ACD HID monitor control panels. */
-    static BOOL FindKnownVirtualCPs (CVirtualCPArray& VirtualCPArray)
-    {
-	EnumHelper helper (VirtualCPArray);
-	return CACDHidDevice::EnumDevices (helper);
+    static BOOL FindKnownVirtualCPs(CVirtualCPArray& VirtualCPArray) {
+		EnumHelper helper(VirtualCPArray);
+		return CACDHidDevice::EnumDevices(helper);
     }
 
     /** Return the HID Device. */
-    CACDHidDevice& GetDevice ()
-    {
-	return m_Device;
+    CACDHidDevice& GetDevice() {
+		return m_Device;
     }
 
     /** Return the device's name. */
-    LPCSTR GetDeviceName () const
-    {
-	return m_lpDeviceName;
+    LPCSTR GetDeviceName() const {
+		return m_lpDeviceName;
     }
 
     /** Return the device's hardware instance ID. */
-    LPCSTR GetDeviceID () const
-    {
-	return m_lpDeviceID;
+    LPCSTR GetDeviceID() const {
+		return m_lpDeviceID;
     }
 
     /**
@@ -145,14 +140,13 @@ public:
     }
 
     /** Return TRUE if the settings have be modified, FALSE otherwise. */
-    BOOL Modified () const
-    {
-	return m_bModified;
+    BOOL Modified() const {
+		return m_bModified;
     }
 
     /** Apply the current settings. */
-    BOOL Apply ();
+    BOOL Apply();
 
     /** Revert to the initial or last applied settings. */
-    BOOL Reset ();
+    BOOL Reset();
 };
