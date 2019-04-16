@@ -354,7 +354,7 @@ public:
 
 
 template <class CHelper>
-CUSBMonitorHidDevice::EnumDevices (
+BOOL CUSBMonitorHidDevice::EnumDevices (
     IN CHelper& helper
     )
 {
