@@ -330,9 +330,9 @@ CACDPropertyPage::OnEnChangeBrightnessEdit ()
 
     // check for out-of-range.
     if (value < 0 || value > 100) {
-	value = min (0, max (value, 100));
-	_snprintf (buffer, sizeof (buffer), "%d", value);
-	buffer [sizeof (buffer) - 1] = '\0';
+		value = min (0, max (value, 100));
+		_snprintf_s(buffer, sizeof (buffer), "%d", value);
+		buffer [sizeof (buffer) - 1] = '\0';
 
 	m_cBrightnessEdit.SetWindowText (buffer);
     }
