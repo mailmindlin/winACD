@@ -21,20 +21,23 @@
 	<PropertyGroup Label="Globals">
 		<VCProjectVersion>16.0</VCProjectVersion>
 		<ProjectGuid>{767354F0-67F8-47E0-8CE0-8DDA6DF0154C}</ProjectGuid>
-		<Keyword>ManagedCProj</Keyword>
+		<Keyword>Win32Proj</Keyword>
+		<WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
 	</PropertyGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
 		<ConfigurationType>Application</ConfigurationType>
 		<UseDebugLibraries>true</UseDebugLibraries>
 		<PlatformToolset>v142</PlatformToolset>
-		<CLRSupport>true</CLRSupport>
+		<CLRSupport>false</CLRSupport>
+		<UseOfMfc>Dynamic</UseOfMfc>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
 		<ConfigurationType>Application</ConfigurationType>
 		<UseDebugLibraries>false</UseDebugLibraries>
 		<PlatformToolset>v142</PlatformToolset>
-		<CLRSupport>true</CLRSupport>
+		<CLRSupport>false</CLRSupport>
+		<UseOfMfc>Dynamic</UseOfMfc>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
 		<ConfigurationType>Application</ConfigurationType>
