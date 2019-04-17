@@ -77,22 +77,21 @@
 			<WarningLevel>Level3</WarningLevel>
 			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
 			<Optimization>Disabled</Optimization>
-			<AdditionalIncludeDirectories>$(ProjectDir)\..\acdutils;$(WINDDK)\inc\wxp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>$(ProjectDir)\..\acdutils;$(DDK_INC_PATH);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 		<Link>
 			<TargetMachine>MachineX86</TargetMachine>
 			<GenerateDebugInformation>true</GenerateDebugInformation>
 			<SubSystem>Windows</SubSystem>
-			<AdditionalDependencies>setupapi.lib;$(WINDDK)\lib\wxp\i386\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>setupapi.lib;$(DDK_LIB_PATH)\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
 			<PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-			<RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
 			<WarningLevel>Level3</WarningLevel>
 			<DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-			<AdditionalIncludeDirectories>$(ProjectDir)\..\acdutils;$(WINDDK)\inc\wxp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+			<AdditionalIncludeDirectories>$(ProjectDir)\..\acdutils;$(DDK_INC_PATH);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
 		</ClCompile>
 		<Link>
 			<TargetMachine>MachineX86</TargetMachine>
@@ -100,9 +99,14 @@
 			<SubSystem>Windows</SubSystem>
 			<EnableCOMDATFolding>true</EnableCOMDATFolding>
 			<OptimizeReferences>true</OptimizeReferences>
-			<AdditionalDependencies>setupapi.lib;$(WINDDK)\lib\wxp\i386\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+			<AdditionalDependencies>setupapi.lib;$(DDK_LIB_PATH)\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
 	</ItemDefinitionGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\acdutils\ACDUtils.vcxproj">
+			<Project>{c3b9cd00-a1a1-4c63-81fd-74fbcb249fe3}</Project>
+		</ProjectReference>
+	</ItemGroup>
 	<ItemGroup>
 		<ClCompile Include="ACDBrightnessWnd.cpp" />
 		<ClCompile Include="ACDMon.cpp" />
