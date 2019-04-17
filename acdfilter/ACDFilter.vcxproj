@@ -84,7 +84,7 @@
 	<ItemDefinitionGroup>
 	</ItemDefinitionGroup>
 	<ItemGroup>
-		<ClCompile Include="acddescriptors.c" />
+		<ClInclude Include="acddescriptors.c" />
 		<ClCompile Include="acdfilter.c" />
 	</ItemGroup>
 	<ItemGroup>
