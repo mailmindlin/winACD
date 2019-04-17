@@ -109,6 +109,9 @@
 		<PostBuildEvent>
 			<Message>Performing registration</Message>
 		</PostBuildEvent>
+		<Manifest>
+			<AssemblyIdentity>WinACD.ACDExt</AssemblyIdentity>
+		</Manifest>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
@@ -142,6 +145,9 @@
 			<ProxyFileName>ACDExt_p.c</ProxyFileName>
 			<HeaderFileName>ACDExt.h</HeaderFileName>
 		</Midl>
+		<Manifest>
+			<AssemblyIdentity>WinACD.ACDExt</AssemblyIdentity>
+		</Manifest>
 	</ItemDefinitionGroup>
 	<ItemGroup>
 		<ClCompile Include="ACDExt.cpp" />
@@ -176,9 +182,6 @@
 	<ItemGroup>
 		<Image Include="acd.ico" />
 		<Image Include="icon.ico" />
-	</ItemGroup>
-	<ItemGroup>
-		<Manifest Include="acdext.dll.manifest" />
 	</ItemGroup>
 	<ItemGroup>
 		<Text Include="ReadMe.txt" />

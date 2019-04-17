@@ -84,9 +84,6 @@
 		</Image>
 	</ItemGroup>
 	<ItemGroup>
-		<Manifest Include="acdext.dll.manifest">
-			<Filter>Resource Files</Filter>
-		</Manifest>
 	</ItemGroup>
 	<ItemGroup>
 		<Text Include="ReadMe.txt" />
