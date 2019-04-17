@@ -18,39 +18,38 @@
 
 #include "ACDHidDev.h"
 
-namespace ACDUtil
-{
+namespace ACDUtil {
     /** Set the flags and mask from the registry prefs. */
-    void GetFlagsFromPrefs (UCHAR& bFlags, UCHAR& bMask);
+    void GetFlagsFromPrefs(UCHAR& bFlags, UCHAR& bMask);
 
     /**
      * Registry functions:
      */
 
     /** Get the HotKey code for increase/decrease brightness */
-    DWORD GetHotKeyPref (BOOL bIncreaseBrightness);
+    DWORD GetHotKeyPref(BOOL bIncreaseBrightness);
 
     /** Set the HotKey code for increase/decrease brightness */
-    void SetHotKeyPref (BOOL bIncreaseBrightness, DWORD wHotKey);
+    void SetHotKeyPref(BOOL bIncreaseBrightness, DWORD wHotKey);
 
     /** Return the disabled button mask (see ACDHidDevice::Flags). */
-    UCHAR GetDisabledButtonsPref ();
+    UCHAR GetDisabledButtonsPref();
 
     /** Set the disabled buttons mask. */
-    void SetDisabledButtonsPref (UCHAR bMask);
+    void SetDisabledButtonsPref(UCHAR bMask);
 
     /** Get the action to execute when the power button is pressed. */
-    ACDPowerButtonAction GetPowerButtonActionPref ();
+    ACDPowerButtonAction GetPowerButtonActionPref();
 
     /** Set the action to execute when the power button is pressed. */
-    void SetPowerButtonActionPref (ACDPowerButtonAction iAction);
+    void SetPowerButtonActionPref(ACDPowerButtonAction iAction);
 
     /** Return TRUE if we should force the suspend/shutdown operation */
-    BOOL GetForceShutdownPref ();
+    BOOL GetForceShutdownPref();
 
     /** Set the force suspend/shutdown operation preference */
-    void SetForceShutdownPref (BOOL bForce);
+    void SetForceShutdownPref(BOOL bForce);
 
     /** Return TRUE if OSD is disabled */
-    BOOL GetDisableOSDPref ();
+    BOOL GetDisableOSDPref();
 };
