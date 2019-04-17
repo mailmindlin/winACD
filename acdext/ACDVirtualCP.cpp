@@ -22,8 +22,7 @@
 #include <cfgmgr32.h>
 
 CACDVirtualCP::EnumHelper::ENUMPROC_STATUS
-CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
-{
+CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP) {
     ENUMPROC_STATUS status = CBase::Callback (&pVCP->m_Device);
 
     if (status != ENUMPROC_STATUS_SUCCESS)
@@ -38,7 +37,7 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
     CHAR buffer [128];
 
     if (!SetupDiEnumDeviceInfo (m_hDevInfo, m_dwCurrentIndex, &devInfo))
-	return ENUMPROC_STATUS_CONTINUE;
+		return ENUMPROC_STATUS_CONTINUE;
 
     DEVINST devInst;
     CM_Get_Parent (&devInst, devInfo.DevInst, 0);
@@ -57,8 +56,7 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
 	);
     
     const char* lpcVirtualPanel = "Virtual Panel on ";
-    LPSTR name = (LPSTR) malloc (
-	strlen (lpcVirtualPanel) + length + strlen (buffer));
+    LPSTR name = (LPSTR) malloc(strlen (lpcVirtualPanel) + length + strlen(buffer));
     if (!name)
 		return ENUMPROC_STATUS_CONTINUE;
 

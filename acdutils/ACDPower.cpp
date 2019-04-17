@@ -37,141 +37,131 @@ static HANDLE hShutdownEvent;
 static HDEVNOTIFY hDevNotify;
 
 void
-ACDDoPowerButtonAction ()
-{
-    BOOL bForce = ACDUtil::GetForceShutdownPref ();
+ACDDoPowerButtonAction() {
+    BOOL bForce = ACDUtil::GetForceShutdownPref();
 
-    switch (ACDUtil::GetPowerButtonActionPref ()) {
-    case ACD_POWER_BUTTON_STAND_BY:
-	if (IsPwrSuspendAllowed ())
-	    SetSuspendState (FALSE, bForce, FALSE);
-	break;
+    switch (ACDUtil::GetPowerButtonActionPref()) {
+		case ACD_POWER_BUTTON_STAND_BY:
+			if (IsPwrSuspendAllowed())
+				SetSuspendState(FALSE, bForce, FALSE);
+			break;
 
-    case ACD_POWER_BUTTON_HIBERNATE:
-	if (IsPwrHibernateAllowed ())
-	    SetSuspendState (TRUE, bForce, FALSE);
-	break;
+		case ACD_POWER_BUTTON_HIBERNATE:
+			if (IsPwrHibernateAllowed())
+				SetSuspendState(TRUE, bForce, FALSE);
+			break;
 
-    case ACD_POWER_BUTTON_SHUT_DOWN:
-	if (!IsPwrShutdownAllowed ())
-	    break;
+		case ACD_POWER_BUTTON_SHUT_DOWN:
+			if (!IsPwrShutdownAllowed())
+				break;
 
-	// we must acquire the SE_SHUTDOWN_NAME privilege
-	TOKEN_PRIVILEGES Priv;
-	HANDLE hToken;
+			// we must acquire the SE_SHUTDOWN_NAME privilege
+			TOKEN_PRIVILEGES Priv;
+			HANDLE hToken;
 
-	// open the process token
-	if (!OpenProcessToken (GetCurrentProcess (),
-	    TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))
-	    break;;
+			// open the process token
+			if (!OpenProcessToken(GetCurrentProcess(),
+				TOKEN_QUERY | TOKEN_ADJUST_PRIVILEGES, &hToken))
+				break;;
 
-	Priv.PrivilegeCount = 1;
-	Priv.Privileges [0].Attributes = SE_PRIVILEGE_ENABLED;
-	LookupPrivilegeValue (
-	    NULL, SE_SHUTDOWN_NAME, &Priv.Privileges [0].Luid);
+			Priv.PrivilegeCount = 1;
+			Priv.Privileges [0].Attributes = SE_PRIVILEGE_ENABLED;
+			LookupPrivilegeValue(NULL, SE_SHUTDOWN_NAME, &Priv.Privileges[0].Luid);
 
-	// enable the privilege
-	if (!AdjustTokenPrivileges (hToken, FALSE, &Priv, 0, NULL, NULL)) {
-	    CloseHandle (hToken);
-	    break;
-        }
+			// enable the privilege
+			if (!AdjustTokenPrivileges(hToken, FALSE, &Priv, 0, NULL, NULL)) {
+				CloseHandle(hToken);
+				break;
+			}
        
-	ExitWindowsEx (
-	    EWX_SHUTDOWN | (bForce ? EWX_FORCE : 0),
-	    SHTDN_REASON_FLAG_PLANNED
-	    );
-	break;
+			ExitWindowsEx(
+				EWX_SHUTDOWN | (bForce ? EWX_FORCE : 0),
+				SHTDN_REASON_FLAG_PLANNED
+			);
+			break;
 
-    default:
-	break;
+		default:
+		break;
     }
 }
 
 static BOOL
-BroadcastButtonEvents ()
-{
+BroadcastButtonEvents() {
     HKEY hKey;
     DWORD type, sz, value = 0;
     LONG lRet;
 
-    lRet = RegOpenKeyEx (HKEY_LOCAL_MACHINE, "SOFTWARE\\WinACD\\Preferences",
+    lRet = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\WinACD\\Preferences",
 	0, KEY_READ, &hKey);
 
     if (lRet == ERROR_SUCCESS) {
-	sz = sizeof (value);
-	RegQueryValueEx (hKey, "BroadcastButtonEvents", 0,
-	    &type, (LPBYTE) &value, &sz);
+		sz = sizeof(value);
+		RegQueryValueEx(hKey, "BroadcastButtonEvents", 0, &type, (LPBYTE) &value, &sz);
 
-	RegCloseKey (hKey);
+		RegCloseKey(hKey);
     }
 
     return value != 0;
 }
 
-static const UINT
-UWM_BEZEL_BN_CLICKED = ::RegisterWindowMessage (
-    _T ("ACD_WM_BEZEL_BN_CLICKED"));
+static const UINT UWM_BEZEL_BN_CLICKED = ::RegisterWindowMessage(_T("ACD_WM_BEZEL_BN_CLICKED"));
 
-DWORD WINAPI ACDServiceThreadProc (LPVOID pParam)
-{
+DWORD WINAPI ACDServiceThreadProc(LPVOID pParam) {
     CACDHidDevice* pDevice = (CACDHidDevice*) pParam;
 
     UCHAR bFlags, bMask;
-    ACDUtil::GetFlagsFromPrefs (bFlags, bMask);
-    pDevice->SetFlags (pDevice->GetFlags () & ~bMask | bFlags);
+    ACDUtil::GetFlagsFromPrefs(bFlags, bMask);
+    pDevice->SetFlags(pDevice->GetFlags() & ~bMask | bFlags);
 
-    HANDLE hDevice = pDevice->GetHandle ();
-    while (TRUE) {
-	DWORD dwBytesRead = 0;
-	UCHAR pbReport [2];
+    HANDLE hDevice = pDevice->GetHandle();
+    while(TRUE) {
+		DWORD dwBytesRead = 0;
+		UCHAR pbReport [2];
 
-	pbReport [0] = pbReport [1] = '\0';
-	if (!ReadFile (hDevice, pbReport, 2, &dwBytesRead, NULL))
-	    break;
+		pbReport [0] = pbReport [1] = '\0';
+		if (!ReadFile(hDevice, pbReport, 2, &dwBytesRead, NULL))
+			break;
 
-	if (dwBytesRead != 2)
-	    continue;
+		if (dwBytesRead != 2)
+			continue;
 
-	if (BroadcastButtonEvents ())
-	    PostMessage (HWND_BROADCAST, UWM_BEZEL_BN_CLICKED,
-		pbReport [1], 0);
+		if (BroadcastButtonEvents())
+			PostMessage(HWND_BROADCAST, UWM_BEZEL_BN_CLICKED,
+			pbReport [1], 0);
 
-	if (pbReport [1] == ACD_BUTTON_POWER) {
-	    ACDDoPowerButtonAction ();
+		if (pbReport [1] == ACD_BUTTON_POWER) {
+			ACDDoPowerButtonAction();
 
-	    // Delete all the pending input reports
-	    HidD_FlushQueue (hDevice);
-	}
+			// Delete all the pending input reports
+			HidD_FlushQueue(hDevice);
+		}
     } 
 
     delete pDevice;
     return 0;
 }
 
-struct EnumHelper : CACDHidDevice::EnumHelper
-{
-    ENUMPROC_STATUS Callback (CACDHidDevice* pDevice)
-    {
-	ENUMPROC_STATUS status = CACDHidDevice::EnumHelper::Callback (pDevice);
-	if (status != ENUMPROC_STATUS_SUCCESS)
-	    return status;
+struct EnumHelper : CACDHidDevice::EnumHelper {
+    ENUMPROC_STATUS Callback(CACDHidDevice* pDevice) {
+		ENUMPROC_STATUS status = CACDHidDevice::EnumHelper::Callback(pDevice);
+		if (status != ENUMPROC_STATUS_SUCCESS)
+			return status;
 
-	DWORD dwThreadID;
-	CreateThread (0, 0, ACDServiceThreadProc, pDevice, 0, &dwThreadID);
+		DWORD dwThreadID;
+		CreateThread(0, 0, ACDServiceThreadProc, pDevice, 0, &dwThreadID);
 
-	return ENUMPROC_STATUS_SUCCESS;
+		return ENUMPROC_STATUS_SUCCESS;
     }
 };
 
 static BOOL
-ACDSetPowerServiceStatus (
-    DWORD dwCurrentState,
-    DWORD dwWin32ExitCode,
-    DWORD dwServiceSpecificExitCode,
-    DWORD dwCheckPoint,
-    DWORD dwWaitHint
-    )
-{
+ACDSetPowerServiceStatus(
+		DWORD dwCurrentState,
+		DWORD dwWin32ExitCode,
+		DWORD dwServiceSpecificExitCode,
+		DWORD dwCheckPoint,
+		DWORD dwWaitHint
+) {
     SERVICE_STATUS ServiceStatus;
 
     ServiceStatus.dwServiceType = SERVICE_WIN32_OWN_PROCESS;
@@ -180,161 +170,157 @@ ACDSetPowerServiceStatus (
     ServiceStatus.dwWaitHint = dwWaitHint;
     ServiceStatus.dwServiceSpecificExitCode = dwServiceSpecificExitCode;
     ServiceStatus.dwWin32ExitCode = dwServiceSpecificExitCode == 0
-	? dwWin32ExitCode : ERROR_SERVICE_SPECIFIC_ERROR;
+			? dwWin32ExitCode
+			: ERROR_SERVICE_SPECIFIC_ERROR;
     ServiceStatus.dwControlsAccepted = dwCurrentState == SERVICE_START_PENDING
-	? 0 : SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
+			? 0
+			: SERVICE_ACCEPT_STOP | SERVICE_ACCEPT_SHUTDOWN;
 
-    return SetServiceStatus (hServiceStatus, &ServiceStatus);
+    return SetServiceStatus(hServiceStatus, &ServiceStatus);
 }
 
 static void
-ACDHandleDeviceArrival (PDEV_BROADCAST_HDR pdb)
-{
+ACDHandleDeviceArrival(PDEV_BROADCAST_HDR pdb) {
     USES_CONVERSION;
 
     if (pdb->dbch_devicetype != DBT_DEVTYP_DEVICEINTERFACE)
-	return;
+		return;
 
     PDEV_BROADCAST_DEVICEINTERFACE pdbi =
 	(PDEV_BROADCAST_DEVICEINTERFACE) pdb;
 
-    HANDLE hDevice = CreateFile (
-	W2CA ((LPCWSTR)pdbi->dbcc_name),    /* filename */
-	GENERIC_READ | GENERIC_WRITE,	    /* desired access */
-	FILE_SHARE_READ | FILE_SHARE_WRITE, /* share mode */
-	NULL,				    /* security attributes */
-	OPEN_EXISTING,			    /* creation disposition */
-	0,				    /* flags and attributes */
-	NULL				    /* template file */
+    HANDLE hDevice = CreateFile(
+		W2CA((LPCWSTR)pdbi->dbcc_name),    /* filename */
+		GENERIC_READ | GENERIC_WRITE,	    /* desired access */
+		FILE_SHARE_READ | FILE_SHARE_WRITE, /* share mode */
+		NULL,				    /* security attributes */
+		OPEN_EXISTING,			    /* creation disposition */
+		0,				    /* flags and attributes */
+		NULL				    /* template file */
 	);
 
     if (hDevice == INVALID_HANDLE_VALUE)
-	return;
+		return;
 
     //
     // Check the collection USAGE_PAGE (must be monitor)
     // 
 
     PHIDP_PREPARSED_DATA ppData;
-    if (!HidD_GetPreparsedData (hDevice, &ppData)) {
-        CloseHandle (hDevice);
+    if (!HidD_GetPreparsedData(hDevice, &ppData)) {
+        CloseHandle(hDevice);
         return;
     }
 
     HIDP_CAPS caps;
-    NTSTATUS hidStatus = HidP_GetCaps (ppData, &caps);
+    NTSTATUS hidStatus = HidP_GetCaps(ppData, &caps);
     if (hidStatus != HIDP_STATUS_SUCCESS
-	|| caps.UsagePage != CUSBMonitorHidDevice::USAGE_PAGE_MONITOR) {
-        HidD_FreePreparsedData (ppData);
-        CloseHandle (hDevice);
+			|| caps.UsagePage != CUSBMonitorHidDevice::USAGE_PAGE_MONITOR) {
+        HidD_FreePreparsedData(ppData);
+        CloseHandle(hDevice);
         return;
     }
 
-    CACDHidDevice *pDevice = new CACDHidDevice (hDevice, ppData);
+    CACDHidDevice *pDevice = new CACDHidDevice(hDevice, ppData);
     if (pDevice == NULL) {
-        HidD_FreePreparsedData (ppData);
-        CloseHandle (hDevice);
-	return;
+        HidD_FreePreparsedData(ppData);
+        CloseHandle(hDevice);
+		return;
     }
 
-    if (!pDevice->IsSupportedCinemaDisplay ()) {
-	delete pDevice;
-	return;
+    if (!pDevice->IsSupportedCinemaDisplay()) {
+		delete pDevice;
+		return;
     }
 
     DWORD dwThreadID;
-    CreateThread (0, 0, ACDServiceThreadProc, pDevice, 0, &dwThreadID);
+    CreateThread(0, 0, ACDServiceThreadProc, pDevice, 0, &dwThreadID);
 }
 
 DWORD WINAPI
-ACDPowerServiceCtrlHandler (DWORD dwControl, DWORD dwEventType,
-			    LPVOID lpEventData, LPVOID lpContext)
-{
+ACDPowerServiceCtrlHandler(DWORD dwControl, DWORD dwEventType, LPVOID lpEventData, LPVOID lpContext) {
     switch (dwControl) {	
-    case SERVICE_CONTROL_SHUTDOWN:
-    case SERVICE_CONTROL_STOP:
-	ACDSetPowerServiceStatus (
-	    SERVICE_STOP_PENDING, NO_ERROR, 0, 1, 3000
-	    );
+		case SERVICE_CONTROL_SHUTDOWN:
+		case SERVICE_CONTROL_STOP:
+			ACDSetPowerServiceStatus(
+				SERVICE_STOP_PENDING, NO_ERROR, 0, 1, 3000
+				);
 
-	// signal the service main
-	SetEvent (hShutdownEvent);
-	UnregisterDeviceNotification (hDevNotify);
+			// signal the service main
+			SetEvent(hShutdownEvent);
+			UnregisterDeviceNotification(hDevNotify);
 
-	ACDSetPowerServiceStatus (
-	    SERVICE_STOPPED, NO_ERROR, 0, 0, 0
-	    );
-	return NO_ERROR;
+			ACDSetPowerServiceStatus(
+				SERVICE_STOPPED, NO_ERROR, 0, 0, 0
+				);
+			return NO_ERROR;
 
-    case SERVICE_CONTROL_DEVICEEVENT:
-	if (dwEventType == DBT_DEVICEARRIVAL)
-	    ACDHandleDeviceArrival ((PDEV_BROADCAST_HDR) lpEventData);
-	return NO_ERROR;
+		case SERVICE_CONTROL_DEVICEEVENT:
+			if (dwEventType == DBT_DEVICEARRIVAL)
+				ACDHandleDeviceArrival((PDEV_BROADCAST_HDR) lpEventData);
+			return NO_ERROR;
 
-    default:
-	return ERROR_CALL_NOT_IMPLEMENTED;
+		default:
+			return ERROR_CALL_NOT_IMPLEMENTED;
     }
 }
 
 static void WINAPI
-ACDPowerServiceMain (DWORD argc, LPTSTR *argv)
+ACDPowerServiceMain(DWORD argc, LPTSTR *argv)
 {
     DEV_BROADCAST_DEVICEINTERFACE NotificationFilter;
-    hServiceStatus = RegisterServiceCtrlHandlerEx (
-	"ACDPowerService", ACDPowerServiceCtrlHandler, NULL);
+    hServiceStatus = RegisterServiceCtrlHandlerEx("ACDPowerService", ACDPowerServiceCtrlHandler, NULL);
 
     if (!hServiceStatus)
-	return;
+		return;
 
-    if (!ACDSetPowerServiceStatus (
-	SERVICE_START_PENDING, NO_ERROR, 0, 1, 3000
+    if (!ACDSetPowerServiceStatus(
+			SERVICE_START_PENDING, NO_ERROR, 0, 1, 3000
 	))
-	return;
+		return;
 
-    ZeroMemory (&NotificationFilter, sizeof (NotificationFilter));
-    NotificationFilter.dbcc_size = sizeof (DEV_BROADCAST_DEVICEINTERFACE);
+    ZeroMemory(&NotificationFilter, sizeof(NotificationFilter));
+    NotificationFilter.dbcc_size = sizeof(DEV_BROADCAST_DEVICEINTERFACE);
     NotificationFilter.dbcc_devicetype = DBT_DEVTYP_DEVICEINTERFACE;
-    HidD_GetHidGuid (&NotificationFilter.dbcc_classguid);
+    HidD_GetHidGuid(&NotificationFilter.dbcc_classguid);
 
-    hDevNotify = RegisterDeviceNotification (
+    hDevNotify = RegisterDeviceNotification(
 	hServiceStatus, &NotificationFilter, DEVICE_NOTIFY_SERVICE_HANDLE);
     if (!hDevNotify)
-	return;
+		return;
 
-    if (!ACDSetPowerServiceStatus (
-	SERVICE_START_PENDING, NO_ERROR, 0, 2, 3000
+    if (!ACDSetPowerServiceStatus(
+			SERVICE_START_PENDING, NO_ERROR, 0, 2, 3000
 	))
-	return;
+		return;
 
-    hShutdownEvent = CreateEvent (0, TRUE, FALSE, 0);
+    hShutdownEvent = CreateEvent(0, TRUE, FALSE, 0);
     if (!hShutdownEvent)
 	return;
 
-    if (!ACDSetPowerServiceStatus (
-	SERVICE_START_PENDING, NO_ERROR, 0, 3, 3000
+    if (!ACDSetPowerServiceStatus(
+			SERVICE_START_PENDING, NO_ERROR, 0, 3, 3000
 	))
-	return;
+		return;
 
     EnumHelper helper;
-    CACDHidDevice::EnumDevices (helper);
+    CACDHidDevice::EnumDevices(helper);
 
-    if (!ACDSetPowerServiceStatus (
-	SERVICE_RUNNING, NO_ERROR, 0, 0, 0
+    if (!ACDSetPowerServiceStatus(
+			SERVICE_RUNNING, NO_ERROR, 0, 0, 0
 	))
-	return;
+		return;
 
-    WaitForSingleObject (hShutdownEvent, INFINITE);
-    CloseHandle (hShutdownEvent);
+    WaitForSingleObject(hShutdownEvent, INFINITE);
+    CloseHandle(hShutdownEvent);
 }
 
-int
-_tmain (int argc, _TCHAR* argv[])
-{
+int _tmain(int argc, _TCHAR* argv[]) {
     SERVICE_TABLE_ENTRY ServiceTable [] = {
-	{ "ACDPowerService", ACDPowerServiceMain },
-	{ NULL, NULL }
+		{ "ACDPowerService", ACDPowerServiceMain },
+		{ NULL, NULL }
     };
 
-    BOOL bRet = StartServiceCtrlDispatcher (ServiceTable);
+    BOOL bRet = StartServiceCtrlDispatcher(ServiceTable);
     return bRet ? EXIT_SUCCESS : EXIT_FAILURE;
 }
