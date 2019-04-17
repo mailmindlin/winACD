@@ -42,9 +42,7 @@ typedef struct _DEVICE_EXTENSION {
     PDEVICE_OBJECT physicalDeviceObject;
     PDEVICE_OBJECT lowerDeviceObject;
 
-    PUSB_STRING_DESCRIPTOR stringDescriptor [
-	ACD_LAST_DRIVER_STRING_DESCRIPTOR + 1
-    ];
+    PUSB_STRING_DESCRIPTOR stringDescriptor [ACD_LAST_DRIVER_STRING_DESCRIPTOR + 1];
 
     IO_REMOVE_LOCK removeLock;
 

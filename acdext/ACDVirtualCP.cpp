@@ -60,7 +60,7 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
     LPSTR name = (LPSTR) malloc (
 	strlen (lpcVirtualPanel) + length + strlen (buffer));
     if (!name)
-	return ENUMPROC_STATUS_CONTINUE;
+		return ENUMPROC_STATUS_CONTINUE;
 
     name [0] = '\0';
     strcat (name, lpcVirtualPanel);
@@ -81,10 +81,10 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP)
     pVCP->m_lpDeviceName = name;
 
     if (CM_Get_Device_ID (
-	devInfo.DevInst,    /* devInst */
-	buffer,		    /* buffer */
-	sizeof (buffer),    /* length */
-	0		    /* flags */
+			devInfo.DevInst,    /* devInst */
+			buffer,		    /* buffer */
+			sizeof (buffer),    /* length */
+			0		    /* flags */
 	) != CR_SUCCESS)
 	    return ENUMPROC_STATUS_CONTINUE;
     pVCP->m_lpDeviceID = strdup (buffer);

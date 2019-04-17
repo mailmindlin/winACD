@@ -111,38 +111,38 @@ CACDPropertyPage::InitializeControls() {
 		child->ShowWindow(bShow);
 
     switch (m_VirtualControlPanels.GetCount ()) {
-    case 0:
-	// no ACD found
-	GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText ("None present");
-	GetDlgItem (IDC_STATIC_VCP)->ShowWindow (SW_SHOW);
-	GetDlgItem (IDC_STATIC_VCP_ICON)->ShowWindow (SW_SHOW);
-	GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_SHOW);
-	return;
+		case 0:
+			// no ACD found
+			GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText ("None present");
+			GetDlgItem (IDC_STATIC_VCP)->ShowWindow (SW_SHOW);
+			GetDlgItem (IDC_STATIC_VCP_ICON)->ShowWindow (SW_SHOW);
+			GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_SHOW);
+			return;
 
-    case 1:
-	// one ACD connected
-	m_pCurrentVirtualCP = m_VirtualControlPanels.ElementAt (0);
-	m_cVirtualControlList.ShowWindow (SW_HIDE);
-	GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText (
-	    m_pCurrentVirtualCP->GetDeviceName ());
-	break;
+		case 1:
+			// one ACD connected
+			m_pCurrentVirtualCP = m_VirtualControlPanels.ElementAt (0);
+			m_cVirtualControlList.ShowWindow (SW_HIDE);
+			GetDlgItem (IDC_VIRTUAL_CONTROL)->SetWindowText (
+				m_pCurrentVirtualCP->GetDeviceName ());
+			break;
 
-    default: 
-	// multiple ACDs connected
-	for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i) {
-	    CACDVirtualCP* pVCP = m_VirtualControlPanels.ElementAt (i);
+		default: 
+			// multiple ACDs connected
+			for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i) {
+				CACDVirtualCP* pVCP = m_VirtualControlPanels.ElementAt (i);
 
-	    int pos = m_cVirtualControlList.AddString (pVCP->GetDeviceName ());
-	    if (pos >= 0)
-		m_cVirtualControlList.SetItemDataPtr (pos, pVCP);
-	}
+				int pos = m_cVirtualControlList.AddString (pVCP->GetDeviceName ());
+				if (pos >= 0)
+				m_cVirtualControlList.SetItemDataPtr (pos, pVCP);
+			}
 
-	// select the first item in the list.
-	m_pCurrentVirtualCP = (CACDVirtualCP*)
-	    m_cVirtualControlList.GetItemDataPtr (0);
-	m_cVirtualControlList.SetCurSel (0);
-	GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_HIDE);
-	break;
+			// select the first item in the list.
+			m_pCurrentVirtualCP = (CACDVirtualCP*)
+				m_cVirtualControlList.GetItemDataPtr (0);
+			m_cVirtualControlList.SetCurSel (0);
+			GetDlgItem (IDC_VIRTUAL_CONTROL)->ShowWindow (SW_HIDE);
+			break;
     }
 
     UpdateControls ();

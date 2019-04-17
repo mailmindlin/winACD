@@ -40,28 +40,24 @@ DriverEntry (IN PDRIVER_OBJECT DriverObject, IN PUNICODE_STRING RegistryPath)
 {
     ULONG i;
 
-    PAGED_CODE ();
-    UNREFERENCED_PARAMETER (RegistryPath);
+	ACD_dbgPrint (("DriverEntry"));
 
-    ACD_dbgPrint (("DriverEntry"));
+	/* initialize our function pointers. */
+	DriverObject->DriverExtension->AddDevice = ACD_AddDevice;
+	DriverObject->DriverUnload = ACD_DriverUnload;
 
-    /* initialize our function pointers. */
-    DriverObject->DriverExtension->AddDevice = ACD_AddDevice;
-    DriverObject->DriverUnload = ACD_DriverUnload;
+	for (ULONG i = 0; i < IRP_MJ_MAXIMUM_FUNCTION; i++) {
+		DriverObject->MajorFunction [i] = ACD_DispatchAny;
+	}
+	/* the WDM requires us to have specific PnP & Power dispatch routines */
+	DriverObject->MajorFunction [IRP_MJ_POWER] = ACD_DispatchPower;
+	DriverObject->MajorFunction [IRP_MJ_PNP] = ACD_DispatchPnP;
 
-    for (i = 0; i < IRP_MJ_MAXIMUM_FUNCTION; i++) {
-	DriverObject->MajorFunction [i] = ACD_DispatchAny;
-    }
-    /* the WDM requires us to have specific PnP & Power dispatch routines */
-    DriverObject->MajorFunction [IRP_MJ_POWER] = ACD_DispatchPower;
-    DriverObject->MajorFunction [IRP_MJ_PNP] = ACD_DispatchPnP;
+	/* we need to filter the hid report descriptor */
+	DriverObject->MajorFunction [IRP_MJ_INTERNAL_DEVICE_CONTROL] = ACD_DispatchIoctl;
 
-    /* we need to filter the hid report descriptor */
-    DriverObject->MajorFunction [IRP_MJ_INTERNAL_DEVICE_CONTROL] =
-	ACD_DispatchIoctl;
-
-    /* that's it! */
-    return STATUS_SUCCESS;
+	/* that's it! */
+	return STATUS_SUCCESS;
 }
 
 /**
