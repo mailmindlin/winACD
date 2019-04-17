@@ -112,12 +112,9 @@ CACDMonApp::RegNotifyThreadMain (LPVOID pParam) {
 		) != ERROR_SUCCESS)
 		return -1;
 
-	while (TRUE) {
+	do {
 		theApp.m_pMainWnd->SendMessage (ACD_WM_INIT_HOTKEYS, 0, 0);
-
-		if (RegNotifyChangeKeyValue (hKey, FALSE, REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE) != ERROR_SUCCESS)
-			break;
-	}
+	} while (RegNotifyChangeKeyValue(hKey, FALSE, REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE) == ERROR_SUCCESS);
 
 	RegCloseKey (hKey);
 
