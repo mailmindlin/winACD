@@ -33,18 +33,16 @@ END_MESSAGE_MAP()
 
 
 /** CACDMonApp construction. */
-CACDMonApp::CACDMonApp ()
-{
+CACDMonApp::CACDMonApp() {
 	// enumerate the ACD controls.
 	EnumHelper helper;
 	CACDHidDevice::EnumDevices (helper);
 }
 
 /** CACDMonApp destructor */
-CACDMonApp::~CACDMonApp ()
-{
-	for (INT_PTR i = 0; i <  m_DeviceArray.GetCount (); ++i)
-	delete m_DeviceArray.ElementAt (i);
+CACDMonApp::~CACDMonApp () {
+	for (INT_PTR i = 0; i < m_DeviceArray.GetCount(); ++i)
+		delete m_DeviceArray.ElementAt(i);
 }
 
 /** The one and only CACDMonApp object. */
@@ -54,10 +52,9 @@ CACDMonApp theApp;
  * CACDMonApp initialization.
  */
 BOOL
-CACDMonApp::InitInstance ()
-{
+CACDMonApp::InitInstance() {
 	// required on WinXP with the use of ComCtl32.dll version 6 or later.
-	InitCommonControls ();
+	InitCommonControls();
 
 	// application initialization (we might not need the registry stuff).
 	CWinApp::InitInstance ();
@@ -106,23 +103,20 @@ CACDMonApp::ExitInstance() {
 
 
 UINT
-CACDMonApp::RegNotifyThreadMain (LPVOID pParam)
-{
+CACDMonApp::RegNotifyThreadMain (LPVOID pParam) {
 	HKEY hKey;
  
 	if (RegCreateKeyEx (
-		HKEY_CURRENT_USER, "SOFTWARE\\WinACD\\Preferences", 0, 0,
-		REG_OPTION_NON_VOLATILE, KEY_NOTIFY, 0, &hKey, 0
+			HKEY_CURRENT_USER, "SOFTWARE\\WinACD\\Preferences", 0, 0,
+			REG_OPTION_NON_VOLATILE, KEY_NOTIFY, 0, &hKey, 0
 		) != ERROR_SUCCESS)
-	return -1;
+		return -1;
 
 	while (TRUE) {
-	theApp.m_pMainWnd->SendMessage (ACD_WM_INIT_HOTKEYS, 0, 0);
+		theApp.m_pMainWnd->SendMessage (ACD_WM_INIT_HOTKEYS, 0, 0);
 
-	if (RegNotifyChangeKeyValue (hKey, FALSE,
-		REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE
-		) != ERROR_SUCCESS)
-		break;
+		if (RegNotifyChangeKeyValue (hKey, FALSE, REG_NOTIFY_CHANGE_LAST_SET, 0, FALSE) != ERROR_SUCCESS)
+			break;
 	}
 
 	RegCloseKey (hKey);
@@ -131,62 +125,58 @@ CACDMonApp::RegNotifyThreadMain (LPVOID pParam)
 }
 
 CACDMonApp::EnumHelper::ENUMPROC_STATUS
-CACDMonApp::EnumHelper::Callback (CACDHidDevice* pDevice)
-{
+CACDMonApp::EnumHelper::Callback (CACDHidDevice* pDevice) {
 	ENUMPROC_STATUS status = CACDHidDevice::EnumHelper::Callback (pDevice);
 
 	if (status != ENUMPROC_STATUS_SUCCESS)
-	return status;
+		return status;
 
 	theApp.m_DeviceArray.Add (pDevice);
 	return ENUMPROC_STATUS_SUCCESS;
 }
 
 BOOL
-CACDMonApp::GetBrightness (PUCHAR pbBrightness)
-{
+CACDMonApp::GetBrightness (PUCHAR pbBrightness) {
 	if (m_DeviceArray.GetCount () == 0)
-	return FALSE;
+		return FALSE;
 
-	BOOL bRet = m_DeviceArray.ElementAt (0)->GetBrightness (pbBrightness);
+	BOOL bRet = m_DeviceArray.ElementAt(0)->GetBrightness(pbBrightness);
 	if (bRet)
-	*pbBrightness /= 16;
+		*pbBrightness /= 16;
 
 	return bRet;
 }
 
 BOOL
-CACDMonApp::SetBrightness (UCHAR nBrightness)
-{
+CACDMonApp::SetBrightness (UCHAR nBrightness) {
 	nBrightness = min (nBrightness, 15);
 	nBrightness = nBrightness * 16 + nBrightness;
 
 	BOOL bRet = TRUE;
 	for (INT_PTR i = 0; i <  m_DeviceArray.GetCount (); ++i)
-	bRet &= m_DeviceArray.ElementAt (i)->SetBrightness (nBrightness);
+		bRet &= m_DeviceArray.ElementAt (i)->SetBrightness(nBrightness);
 
 	return bRet;
 }
 
 BOOL
-CACDMonApp::OnDeviceChange (UINT nEventType, LPTSTR lpcDeviceName)
-{
+CACDMonApp::OnDeviceChange(UINT nEventType, LPTSTR lpcDeviceName) {
 	if (nEventType == DBT_DEVICEREMOVECOMPLETE
-	|| nEventType == DBT_DEVICEARRIVAL) {
-	// at some point we might check if we actually have an open
-	// handle for the disconnected device. for now, we just purge
-	// all the HID device in the DeviceArray and reload them all.
+			|| nEventType == DBT_DEVICEARRIVAL) {
+		// at some point we might check if we actually have an open
+		// handle for the disconnected device. for now, we just purge
+		// all the HID device in the DeviceArray and reload them all.
 
-	INT_PTR iCount = m_DeviceArray.GetCount ();
-	for (INT_PTR i = 0; i <  iCount; ++i)
-		delete m_DeviceArray.ElementAt (i);
+		INT_PTR iCount = m_DeviceArray.GetCount ();
+		for (INT_PTR i = 0; i <  iCount; ++i)
+			delete m_DeviceArray.ElementAt (i);
 
-	m_DeviceArray.RemoveAll ();
+		m_DeviceArray.RemoveAll ();
 
-	EnumHelper helper;
-	CACDHidDevice::EnumDevices (helper);
+		EnumHelper helper;
+		CACDHidDevice::EnumDevices (helper);
 
-	return iCount != m_DeviceArray.GetCount ();
+		return iCount != m_DeviceArray.GetCount ();
 	}
 
 	return FALSE;
