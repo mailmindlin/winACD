@@ -37,11 +37,6 @@
 		</ClInclude>
 	</ItemGroup>
 	<ItemGroup>
-		<ResourceCompile Include="ACDMgr.rc">
-			<Filter>Resource Files</Filter>
-		</ResourceCompile>
-	</ItemGroup>
-	<ItemGroup>
 		<Text Include="ReadMe.txt" />
 	</ItemGroup>
 </Project>
