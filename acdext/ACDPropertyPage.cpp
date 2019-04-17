@@ -57,13 +57,13 @@ CACDPropertyPage::PostNcDestroy ()
 void
 CACDPropertyPage::UpdateBrightnessEdit ()
 {
-    char buffer [4];
 
     // get the slider position.
     int pos = m_cBrightnessSlider.GetPos ();
 
     // set the spinner text.
-    _snprintf (buffer, sizeof (buffer), "%d", pos * 100 / 255);
+	char buffer[4];
+    _snprintf_s(buffer, sizeof (buffer), "%d", pos * 100 / 255);
     buffer [sizeof (buffer) - 1] = '\0';
     m_cBrightnessEdit.SetWindowText (buffer);
 }
@@ -90,14 +90,14 @@ CACDPropertyPage::UpdateControls ()
 
     // set the firmware revision.
     int nVersion = Device.GetDeviceVersionNumber ();
-    _snprintf (buffer, sizeof (buffer), "%x", nVersion);
+    _snprintf_s(buffer, sizeof (buffer), "%x", nVersion);
     buffer [sizeof (buffer) - 1] = '\0';
     GetDlgItem (IDC_FIRMWARE_VERSION)->SetWindowText (buffer);
 
     // set the manufacturing date.
     EDID_STRUCT edid;
     Device.GetEDID (&edid);
-    _snprintf (buffer, sizeof (buffer), "%d, ISO week %d",
+    _snprintf_s(buffer, sizeof (buffer), "%d, ISO week %d",
 	edid.ProductIdentification.bManufacturingYear + 1990,
 	edid.ProductIdentification.bManufacturingWeek);
     buffer [sizeof (buffer) - 1] = '\0';
