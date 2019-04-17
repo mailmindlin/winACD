@@ -34,7 +34,6 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP) {
 
     SP_DEVINFO_DATA devInfo;
     devInfo.cbSize = sizeof (devInfo);
-    CHAR buffer [128];
 
     if (!SetupDiEnumDeviceInfo (m_hDevInfo, m_dwCurrentIndex, &devInfo))
 		return ENUMPROC_STATUS_CONTINUE;
@@ -42,7 +41,8 @@ CACDVirtualCP::EnumHelper::Callback (IN CACDVirtualCP* pVCP) {
     DEVINST devInst;
     CM_Get_Parent (&devInst, devInfo.DevInst, 0);
 
-    _snprintf (buffer, sizeof (buffer), " (HID%d)", m_dwCurrentIndex);
+	CHAR buffer[128];
+    _snprintf_s(buffer, sizeof(buffer), " (HID%d)", m_dwCurrentIndex);
     buffer [sizeof (buffer) - 1] = '\0';
 
     ULONG length = 0;
