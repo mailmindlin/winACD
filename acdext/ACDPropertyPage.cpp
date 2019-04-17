@@ -69,8 +69,7 @@ CACDPropertyPage::UpdateBrightnessEdit ()
 }
 
 void
-CACDPropertyPage::UpdateControls ()
-{
+CACDPropertyPage::UpdateControls() {
     CACDHidDevice& Device = m_pCurrentVirtualCP->GetDevice ();
     USES_CONVERSION;
     char buffer [128];
@@ -89,7 +88,7 @@ CACDPropertyPage::UpdateControls ()
 	GetDlgItem (IDC_DESCRIPTION)->SetWindowText (W2T ((LPCWSTR)buffer));
 
     // set the firmware revision.
-    int nVersion = Device.GetDeviceVersionNumber ();
+    int nVersion = Device.GetDeviceVersionNumber();
     _snprintf_s(buffer, sizeof (buffer), "%x", nVersion);
     buffer [sizeof (buffer) - 1] = '\0';
     GetDlgItem (IDC_FIRMWARE_VERSION)->SetWindowText (buffer);
@@ -105,15 +104,11 @@ CACDPropertyPage::UpdateControls ()
 }
 
 void
-CACDPropertyPage::InitializeControls ()
-{
+CACDPropertyPage::InitializeControls() {
     BOOL bShow = m_VirtualControlPanels.GetCount () != 0;
 
-    for (CWnd* child = GetWindow (GW_CHILD);
-	child != NULL;
-        child = child->GetNextWindow ()
-	)
-	child->ShowWindow (bShow);
+    for (CWnd* child = GetWindow(GW_CHILD); child != NULL; child = child->GetNextWindow())
+		child->ShowWindow(bShow);
 
     switch (m_VirtualControlPanels.GetCount ()) {
     case 0:
@@ -154,11 +149,10 @@ CACDPropertyPage::InitializeControls ()
 }
 
 BOOL
-CACDPropertyPage::OnInitDialog ()
-{
+CACDPropertyPage::OnInitDialog() {
     DEV_BROADCAST_DEVICEINTERFACE NotificationFilter;
 
-    CPropertyPage::OnInitDialog ();
+    CPropertyPage::OnInitDialog();
 
     // register the HID device notification.
     ZeroMemory (&NotificationFilter, sizeof (NotificationFilter));
@@ -176,21 +170,20 @@ CACDPropertyPage::OnInitDialog ()
     InitializeControls ();
 
     if (m_VirtualControlPanels.GetCount () > 0)
-	SetTimer (ACD_SETTINGS_TIMER, 500, 0);
+		SetTimer (ACD_SETTINGS_TIMER, 500, 0);
 
     return TRUE;
 }
 
 BOOL
-CACDPropertyPage::OnApply ()
-{
+CACDPropertyPage::OnApply() {
     BOOL status = CPropertyPage::OnApply ();
     if (!status)
-	return status;
+		return status;
 
     // enumerate the virtual control panels and apply individual settings.
     for (INT_PTR i = 0; i < m_VirtualControlPanels.GetCount (); ++i)
-	m_VirtualControlPanels.ElementAt (i)->Apply ();
+		m_VirtualControlPanels.ElementAt(i)->Apply ();
 
     return TRUE;
 }
@@ -334,7 +327,7 @@ CACDPropertyPage::OnEnChangeBrightnessEdit ()
 		_snprintf_s(buffer, sizeof (buffer), "%d", value);
 		buffer [sizeof (buffer) - 1] = '\0';
 
-	m_cBrightnessEdit.SetWindowText (buffer);
+		m_cBrightnessEdit.SetWindowText (buffer);
     }
 
     if (m_cBrightnessSlider.GetPos () * 100 / 255 == value)
