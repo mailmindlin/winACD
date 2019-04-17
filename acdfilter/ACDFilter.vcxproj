@@ -22,33 +22,47 @@
 		<VCProjectVersion>16.0</VCProjectVersion>
 		<ProjectGuid>{F02C091E-E9C6-4246-B3B4-414372127F4D}</ProjectGuid>
 		<Keyword>MakeFileProj</Keyword>
+		<RootNamespace>$(MSBuildProjectName)</RootNamespace>
+		<SupportsPackaging>false</SupportsPackaging>
+		<RequiresPackageProject>true</RequiresPackageProject>
 	</PropertyGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-		<ConfigurationType>Makefile</ConfigurationType>
+		<TargetVersion>Windows10</TargetVersion>
 		<UseDebugLibraries>true</UseDebugLibraries>
-		<PlatformToolset>v142</PlatformToolset>
+		<DriverTargetPlatform>Desktop</DriverTargetPlatform>
+		<DriverType>WDM</DriverType>
+		<PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+		<ConfigurationType>Driver</ConfigurationType>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-		<ConfigurationType>Makefile</ConfigurationType>
+		<TargetVersion>Windows10</TargetVersion>
 		<UseDebugLibraries>false</UseDebugLibraries>
-		<PlatformToolset>v142</PlatformToolset>
+		<DriverTargetPlatform>Desktop</DriverTargetPlatform>
+		<DriverType>WDM</DriverType>
+		<PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+		<ConfigurationType>Driver</ConfigurationType>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-		<ConfigurationType>Application</ConfigurationType>
+		<TargetVersion>Windows10</TargetVersion>
 		<UseDebugLibraries>true</UseDebugLibraries>
-		<PlatformToolset>v142</PlatformToolset>
+		<DriverTargetPlatform>Desktop</DriverTargetPlatform>
+		<DriverType>WDM</DriverType>
+		<PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+		<ConfigurationType>Driver</ConfigurationType>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-		<ConfigurationType>Application</ConfigurationType>
+		<TargetVersion>Windows10</TargetVersion>
 		<UseDebugLibraries>false</UseDebugLibraries>
-		<PlatformToolset>v142</PlatformToolset>
+		<DriverTargetPlatform>Desktop</DriverTargetPlatform>
+		<DriverType>WDM</DriverType>
+		<PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
+		<ConfigurationType>Driver</ConfigurationType>
 	</PropertyGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-	<ImportGroup Label="ExtensionSettings">
-	</ImportGroup>
-	<ImportGroup Label="Shared">
-	</ImportGroup>
+	<PropertyGroup>
+		<OutDir>$(IntDir)</OutDir>
+	</PropertyGroup>
 	<ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 	</ImportGroup>
@@ -62,7 +76,7 @@
 		<Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
 	</ImportGroup>
 	<PropertyGroup Label="UserMacros" />
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+	<!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
 		<NMakeBuildCommandLine>$(ProjectDir)/ddkbuild.bat -WXP checked $(InputDir)</NMakeBuildCommandLine>
 		<NMakeOutput>objfre_wxp_x86/i386/acdfilter.sys</NMakeOutput>
 		<NMakeCleanCommandLine>$(ProjectDir)/ddkbuild.bat -WXP checked $(InputDir) -clean</NMakeCleanCommandLine>
@@ -75,19 +89,65 @@
 		<NMakeCleanCommandLine>$(ProjectDir)/ddkbuild.bat -WXP free $(InputDir) -clean</NMakeCleanCommandLine>
 		<NMakeReBuildCommandLine>$(ProjectDir)/ddkbuild.bat -WXP free $(InputDir) -c</NMakeReBuildCommandLine>
 		<NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+	</PropertyGroup>-->
 	<ItemGroup Label="WrappedTaskItems">
 		<ProjectReference Include="..\acdutils\ACDUtils.vcxproj">
 			<Project>{c3b9cd00-a1a1-4c63-81fd-74fbcb249fe3}</Project>
 		</ProjectReference>
 	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<TargetName>ACDFilter</TargetName>
 	</PropertyGroup>
-	<ItemDefinitionGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<TargetName>ACDFilter</TargetName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<TargetName>ACDFilter</TargetName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<TargetName>ACDFilter</TargetName>
+	</PropertyGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<Link>
+			<AdditionalDependencies>%(AdditionalDependencies);$(DDK_LIB_PATH)\hidclass.lib</AdditionalDependencies>
+		</Link>
+		<ClCompile>
+			<ExceptionHandling>
+			</ExceptionHandling>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<Link>
+			<AdditionalDependencies>%(AdditionalDependencies);$(DDK_LIB_PATH)\hidclass.lib</AdditionalDependencies>
+		</Link>
+		<ClCompile>
+			<ExceptionHandling>
+			</ExceptionHandling>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+		<Link>
+			<AdditionalDependencies>%(AdditionalDependencies);$(DDK_LIB_PATH)\hidclass.lib</AdditionalDependencies>
+		</Link>
+		<ClCompile>
+			<ExceptionHandling>
+			</ExceptionHandling>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+		<Link>
+			<AdditionalDependencies>%(AdditionalDependencies);$(DDK_LIB_PATH)\hidclass.lib</AdditionalDependencies>
+		</Link>
+		<ClCompile>
+			<ExceptionHandling>
+			</ExceptionHandling>
+		</ClCompile>
 	</ItemDefinitionGroup>
 	<ItemGroup>
-		<ClInclude Include="acddescriptors.c" />
 		<ClCompile Include="acdfilter.c" />
 	</ItemGroup>
 	<ItemGroup>
+		<ClInclude Include="acddescriptors.c" />
 		<ClInclude Include="acdfilter.h" />
 	</ItemGroup>
 	<ItemGroup>
