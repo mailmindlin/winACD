@@ -22,12 +22,11 @@
 # error "Must be included by acdfilter.c"
 #endif /* !defined _ACD_FILTER_C */
 
-static UCHAR
-ACD_9216_HidReportDescriptor [] = {
-	0x05, 0x80,		/* USAGE_PAGE (Monitor)			*/
-	0x09, 0x01,		/* USAGE (Monitor Control)		*/
-	0xA1, 0x01,		/* COLLECTION (Application)		*/
-	0x15, 0x00,		/*   LOGICAL_MINIMUM (0)		*/
+static UCHAR ACD_9216_HidReportDescriptor [] = {
+	0x05, 0x80,     // USAGE_PAGE (Monitor)
+	0x09, 0x01,     // USAGE (Monitor Control)
+	0xA1, 0x01,     // COLLECTION (Application)
+	0x15, 0x00,     // LOGICAL_MINIMUM (0)
 	0x26, 0xFF, 0x00,	/*   LOGICAL_MAXIMUM (255)		*/
 	0x75, 0x08,		/*   REPORT_SIZE (8)			*/
 	0x85, 0x02,		/*   REPORT_ID (2)			*/
@@ -68,32 +67,34 @@ static ACD_CONFIGURATION_DESCRIPTOR ACD_9216_ConfigurationDescriptor = {
 	.Interface0 = {
 		.bLength = sizeof (USB_INTERFACE_DESCRIPTOR),	/* bLength		*/
 		.bDescriptorType = USB_INTERFACE_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-		.wTotalLength = 0,					/* bInterfaceNumber	*/
+		.bInterfaceNumber = 0,					/* bInterfaceNumber	*/
 		.bAlternateSetting = 0,					/* bAlternateSetting	*/
-	1,					/* bNumEndPoints	*/
-	3,					/* bInterfaceClass	*/
-	0,					/* bInterfaceSubClass	*/
-	0,					/* bInterfaceProtocol	*/
-	0					/* iInterface		*/
+		.bNumEndpoints = 1,					/* bNumEndPoints	*/
+		.bInterfaceClass = 3,					/* bInterfaceClass	*/
+		.bInterfaceSubClass = 0,					/* bInterfaceSubClass	*/
+		.bInterfaceProtocol = 0,					/* bInterfaceProtocol	*/
+		.iInterface = 0					/* iInterface		*/
 	},
-	{ /* HID Descriptor */
-	.bLength = sizeof (HID_DESCRIPTOR),		/* bLength		*/
+	/* HID Descriptor */
+	.Hid0 = { 
+		.bLength = sizeof (HID_DESCRIPTOR),		/* bLength		*/
 		.bDescriptorType = HID_HID_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-		.wTotalLength = 0x111,					/* bcdHID		*/
-		.bNumInterfaces = 0,					/* bCountry		*/
-	1,					/* bNumDescriptors	*/
-	{
-		HID_REPORT_DESCRIPTOR_TYPE,		/* bReportType		*/
-		sizeof (ACD_9216_HidReportDescriptor) /* wReportLength	*/
-	}
+		.bcdHID = 0x111,					/* bcdHID		*/
+		.bCountry = 0,					/* bCountry		*/
+		.bNumDescriptors = 1,					/* bNumDescriptors	*/
+		{{
+			.bReportType = HID_REPORT_DESCRIPTOR_TYPE,		/* bReportType		*/
+			.wReportLength = sizeof(ACD_9216_HidReportDescriptor) /* wReportLength	*/
+		}}
 	},
-	{ /* Endpoint 0x81 - Interrupt Input */
-	.bLength = sizeof (USB_ENDPOINT_DESCRIPTOR),	/* bLength		*/
+	/* Endpoint 0x81 - Interrupt Input */
+	.EndPoint1 = {
+		.bLength = sizeof (USB_ENDPOINT_DESCRIPTOR),        // bLength		*/
 		.bDescriptorType = USB_ENDPOINT_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-		.wTotalLength = 0x81,					/* bEndPointAddress	*/
-		.bNumInterfaces = USB_ENDPOINT_TYPE_INTERRUPT,		/* bmAttributes		*/
-	8,					/* wMaxPacketSize	*/
-	16					/* bInterval		*/
+		.bEndpointAddress = 0x81,					/* bEndPointAddress	*/
+		.bmAttributes = USB_ENDPOINT_TYPE_INTERRUPT,		// bmAttributes
+		.wMaxPacketSize = 8,                                // wMaxPacketSize
+		.bInterval = 16                                     // bInterval
 	}		
 };
 
@@ -143,46 +144,50 @@ ACD_Clear_HidReportDescriptor [] = {
  */
 static ACD_CONFIGURATION_DESCRIPTOR
 ACD_Clear_ConfigurationDescriptor = {
-	{ /* USB Configuration descriptor */
-	sizeof (USB_CONFIGURATION_DESCRIPTOR),	/* bLength		*/
-	USB_CONFIGURATION_DESCRIPTOR_TYPE,	/* bDescriptorType	*/
-	sizeof (ACD_CONFIGURATION_DESCRIPTOR),	/* wTotalLength		*/
-	1,					/* bNumInterfaces	*/
-	1,					/* bConfigurationValue	*/
-	0,					/* iConfiguration	*/
-	0xE0,					/* bmAttributes		*/
-	1					/* MaxPower		*/
+	/* USB Configuration descriptor */
+	.Configuration0 = {
+		.bLength = sizeof (USB_CONFIGURATION_DESCRIPTOR),	/* bLength		*/
+		.bDescriptorType = USB_CONFIGURATION_DESCRIPTOR_TYPE,	/* bDescriptorType	*/
+		.wTotalLength = sizeof (ACD_CONFIGURATION_DESCRIPTOR),	/* wTotalLength		*/
+		.bNumInterfaces = 1,					/* bNumInterfaces	*/
+		.bConfigurationValue = 1,					/* bConfigurationValue	*/
+		.iConfiguration = 0,					/* iConfiguration	*/
+		.bmAttributes = 0xE0,					/* bmAttributes		*/
+		.MaxPower = 1					/* MaxPower		*/
 	},
-	{ /* USB Interface descriptor */
-	sizeof (USB_INTERFACE_DESCRIPTOR),	/* bLength		*/
-	USB_INTERFACE_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-	0,					/* bInterfaceNumber	*/
-	0,					/* bAlternateSetting	*/
-	1,					/* bNumEndPoints	*/
-	3,					/* bInterfaceClass	*/
-	0,					/* bInterfaceSubClass	*/
-	0,					/* bInterfaceProtocol	*/
-	0					/* iInterface		*/
+	/* USB Interface descriptor */
+	.Interface0 = {
+		.bLength = sizeof (USB_INTERFACE_DESCRIPTOR),	/* bLength		*/
+		.bDescriptorType = USB_INTERFACE_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+		.bInterfaceNumber = 0,					/* bInterfaceNumber	*/
+		.bAlternateSetting = 0,					/* bAlternateSetting	*/
+		.bNumEndpoints = 1,					/* bNumEndPoints	*/
+		.bInterfaceClass = 3,					/* bInterfaceClass	*/
+		.bInterfaceSubClass = 0,					/* bInterfaceSubClass	*/
+		.bInterfaceProtocol = 0,					/* bInterfaceProtocol	*/
+		.iInterface = 0					/* iInterface		*/
 	},
-	{ /* HID Descriptor */
-	sizeof (HID_DESCRIPTOR),		/* bLength		*/
-	HID_HID_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-	0x111,					/* bcdHID		*/
-	0,					/* bCountry		*/
-	1,					/* bNumDescriptors	*/
-	{
-		HID_REPORT_DESCRIPTOR_TYPE,		/* bReportType		*/
-		sizeof (ACD_Clear_HidReportDescriptor) /* wReportLength	*/
+	/* HID Descriptor */
+	.Hid0 = {
+		.bLength = sizeof (HID_DESCRIPTOR),		/* bLength		*/
+		.bDescriptorType = HID_HID_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+		.bcdHID = 0x111,					/* bcdHID		*/
+		.bCountry = 0,					/* bCountry		*/
+		.bNumDescriptors = 1,					/* bNumDescriptors	*/
+		{{
+			.bReportType = HID_REPORT_DESCRIPTOR_TYPE,
+			.wReportLength = sizeof (ACD_Clear_HidReportDescriptor)
+		}}
+	},
+	/* Endpoint 0x81 - Interrupt Input */
+	.EndPoint1 = {
+		.bLength = sizeof (USB_ENDPOINT_DESCRIPTOR),
+		.bDescriptorType = USB_ENDPOINT_DESCRIPTOR_TYPE,
+		.bEndpointAddress = 0x81,
+		.bmAttributes = USB_ENDPOINT_TYPE_INTERRUPT,
+		.wMaxPacketSize = 8,
+		.bInterval = 16
 	}
-	},
-	{ /* Endpoint 0x81 - Interrupt Input */
-	sizeof (USB_ENDPOINT_DESCRIPTOR),	/* bLength		*/
-	USB_ENDPOINT_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-	0x81,					/* bEndPointAddress	*/
-	USB_ENDPOINT_TYPE_INTERRUPT,		/* bmAttributes		*/
-	8,					/* wMaxPacketSize	*/
-	16					/* bInterval		*/
-	}		
 };
 
 /**
@@ -242,44 +247,48 @@ ACD_Aluminum_HidReportDescriptor [] = {
  */
 static ACD_CONFIGURATION_DESCRIPTOR
 ACD_Aluminum_ConfigurationDescriptor = {
-	{ /* USB Configuration descriptor */
-	sizeof (USB_CONFIGURATION_DESCRIPTOR),	/* bLength		*/
-	USB_CONFIGURATION_DESCRIPTOR_TYPE,	/* bDescriptorType	*/
-	sizeof (ACD_CONFIGURATION_DESCRIPTOR),	/* wTotalLength		*/
-	1,					/* bNumInterfaces	*/
-	1,					/* bConfigurationValue	*/
-	0,					/* iConfiguration	*/
-	0xE0,					/* bmAttributes		*/
-	1					/* MaxPower		*/
+	/* USB Configuration descriptor */
+	.Configuration0 = {
+		.bLength = sizeof (USB_CONFIGURATION_DESCRIPTOR),	/* bLength		*/
+		.bDescriptorType = USB_CONFIGURATION_DESCRIPTOR_TYPE,	/* bDescriptorType	*/
+		.wTotalLength = sizeof (ACD_CONFIGURATION_DESCRIPTOR),	/* wTotalLength		*/
+		.bNumInterfaces = 1,					/* bNumInterfaces	*/
+		.bConfigurationValue = 1,					/* bConfigurationValue	*/
+		.iConfiguration = 0,					/* iConfiguration	*/
+		.bmAttributes = 0xE0,					/* bmAttributes		*/
+		.MaxPower = 1					/* MaxPower		*/
 	},
-	{ /* USB Interface descriptor */
-	sizeof (USB_INTERFACE_DESCRIPTOR),	/* bLength		*/
-	USB_INTERFACE_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-	0,					/* bInterfaceNumber	*/
-	0,					/* bAlternateSetting	*/
-	1,					/* bNumEndPoints	*/
-	3,					/* bInterfaceClass	*/
-	0,					/* bInterfaceSubClass	*/
-	0,					/* bInterfaceProtocol	*/
-	0					/* iInterface		*/
+	/* USB Interface descriptor */
+	.Interface0 = {
+		.bLength = sizeof (USB_INTERFACE_DESCRIPTOR),	/* bLength		*/
+		.bDescriptorType = USB_INTERFACE_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+		.bInterfaceNumber = 0,					/* bInterfaceNumber	*/
+		.bAlternateSetting = 0,					/* bAlternateSetting	*/
+		.bNumEndpoints = 1,					/* bNumEndPoints	*/
+		.bInterfaceClass = 3,					/* bInterfaceClass	*/
+		.bInterfaceSubClass = 0,					/* bInterfaceSubClass	*/
+		.bInterfaceProtocol = 0,					/* bInterfaceProtocol	*/
+		.iInterface = 0					/* iInterface		*/
 	},
-	{ /* HID Descriptor */
-	sizeof (HID_DESCRIPTOR),		/* bLength		*/
-	HID_HID_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-	0x111,					/* bcdHID		*/
-	0,					/* bCountry		*/
-	1,					/* bNumDescriptors	*/
-	{
-		HID_REPORT_DESCRIPTOR_TYPE,		/* bReportType		*/
-		sizeof (ACD_Aluminum_HidReportDescriptor) /* wReportLength	*/
+	/* HID Descriptor */
+	.Hid0 = {
+		.bLength = sizeof (HID_DESCRIPTOR),		/* bLength		*/
+		.bDescriptorType = HID_HID_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+		.bcdHID = 0x111,					/* bcdHID		*/
+		.bCountry = 0,					/* bCountry		*/
+		.bNumDescriptors = 1,					/* bNumDescriptors	*/
+		{{
+			.bReportType = HID_REPORT_DESCRIPTOR_TYPE,		/* bReportType		*/
+			.wReportLength = sizeof (ACD_Aluminum_HidReportDescriptor) /* wReportLength	*/
+		}}
+	},
+	/* Endpoint 0x81 - Interrupt Input */
+	.EndPoint1 = {
+		.bLength = sizeof(USB_ENDPOINT_DESCRIPTOR),        // bLength		*/
+		.bDescriptorType = USB_ENDPOINT_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
+		.bEndpointAddress = 0x81,					/* bEndPointAddress	*/
+		.bmAttributes = USB_ENDPOINT_TYPE_INTERRUPT,		// bmAttributes
+		.wMaxPacketSize = 8,                                // wMaxPacketSize
+		.bInterval = 16                                     // bInterval
 	}
-	},
-	{ /* Endpoint 0x81 - Interrupt Input */
-	sizeof (USB_ENDPOINT_DESCRIPTOR),	/* bLength		*/
-	USB_ENDPOINT_DESCRIPTOR_TYPE,		/* bDescriptorType	*/
-	0x81,					/* bEndPointAddress	*/
-	USB_ENDPOINT_TYPE_INTERRUPT,		/* bmAttributes		*/
-	8,					/* wMaxPacketSize	*/
-	16					/* bInterval		*/
-	}		
 };
