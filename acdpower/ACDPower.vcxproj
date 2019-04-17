@@ -108,6 +108,9 @@
 		<Text Include="ReadMe.txt" />
 	</ItemGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\acdutils\ACDUtils.vcxproj">
+			<Project>{c3b9cd00-a1a1-4c63-81fd-74fbcb249fe3}</Project>
+		</ProjectReference>
 	</ItemGroup>
 	<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 	<ImportGroup Label="ExtensionTargets">
