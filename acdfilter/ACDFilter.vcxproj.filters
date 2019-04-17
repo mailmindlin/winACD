@@ -15,9 +15,6 @@
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>
-		<ClCompile Include="acddescriptors.c">
-			<Filter>Source Files</Filter>
-		</ClCompile>
 		<ClCompile Include="acdfilter.c">
 			<Filter>Source Files</Filter>
 		</ClCompile>
@@ -25,6 +22,9 @@
 	<ItemGroup>
 		<ClInclude Include="acdfilter.h">
 			<Filter>Header Files</Filter>
+		</ClInclude>
+		<ClInclude Include="acddescriptors.c">
+			<Filter>Source Files</Filter>
 		</ClInclude>
 	</ItemGroup>
 	<ItemGroup>
