@@ -110,9 +110,9 @@ public:
 private:
 
     /** Copy not allowed. */
-    CUSBMonitorHidDevice (const CUSBMonitorHidDevice &);
+    CUSBMonitorHidDevice (const CUSBMonitorHidDevice &) = delete;
     /** Copy not allowed. */
-    void operator = (const CUSBMonitorHidDevice &);
+    void operator= (const CUSBMonitorHidDevice &) = delete;
 
 protected:
 
