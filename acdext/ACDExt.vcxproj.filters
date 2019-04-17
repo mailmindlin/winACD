@@ -13,6 +13,9 @@
 			<UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
 			<Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
 		</Filter>
+		<Filter Include="Generated Files">
+			<UniqueIdentifier>{2ce3f236-dffd-425c-a6a9-5bfa3027fdbc}</UniqueIdentifier>
+		</Filter>
 	</ItemGroup>
 	<ItemGroup>
 		<ClCompile Include="ACDExt.cpp">
@@ -84,6 +87,9 @@
 		</Image>
 	</ItemGroup>
 	<ItemGroup>
+		<ClCompile Include="ACDExt_i.c">
+			<Filter>Generated Files</Filter>
+		</ClCompile>
 	</ItemGroup>
 	<ItemGroup>
 		<Text Include="ReadMe.txt" />
