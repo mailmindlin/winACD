@@ -121,7 +121,7 @@ IDB_PWR_BACKGROUND      BITMAP                  "res\\PwrBackground.bmp"
 // RT_MANIFEST
 //
 
-IDR_MANIFEST            RT_MANIFEST             "res\\ACDMon.manifest"
+// IDR_MANIFEST            RT_MANIFEST             "res\\ACDMon.manifest"
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 

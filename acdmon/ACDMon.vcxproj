@@ -85,6 +85,9 @@
 			<SubSystem>Windows</SubSystem>
 			<AdditionalDependencies>setupapi.lib;$(DDK_LIB_PATH)\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
+		<Manifest>
+			<AssemblyIdentity>WinACD.ACDMon</AssemblyIdentity>
+		</Manifest>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
 		<ClCompile>
@@ -101,6 +104,9 @@
 			<OptimizeReferences>true</OptimizeReferences>
 			<AdditionalDependencies>setupapi.lib;$(DDK_LIB_PATH)\hid.lib;%(AdditionalDependencies)</AdditionalDependencies>
 		</Link>
+		<Manifest>
+			<AssemblyIdentity>WinACD.ACDMon</AssemblyIdentity>
+		</Manifest>
 	</ItemDefinitionGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\acdutils\ACDUtils.vcxproj">
