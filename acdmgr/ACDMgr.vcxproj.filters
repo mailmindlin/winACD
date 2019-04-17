@@ -15,32 +15,11 @@
 		</Filter>
 	</ItemGroup>
 	<ItemGroup>
-		<ClCompile Include="ACDHidDev.cpp">
-			<Filter>Source Files</Filter>
-		</ClCompile>
 		<ClCompile Include="ACDMgr.cpp">
-			<Filter>Source Files</Filter>
-		</ClCompile>
-		<ClCompile Include="ACDPower.cpp">
-			<Filter>Source Files</Filter>
-		</ClCompile>
-		<ClCompile Include="ACDUtil.cpp">
-			<Filter>Source Files</Filter>
-		</ClCompile>
-		<ClCompile Include="ACDEdid.c">
 			<Filter>Source Files</Filter>
 		</ClCompile>
 	</ItemGroup>
 	<ItemGroup>
-		<ClInclude Include="ACDEdid.h">
-			<Filter>Header Files</Filter>
-		</ClInclude>
-		<ClInclude Include="ACDHidDev.h">
-			<Filter>Header Files</Filter>
-		</ClInclude>
-		<ClInclude Include="ACDUtil.h">
-			<Filter>Header Files</Filter>
-		</ClInclude>
 		<ClInclude Include="resource.h">
 			<Filter>Header Files</Filter>
 		</ClInclude>

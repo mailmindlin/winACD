@@ -102,16 +102,9 @@
 		</Link>
 	</ItemDefinitionGroup>
 	<ItemGroup>
-		<ClCompile Include="ACDEdid.c" />
-		<ClCompile Include="ACDHidDev.cpp" />
 		<ClCompile Include="ACDMgr.cpp" />
-		<ClCompile Include="ACDPower.cpp" />
-		<ClCompile Include="ACDUtil.cpp" />
 	</ItemGroup>
 	<ItemGroup>
-		<ClInclude Include="ACDEdid.h" />
-		<ClInclude Include="ACDHidDev.h" />
-		<ClInclude Include="ACDUtil.h" />
 		<ClInclude Include="resource.h" />
 	</ItemGroup>
 	<ItemGroup>
